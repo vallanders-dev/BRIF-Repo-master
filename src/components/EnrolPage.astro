@@ -1,0 +1,196 @@
+---
+import { content, site } from '../data/content.js';
+import PageHero from './PageHero.astro';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].enrol;
+const hasEndpoint = Boolean(site.formEndpoint);
+---
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="enrol" />
+
+<section class="section">
+  <div class="wrap form-wrap">
+    <p class="lede intro-lede" data-reveal>{c.intro}</p>
+
+    <form
+      id="enrol-form"
+      class="enrol-form"
+      data-reveal
+      data-endpoint={site.formEndpoint}
+      data-email={site.email}
+      data-lang={lang}
+      method="POST"
+      action={hasEndpoint ? site.formEndpoint : undefined}
+      novalidate
+    >
+      <div class="field">
+        <label for="parentName">{c.parentName}</label>
+        <input type="text" id="parentName" name="parentName" required autocomplete="name" />
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="parentEmail">{c.parentEmail}</label>
+          <input type="email" id="parentEmail" name="parentEmail" required autocomplete="email" />
+        </div>
+        <div class="field">
+          <label for="parentPhone">{c.parentPhone}</label>
+          <input type="tel" id="parentPhone" name="parentPhone" required autocomplete="tel" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="childName">{c.childName}</label>
+          <input type="text" id="childName" name="childName" />
+        </div>
+        <div class="field">
+          <label for="childAge">{c.childAge}</label>
+          <input type="number" id="childAge" name="childAge" min="2" max="20" />
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="field">
+          <label for="curriculum">{c.curriculum}</label>
+          <select id="curriculum" name="curriculum">
+            {c.curriculumOptions.map((opt) => <option value={opt}>{opt}</option>)}
+          </select>
+        </div>
+        <div class="field">
+          <label for="entryYear">{c.entryYear}</label>
+          <input type="number" id="entryYear" name="entryYear" min="2025" max="2035" placeholder="2026" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="message">{c.message}</label>
+        <textarea id="message" name="message" rows="4"></textarea>
+      </div>
+
+      <div class="form-foot">
+        <button type="submit" class="btn">{c.submit}<span class="arw" aria-hidden="true">→</span></button>
+        <p class="form-note">{c.note}</p>
+      </div>
+
+      <p class="form-success" id="form-success" role="status" hidden>{c.successThanks}</p>
+    </form>
+  </div>
+</section>
+
+<script is:inline define:vars={{ successMsg: c.successThanks, subjectLine: (lang === 'fr' ? 'Demande d\u2019inscription — BRIF' : 'Enrolment enquiry — BRIF') }}>
+  (function () {
+    const form = document.getElementById('enrol-form');
+    if (!form) return;
+    const endpoint = form.dataset.endpoint;
+    const email = form.dataset.email;
+    const success = document.getElementById('form-success');
+
+    function markError(field, on) {
+      field.closest('.field').classList.toggle('has-error', on);
+    }
+
+    form.addEventListener('submit', async (e) => {
+      // Client-side required validation
+      let valid = true;
+      form.querySelectorAll('[required]').forEach((el) => {
+        const ok = el.value.trim() !== '' && (el.type !== 'email' || /.+@.+\..+/.test(el.value));
+        markError(el, !ok);
+        if (!ok) valid = false;
+      });
+      if (!valid) { e.preventDefault(); return; }
+
+      // If a form endpoint is configured, submit via fetch for a smooth UX.
+      if (endpoint) {
+        e.preventDefault();
+        const btn = form.querySelector('button[type=submit]');
+        btn.disabled = true;
+        try {
+          const res = await fetch(endpoint, {
+            method: 'POST',
+            headers: { Accept: 'application/json' },
+            body: new FormData(form),
+          });
+          if (res.ok) {
+            form.reset();
+            success.hidden = false;
+            success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          } else {
+            btn.disabled = false;
+            alert('Something went wrong. Please try again or email us directly.');
+          }
+        } catch {
+          btn.disabled = false;
+          alert('Network error. Please try again or email us directly.');
+        }
+        return;
+      }
+
+      // No endpoint yet: fall back to a prefilled mailto so the form is never broken.
+      e.preventDefault();
+      const data = new FormData(form);
+      const lines = [];
+      for (const [k, v] of data.entries()) if (v) lines.push(k + ': ' + v);
+      const body = encodeURIComponent(lines.join('\n'));
+      const subject = encodeURIComponent(subjectLine);
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+      success.hidden = false;
+    });
+  })();
+</script>
+
+<style>
+  .form-wrap { max-width: 760px; }
+  .intro-lede { margin-bottom: 2.5rem; }
+  .enrol-form { display: grid; gap: 1.3rem; }
+  .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; }
+  .field { display: flex; flex-direction: column; gap: 0.4rem; }
+  .field label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--oxford);
+  }
+  .field input,
+  .field select,
+  .field textarea {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    padding: 0.8rem 0.9rem;
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-sm);
+    background: var(--paper);
+    color: var(--ink);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+  }
+  .field input:focus,
+  .field select:focus,
+  .field textarea:focus {
+    outline: none;
+    border-color: var(--true-blue);
+    box-shadow: 0 0 0 3px rgba(57,108,180,0.15);
+  }
+  .field.has-error input,
+  .field.has-error select { border-color: var(--orange); }
+  .field textarea { resize: vertical; }
+
+  .form-foot {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    margin-top: 0.5rem;
+  }
+  .form-note { font-size: 0.85rem; color: var(--ink-soft); max-width: 40ch; }
+  .form-success {
+    background: rgba(57,108,180,0.1);
+    border: 1px solid var(--true-blue);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.2rem;
+    color: var(--true-blue-ink);
+    font-weight: 500;
+  }
+
+  @media (max-width: 620px) {
+    .row { grid-template-columns: 1fr; }
+  }
+</style>

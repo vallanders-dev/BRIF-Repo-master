@@ -1,0 +1,18 @@
+# build output
+dist/
+# dependencies
+node_modules/
+# logs
+npm-debug.log*
+# environment
+.env
+.env.production
+# macOS
+.DS_Store
+# editor
+.vscode/
+.idea/
+# Astro
+.astro/
+# Claude Code local settings
+.claude/settings.local.json

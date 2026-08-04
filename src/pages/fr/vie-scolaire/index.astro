@@ -1,0 +1,10 @@
+---
+import Base from '../../../layouts/Base.astro';
+import LifePage from '../../../components/LifePage.astro';
+import { content } from '../../../data/content.js';
+const lang = 'fr';
+const c = content[lang].life;
+---
+<Base lang={lang} routeKey="life" title={c.title} description={c.intro}>
+  <LifePage lang={lang} />
+</Base>

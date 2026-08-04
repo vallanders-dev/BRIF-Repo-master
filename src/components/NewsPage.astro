@@ -1,0 +1,155 @@
+---
+import { content, news, site } from '../data/content.js';
+import PageHero from './PageHero.astro';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].news;
+const fb = content[lang].fbModule;
+const items = news[lang];
+
+const dateFmt = (iso) =>
+  new Date(iso).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', {
+    day: 'numeric', month: 'long', year: 'numeric',
+  });
+---
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="news" />
+
+<section class="section">
+  <div class="wrap">
+    <p class="lede intro-lede" data-reveal>{c.intro}</p>
+    <div class="news-list">
+      {items.map((n, i) => (
+        <article class="news-item" data-reveal class:list={[`d${Math.min(i + 1, 4)}`]}>
+          <div class="news-item-img" aria-hidden="true"><span>📷</span></div>
+          <div class="news-item-body">
+            <time datetime={n.date}>{dateFmt(n.date)}</time>
+            <h2>{n.title}</h2>
+            <p>{n.excerpt}</p>
+            <a href={site.facebook} class="news-link" target="_blank" rel="noopener">
+              {c.readMore}<span aria-hidden="true"> →</span>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- Facebook live feed module -->
+<section class="section section--mist">
+  <div class="wrap fb-live" data-reveal>
+    <div class="fb-live-copy">
+      <p class="eyebrow">{fb.kicker}</p>
+      <h2>{fb.title}</h2>
+      <p class="lede">{fb.text}</p>
+      <a href={site.facebook} class="btn" target="_blank" rel="noopener">
+        <span class="fb-icon" aria-hidden="true">f</span>{fb.button}
+      </a>
+    </div>
+    <!-- Official Facebook Page Plugin mounts here.
+         It loads only in the built site (needs the FB SDK + a real page URL).
+         Framed to sit tidily within the site's styling. -->
+    <div class="fb-embed">
+      <div class="fb-embed-frame">
+        <div class="fb-page"
+          data-href={site.facebook}
+          data-tabs="timeline"
+          data-width="380"
+          data-height="500"
+          data-small-header="true"
+          data-adapt-container-width="true"
+          data-hide-cover="false"
+          data-show-facepile="true">
+          <blockquote cite={site.facebook} class="fb-xfbml-parse-ignore">
+            <a href={site.facebook}>British &amp; French Academy</a>
+          </blockquote>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .intro-lede { max-width: 60ch; margin-bottom: 3rem; }
+  .news-list { display: grid; gap: 1.6rem; }
+  .news-item {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 1.8rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .news-item:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .news-item-img {
+    background: linear-gradient(135deg, var(--mist), #e8eef7);
+    border-right: 1px dashed var(--true-blue);
+    display: grid;
+    place-items: center;
+    font-size: 2rem;
+    color: var(--true-blue);
+    min-height: 180px;
+  }
+  .news-item-body { padding: 1.8rem 1.8rem 1.8rem 0; }
+  .news-item-body time {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--true-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .news-item-body h2 { font-size: 1.6rem; margin: 0.5rem 0 0.7rem; }
+  .news-item-body p { color: var(--ink-soft); margin-bottom: 1rem; }
+  .news-link { font-weight: 600; color: var(--orange); }
+  .news-link:hover { color: var(--orange-ink); }
+
+  .fb-live {
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    gap: clamp(2rem, 1rem + 4vw, 4rem);
+    align-items: center;
+  }
+  .fb-live-copy .eyebrow { margin-bottom: 1rem; }
+  .fb-live-copy h2 { font-size: var(--step-3); margin-bottom: 1rem; }
+  .fb-live-copy .lede { margin-bottom: 1.6rem; }
+  .fb-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 22px; height: 22px;
+    background: #fff;
+    color: var(--orange);
+    border-radius: 5px;
+    font-family: Georgia, serif;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 0.95rem;
+  }
+  .fb-embed-frame {
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0.5rem;
+    box-shadow: var(--shadow-sm);
+    min-height: 200px;
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+  }
+  .fb-embed-frame:empty::after,
+  .fb-page:not(.fb_iframe_widget)::after {
+    content: "Facebook feed loads on the published site";
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    padding: 2rem;
+    text-align: center;
+  }
+
+  @media (max-width: 860px) {
+    .news-item { grid-template-columns: 1fr; }
+    .news-item-img { border-right: none; border-bottom: 1px dashed var(--true-blue); }
+    .news-item-body { padding: 1.6rem; }
+    .fb-live { grid-template-columns: 1fr; }
+    .fb-embed { max-width: 400px; }
+  }
+</style>

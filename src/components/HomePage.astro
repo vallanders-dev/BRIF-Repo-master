@@ -1,0 +1,514 @@
+---
+import { content, site, news } from '../data/content.js';
+import { localizedPath, useTranslations } from '../i18n/ui.js';
+import Cards from './Cards.astro';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].home;
+const t = useTranslations(lang);
+const items = news[lang];
+
+const admissionsHref = localizedPath(lang, 'admissions');
+const aboutHref = localizedPath(lang, 'about');
+const newsHref = localizedPath(lang, 'news');
+const contactHref = localizedPath(lang, 'contact');
+const enrolHref = localizedPath(lang, 'enrol');
+const social = content[lang].social;
+
+const dateFmt = (iso) =>
+  new Date(iso).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', {
+    day: 'numeric', month: 'long', year: 'numeric',
+  });
+---
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <span class="orb orb--1"></span>
+    <span class="orb orb--2"></span>
+    <span class="grid-lines"></span>
+  </div>
+  <div class="wrap hero-inner">
+    <p class="hero-kicker" data-reveal>{c.heroKicker}</p>
+    <h1 class="hero-title" data-reveal class:list={['d1']}>{c.heroTitle}</h1>
+    <p class="hero-text" data-reveal class:list={['d2']}>{c.heroText}</p>
+    <div class="hero-cta" data-reveal class:list={['d3']}>
+      <a href={enrolHref} class="btn">{c.heroCtaPrimary}<span class="arw" aria-hidden="true">→</span></a>
+      <a href={aboutHref} class="btn btn--ghost btn--on-dark">{c.heroCtaSecondary}</a>
+    </div>
+    <p class="hero-motto" data-reveal class:list={['d4']}>
+      <span class="motto-latin">{site.motto}</span>
+      <span class="motto-gloss">{site.mottoGloss[lang]}</span>
+    </p>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="section stats-band">
+  <div class="wrap">
+    <p class="stats-label" data-reveal>{c.statLabel}</p>
+    <div class="stats">
+      {c.stats.map((s, i) => (
+        s.anchor ? (
+          <a href={`${aboutHref}#${s.anchor}`} class="stat stat--link" data-reveal class:list={[`d${i + 1}`]}>
+            <span class="stat-value">{s.value}</span>
+            <span class="stat-label">{s.label}</span>
+          </a>
+        ) : (
+          <div class="stat" data-reveal class:list={[`d${i + 1}`]}>
+            <span class="stat-value">{s.value}</span>
+            <span class="stat-label">{s.label}</span>
+          </div>
+        )
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- PILLARS -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head">
+      <p class="eyebrow">{c.pillarsKicker}</p>
+      <h2>{c.pillarsTitle}</h2>
+    </div>
+    <Cards items={c.pillars} columns={4} />
+  </div>
+</section>
+
+<!-- ABOUT SPLIT -->
+<section class="section section--mist">
+  <div class="wrap about-split">
+    <div class="about-figure" aria-hidden="true">
+      <div class="fig-card fig-blue"><span>{site.since}</span><small>{lang === 'fr' ? 'Depuis' : 'Since'}</small></div>
+      <div class="fig-card fig-orange"><span>EN</span><small>+</small><span>FR</span></div>
+      <div class="fig-card fig-yellow">✦</div>
+    </div>
+    <div class="about-copy">
+      <p class="eyebrow">{c.aboutKicker}</p>
+      <h2>{c.aboutTitle}</h2>
+      <p class="lede">{c.aboutText}</p>
+      <a href={aboutHref} class="btn btn--ghost">{c.aboutLink}<span class="arw" aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<!-- NEWS -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head section-head--row">
+      <div>
+        <p class="eyebrow">{c.newsKicker}</p>
+        <h2>{c.newsTitle}</h2>
+      </div>
+      <a href={newsHref} class="btn btn--ghost btn--sm2">{c.newsLink}<span class="arw" aria-hidden="true">→</span></a>
+    </div>
+    <div class="news-grid">
+      {items.map((n) => (
+        <article class="news-card">
+          <time datetime={n.date}>{dateFmt(n.date)}</time>
+          <h3>{n.title}</h3>
+          <p>{n.excerpt}</p>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL FOLLOW MODULE -->
+<section class="section section--mist">
+  <div class="wrap social-module" data-reveal>
+    <div class="social-copy">
+      <p class="eyebrow">{social.kicker}</p>
+      <h2>{social.title}</h2>
+      <p class="lede">{social.text}</p>
+      <div class="social-actions">
+        <a href={site.facebook} class="btn btn--ghost" target="_blank" rel="noopener">
+          <span class="social-icon social-icon--fb" aria-hidden="true">f</span>{social.fbButton}
+        </a>
+        <a href={site.instagram} class="btn" target="_blank" rel="noopener">
+          <span class="social-icon social-icon--ig" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"></circle></svg>
+          </span>{social.igButton}
+        </a>
+      </div>
+    </div>
+    <div class="social-badges">
+      <a href={site.facebook} class="social-photo" target="_blank" rel="noopener" aria-hidden="true">
+        <img src="/images/shade.jpg" alt="" loading="lazy" />
+        <span class="social-photo-tag">
+          <span class="social-photo-icon">
+            <svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true">
+              <rect x="1" y="1" width="46" height="46" rx="14" fill="#1877F2"></rect>
+              <path d="M27 16h4v-5h-4c-3.3 0-6 2.7-6 6v3h-3v5h3v11h5V25h4l1-5h-5v-3c0-.6.4-1 1-1z" fill="#fff"></path>
+            </svg>
+          </span>
+          {social.handleFb}
+        </span>
+      </a>
+      <a href={site.instagram} class="social-photo" target="_blank" rel="noopener" aria-hidden="true">
+        <img src="/images/ahouanvoebla.jpg" alt="" loading="lazy" />
+        <span class="social-photo-tag">
+          <span class="social-photo-icon">
+            <svg viewBox="0 0 48 48" width="20" height="20" aria-hidden="true">
+              <defs>
+                <linearGradient id="igGradHome" x1="0%" y1="100%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#FEE411"></stop>
+                  <stop offset="15%" stop-color="#FEDA77"></stop>
+                  <stop offset="30%" stop-color="#F58529"></stop>
+                  <stop offset="50%" stop-color="#DD2A7B"></stop>
+                  <stop offset="70%" stop-color="#8134AF"></stop>
+                  <stop offset="100%" stop-color="#515BD4"></stop>
+                </linearGradient>
+              </defs>
+              <rect x="1" y="1" width="46" height="46" rx="14" fill="url(#igGradHome)"></rect>
+              <rect x="13" y="13" width="22" height="22" rx="7" fill="none" stroke="#fff" stroke-width="2.6"></rect>
+              <circle cx="24" cy="24" r="6" fill="none" stroke="#fff" stroke-width="2.6"></circle>
+              <circle cx="32.2" cy="15.8" r="1.6" fill="#fff"></circle>
+            </svg>
+          </span>
+          {social.handleIg}
+        </span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section cta-band">
+  <div class="wrap cta-inner" data-reveal>
+    <div>
+      <h2>{c.ctaTitle}</h2>
+      <p>{c.ctaText}</p>
+    </div>
+    <a href={enrolHref} class="btn btn--yellow">{c.ctaButton}<span class="arw" aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<style>
+  /* HERO */
+  .hero {
+    position: relative;
+    background: var(--oxford);
+    color: #eaf0fa;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .hero-bg { position: absolute; inset: 0; z-index: -1; }
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(10px);
+    opacity: 0.5;
+  }
+  .orb--1 {
+    width: 420px; height: 420px;
+    background: radial-gradient(circle, rgba(57,108,180,0.55), transparent 70%);
+    top: -120px; right: -80px;
+  }
+  .orb--2 {
+    width: 340px; height: 340px;
+    background: radial-gradient(circle, rgba(190,0,0,0.4), transparent 70%);
+    bottom: -140px; left: -60px;
+  }
+  .grid-lines {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at 60% 40%, #000 30%, transparent 75%);
+  }
+  .hero-inner {
+    padding-block: clamp(4rem, 3rem + 8vw, 8rem);
+    max-width: 84ch;
+  }
+  .hero-kicker {
+    display: inline-block;
+    color: var(--yellow);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-size: var(--step--1);
+    margin-bottom: 1.2rem;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid rgba(255,186,8,0.4);
+    border-radius: 999px;
+  }
+  .hero-title {
+    color: #fff;
+    font-size: var(--step-5);
+    margin-bottom: 1.4rem;
+  }
+  .hero-text {
+    font-size: var(--step-1);
+    color: #c6d2e6;
+    max-width: 66ch;
+    margin-bottom: 2rem;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: none;
+  }
+  .hero-cta { display: flex; flex-wrap: wrap; gap: 1rem; margin-bottom: 2.5rem; }
+  .btn--on-dark { color: #fff; border-color: rgba(255,255,255,0.5); }
+  .btn--on-dark:hover { background: #fff; color: var(--oxford); border-color: #fff; }
+
+  .hero-motto {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    padding-left: 1.1rem;
+    border-left: 3px solid var(--yellow);
+  }
+  .motto-latin {
+    font-family: var(--font-display);
+    font-style: italic;
+    font-size: var(--step-1);
+    color: var(--yellow);
+  }
+  .motto-gloss { font-size: 0.9rem; color: #9fb0cc; }
+
+  /* STATS */
+  .stats-band {
+    background: var(--paper);
+    padding-block: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+    border-bottom: 1px solid var(--line);
+  }
+  .stats-label {
+    text-align: center;
+    font-family: var(--font-display);
+    font-size: var(--step-1);
+    color: var(--oxford);
+    margin-bottom: 2rem;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    text-align: center;
+  }
+  .stat { padding: 1rem 0.5rem; }
+  .stat + .stat { border-left: 1px solid var(--line); }
+  .stat--link {
+    display: block;
+    border-radius: var(--radius-sm);
+    transition: transform 0.2s ease, background 0.2s ease;
+  }
+  .stat--link:hover {
+    transform: translateY(-3px);
+    background: rgba(57,108,180,0.07);
+  }
+  .stat--link:hover .stat-value { color: var(--orange-ink); }
+  .stat--link:hover .stat-label { color: var(--true-blue); }
+  .stat-value {
+    display: block;
+    font-family: var(--font-display);
+    font-size: var(--step-3);
+    color: var(--orange);
+    font-weight: 600;
+    line-height: 1;
+  }
+  .stat-label {
+    display: block;
+    margin-top: 0.5rem;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+
+  /* Section heads */
+  .section-head { margin-bottom: 2.5rem; max-width: 60ch; }
+  .section-head .eyebrow { margin-bottom: 0.8rem; }
+  .section-head h2 { font-size: var(--step-3); }
+  .section-head--row {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.5rem;
+    max-width: none;
+    flex-wrap: wrap;
+  }
+
+  /* About split */
+  .about-split {
+    display: grid;
+    grid-template-columns: 0.9fr 1.1fr;
+    gap: clamp(2rem, 1rem + 4vw, 4rem);
+    align-items: center;
+  }
+  .about-figure {
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    aspect-ratio: 1 / 1;
+    max-width: 380px;
+  }
+  .fig-card {
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: var(--font-display);
+    box-shadow: var(--shadow-sm);
+  }
+  .fig-blue { background: var(--true-blue); }
+  .fig-blue span { font-size: 2.4rem; font-weight: 600; line-height: 1; }
+  .fig-blue small { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; }
+  .fig-orange {
+    background: var(--orange);
+    grid-row: span 2;
+    flex-direction: row;
+    gap: 0.4rem;
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+  .fig-orange small { font-size: 1.3rem; }
+  .fig-yellow {
+    background: var(--yellow);
+    color: var(--oxford);
+    font-size: 2rem;
+  }
+  .about-copy .eyebrow { margin-bottom: 0.8rem; }
+  .about-copy h2 { font-size: var(--step-3); margin-bottom: 1rem; }
+  .about-copy .lede { margin-bottom: 1.6rem; text-align: justify; text-justify: inter-word; hyphens: none; }
+
+  /* News */
+  .news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+  }
+  .news-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.6rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .news-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .news-card time {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--true-blue);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .news-card h3 { font-size: var(--step-1); margin: 0.6rem 0; }
+  .news-card p { color: var(--ink-soft); font-size: 0.95rem; text-align: justify; text-justify: inter-word; hyphens: none; }
+  .btn--sm2 { padding: 0.6rem 1.1rem; font-size: 0.9rem; }
+
+  /* CTA */
+  .cta-band {
+    background: linear-gradient(120deg, var(--oxford), var(--true-blue-ink));
+    color: #fff;
+  }
+  .cta-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+  .cta-inner h2 { color: #fff; font-size: var(--step-3); margin-bottom: 0.5rem; }
+  .cta-inner p { color: #c6d2e6; max-width: 46ch; text-align: justify; text-justify: inter-word; hyphens: none; }
+
+  /* Social module (Facebook + Instagram) */
+  .social-module {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: clamp(2rem, 1rem + 4vw, 4rem);
+    align-items: center;
+  }
+  .social-copy .eyebrow { margin-bottom: 1rem; }
+  .social-copy h2 { font-size: var(--step-3); margin-bottom: 1rem; }
+  .social-copy .lede { margin-bottom: 1.6rem; text-align: justify; text-justify: inter-word; hyphens: none; }
+  .social-actions { display: flex; flex-wrap: wrap; gap: 1rem; }
+  .social-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 22px; height: 22px;
+    background: #fff;
+    border-radius: 5px;
+  }
+  .social-icon--fb {
+    color: var(--orange);
+    font-family: Georgia, serif;
+    font-weight: bold;
+    font-style: italic;
+    font-size: 0.95rem;
+  }
+  .btn:hover .social-icon--fb { color: var(--orange-ink); }
+  .social-icon--ig { color: var(--oxford); }
+  .btn--ghost .social-icon { background: transparent; color: var(--oxford); }
+  .btn--ghost:hover .social-icon { color: #fff; }
+
+  .social-badges { display: grid; gap: 1.2rem; }
+  .social-photo {
+    position: relative;
+    display: block;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .social-photo:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .social-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  .social-photo:hover img { transform: scale(1.05); }
+  .social-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(13,26,48,0.75), transparent 55%);
+    pointer-events: none;
+  }
+  .social-photo-tag {
+    position: absolute;
+    left: 0.9rem;
+    bottom: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+  .social-photo-icon {
+    display: grid;
+    place-items: center;
+  }
+  .social-photo-icon svg { display: block; border-radius: 6px; }
+
+  @media (max-width: 860px) {
+    .stats { grid-template-columns: repeat(2, 1fr); gap: 1.5rem 0; }
+    .stat:nth-child(odd) { border-left: none; }
+    .stat:nth-child(even) { border-left: 1px solid var(--line); }
+    .about-split { grid-template-columns: 1fr; }
+    .about-figure { order: 2; margin-inline: auto; }
+    .news-grid { grid-template-columns: 1fr; }
+    .social-module { grid-template-columns: 1fr; }
+    .social-badges { grid-template-columns: 1fr 1fr; }
+  }
+  @media (max-width: 560px) {
+    .social-badges { grid-template-columns: 1fr; max-width: 420px; margin-inline: auto; }
+  }
+
+  /* Justified text reads poorly in narrow columns (big word gaps) — go left-aligned there. */
+  @media (max-width: 640px) {
+    .hero-text,
+    .about-copy .lede,
+    .social-copy .lede,
+    .news-card p,
+    .cta-inner p {
+      text-align: left;
+    }
+  }
+</style>

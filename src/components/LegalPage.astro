@@ -1,0 +1,88 @@
+---
+import { content } from '../data/content.js';
+import PageHero from './PageHero.astro';
+import { localizedPath } from '../i18n/ui.js';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].legal;
+---
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="legal" />
+
+<section class="section">
+  <div class="wrap legal-wrap">
+    <div class="legal-block" data-reveal>
+      <h2>{c.publisherTitle}</h2>
+      <ul class="legal-list">
+        {c.publisher.map((item) => (
+          <li><strong>{item.label}:</strong> {item.value}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="legal-block" data-reveal>
+      <h2>{c.hostingTitle}</h2>
+      <ul class="legal-list">
+        {c.hosting.map((item) => (
+          <li><strong>{item.label}:</strong> {item.value}</li>
+        ))}
+      </ul>
+    </div>
+
+    {c.sections.map((s) => (
+      <div class="legal-block" data-reveal>
+        <h2>{s.title}</h2>
+        <p>{s.text}</p>
+        {s.linkKey && (
+          <a class="legal-link" href={localizedPath(lang, s.linkKey)}>
+            {s.linkLabel}<span class="arw" aria-hidden="true"> →</span>
+          </a>
+        )}
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .legal-wrap { max-width: 72ch; }
+  .legal-block { margin-bottom: 2.5rem; }
+  .legal-block:last-child { margin-bottom: 0; }
+  .legal-block h2 {
+    font-size: var(--step-2);
+    margin-bottom: 1rem;
+  }
+  .legal-block p {
+    color: var(--ink-soft);
+    line-height: 1.75;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: none;
+  }
+
+  @media (max-width: 640px) {
+    .legal-block p { text-align: left; }
+  }
+  .legal-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.6rem;
+  }
+  .legal-list li {
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .legal-list strong {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .legal-link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 0.8rem;
+    font-weight: 600;
+    color: var(--orange);
+  }
+  .legal-link:hover { color: var(--orange-ink); }
+  .legal-link .arw { transition: transform 0.18s ease; }
+  .legal-link:hover .arw { transform: translateX(4px); }
+</style>

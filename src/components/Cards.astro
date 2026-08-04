@@ -1,0 +1,94 @@
+---
+// Generic card grid. Pass `items` = [{ title, text }], optional `numbered`.
+const { items = [], numbered = false, columns = 3 } = Astro.props;
+---
+<div class={`cards cards--${columns}`}>
+  {items.map((item, i) => (
+    <article class="card">
+      {numbered
+        ? <span class="card-num">{item.n ?? String(i + 1).padStart(2, '0')}</span>
+        : <span class="card-tick" aria-hidden="true"></span>
+      }
+      <h3>{item.title}</h3>
+      <p>{item.text}</p>
+    </article>
+  ))}
+</div>
+
+<style>
+  .cards {
+    display: grid;
+    gap: 1.4rem;
+  }
+  .cards--2 { grid-template-columns: repeat(2, 1fr); }
+  .cards--3 { grid-template-columns: repeat(3, 1fr); }
+  .cards--4 { grid-template-columns: repeat(4, 1fr); }
+
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.8rem 1.6rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 4px;
+    background: var(--yellow);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.25s ease;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow);
+    border-color: transparent;
+  }
+  .card:hover::before { transform: scaleY(1); }
+
+  .card-num {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    color: var(--true-blue);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.6rem;
+  }
+  .card-tick {
+    display: inline-block;
+    width: 34px; height: 34px;
+    border-radius: 9px;
+    background: linear-gradient(135deg, var(--true-blue), var(--oxford));
+    margin-bottom: 1rem;
+    position: relative;
+  }
+  .card-tick::after {
+    content: "";
+    position: absolute;
+    left: 11px; top: 8px;
+    width: 8px; height: 14px;
+    border: solid var(--yellow);
+    border-width: 0 3px 3px 0;
+    transform: rotate(45deg);
+  }
+  .card h3 {
+    font-size: var(--step-1);
+    margin-bottom: 0.5rem;
+  }
+  .card p {
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 860px) {
+    .cards--3, .cards--4 { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 540px) {
+    .cards--2, .cards--3, .cards--4 { grid-template-columns: 1fr; }
+  }
+</style>

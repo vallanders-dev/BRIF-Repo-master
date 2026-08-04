@@ -1,0 +1,10 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ContactPage from '../../../components/ContactPage.astro';
+import { content } from '../../../data/content.js';
+const lang = 'en';
+const c = content[lang].contact;
+---
+<Base lang={lang} routeKey="contact" title={c.title} description={c.intro}>
+  <ContactPage lang={lang} />
+</Base>

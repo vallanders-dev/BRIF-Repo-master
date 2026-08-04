@@ -1,0 +1,10 @@
+---
+import Base from '../../../layouts/Base.astro';
+import AdmissionsPage from '../../../components/AdmissionsPage.astro';
+import { content } from '../../../data/content.js';
+const lang = 'en';
+const c = content[lang].admissions;
+---
+<Base lang={lang} routeKey="admissions" title={c.title} description={c.intro}>
+  <AdmissionsPage lang={lang} />
+</Base>

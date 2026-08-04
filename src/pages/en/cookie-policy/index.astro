@@ -1,0 +1,10 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PolicyPage from '../../../components/PolicyPage.astro';
+import { content } from '../../../data/content.js';
+const lang = 'en';
+const c = content[lang].cookies;
+---
+<Base lang={lang} routeKey="cookies" title={c.title} description={c.title}>
+  <PolicyPage lang={lang} policyKey="cookies" />
+</Base>

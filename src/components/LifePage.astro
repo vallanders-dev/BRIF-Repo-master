@@ -1,0 +1,107 @@
+---
+import { content } from '../data/content.js';
+import PageHero from './PageHero.astro';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].life;
+
+// Highlight photos, matched by position to c.highlights (Sports & play,
+// Arts & culture, Clubs & societies, Service & values).
+const highlightImages = ['/images/sport-and-play.jpg', '/images/art-and-culture.jpg', '/images/clubs-and-societies.jpg', '/images/service-and-values.jpg'];
+---
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="life" />
+
+<section class="section">
+  <div class="wrap life-intro">
+    <div data-reveal>
+      <p class="lede">{c.intro}</p>
+      {c.body.map((para) => <p class="life-p">{para}</p>)}
+    </div>
+    <div class="life-photo" data-reveal>
+      <img src="/images/school-life-intro.jpg" alt="" width="1600" height="1066" loading="lazy" />
+    </div>
+  </div>
+</section>
+
+<section class="section section--mist">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{c.highlightsTitle}</p>
+      <h2>{c.highlightsTitle}</h2>
+    </div>
+    <div class="life-grid">
+      {c.highlights.map((h, i) => (
+        <article class="life-card" data-reveal class:list={[`d${Math.min(i + 1, 4)}`]}>
+          {highlightImages[i]
+            ? <div class="life-card-img life-card-img--photo"><img src={highlightImages[i]} alt="" width="400" height="300" loading="lazy" /></div>
+            : <div class="life-card-img" aria-hidden="true"><span>📷</span></div>}
+          <div class="life-card-body">
+            <h3>{h.title}</h3>
+            <p>{h.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .life-intro {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: clamp(2rem, 1rem + 4vw, 4rem);
+    align-items: center;
+  }
+  .life-intro .lede { margin-bottom: 1.4rem; }
+  .life-p { color: var(--ink-soft); margin-bottom: 1.1rem; line-height: 1.7; }
+  .life-photo { aspect-ratio: 4 / 3; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow-sm); }
+  .life-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .photo-ph, .life-card-img {
+    background: linear-gradient(135deg, var(--mist), #e8eef7);
+    border: 1px dashed var(--true-blue);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: var(--true-blue);
+    gap: 0.5rem;
+  }
+  .photo-ph { aspect-ratio: 4 / 3; font-size: 2.5rem; }
+  .photo-ph small { font-size: 0.85rem; }
+
+  .section-head { margin-bottom: 2.5rem; }
+  .section-head h2 { font-size: var(--step-3); }
+
+  .life-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.4rem;
+  }
+  .life-card {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .life-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .life-card-img { font-size: 1.8rem; border: none; border-right: 1px dashed var(--true-blue); border-radius: 0; }
+  .life-card-img--photo { border-right: none; padding: 0; background: none; }
+  .life-card-img--photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .life-card-body { padding: 1.4rem; }
+  .life-card-body h3 { font-size: 1.3rem; margin-bottom: 0.4rem; }
+  .life-card-body p { color: var(--ink-soft); font-size: 0.95rem; }
+
+  @media (max-width: 860px) {
+    .life-intro { grid-template-columns: 1fr; }
+    .life-photo { order: -1; }
+    .life-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 480px) {
+    .life-card { grid-template-columns: 1fr; }
+    .life-card-img { aspect-ratio: 16/9; border-right: none; border-bottom: 1px dashed var(--true-blue); }
+  }
+</style>

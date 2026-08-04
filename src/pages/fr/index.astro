@@ -1,0 +1,14 @@
+---
+import Base from '../../layouts/Base.astro';
+import HomePage from '../../components/HomePage.astro';
+import { content } from '../../data/content.js';
+const lang = 'fr';
+---
+<Base
+  lang={lang}
+  routeKey="home"
+  title={undefined}
+  description={content[lang].home.heroText}
+>
+  <HomePage lang={lang} />
+</Base>

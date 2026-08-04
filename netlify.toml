@@ -1,0 +1,15 @@
+# Netlify configuration for the BRIF Astro site
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "20"
+
+# Send the bare root straight to the English site (instant, server-level).
+# The built /index.html also does this via meta-refresh as a fallback.
+[[redirects]]
+  from = "/"
+  to = "/en/"
+  status = 302
+  force = false

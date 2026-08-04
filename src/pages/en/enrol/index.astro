@@ -1,0 +1,10 @@
+---
+import Base from '../../../layouts/Base.astro';
+import EnrolPage from '../../../components/EnrolPage.astro';
+import { content } from '../../../data/content.js';
+const lang = 'en';
+const c = content[lang].enrol;
+---
+<Base lang={lang} routeKey="enrol" title={c.title} description={c.intro}>
+  <EnrolPage lang={lang} />
+</Base>

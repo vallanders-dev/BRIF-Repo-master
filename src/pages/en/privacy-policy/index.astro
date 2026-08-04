@@ -1,0 +1,10 @@
+---
+import Base from '../../../layouts/Base.astro';
+import PolicyPage from '../../../components/PolicyPage.astro';
+import { content } from '../../../data/content.js';
+const lang = 'en';
+const c = content[lang].privacy;
+---
+<Base lang={lang} routeKey="privacy" title={c.title} description={c.title}>
+  <PolicyPage lang={lang} policyKey="privacy" />
+</Base>

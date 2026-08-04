@@ -1,0 +1,105 @@
+---
+import { content } from '../data/content.js';
+import PageHero from './PageHero.astro';
+import { localizedPath } from '../i18n/ui.js';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].programs;
+const enrolHref = localizedPath(lang, 'enrol');
+---
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="programs" />
+
+<section class="section">
+  <div class="wrap">
+    <p class="lede intro-lede" data-reveal>{c.intro}</p>
+    <div class="prog-grid">
+      {c.items.map((item, i) => (
+        <article class="prog-card" data-reveal class:list={[`d${Math.min((i % 3) + 1, 4)}`]}>
+          <div class="prog-card-img">
+            <img src={item.image} alt={item.title} loading="lazy" />
+          </div>
+          <div class="prog-card-body">
+            <span class="prog-num">{String(i + 1).padStart(2, '0')}</span>
+            <h3>{item.title}</h3>
+            <p>{item.text}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section section--mist">
+  <div class="wrap prog-cta" data-reveal>
+    <h2>{lang === 'fr' ? 'Une place pour votre enfant ?' : 'A place for your child?'}</h2>
+    <a href={enrolHref} class="btn">{lang === 'fr' ? 'Demander une inscription' : 'Make an enquiry'}<span class="arw" aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<style>
+  .intro-lede { max-width: 60ch; margin-bottom: 3rem; }
+  .prog-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+  }
+  .prog-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .prog-card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--true-blue);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.25s ease;
+    z-index: 1;
+  }
+  .prog-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: transparent; }
+  .prog-card:hover::before { transform: scaleY(1); }
+  .prog-card-img {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--mist);
+  }
+  .prog-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  .prog-card:hover .prog-card-img img { transform: scale(1.05); }
+  .prog-card-body {
+    padding: 1.7rem 1.7rem 2rem;
+  }
+  .prog-num {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--true-blue);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  .prog-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
+  .prog-card p { color: var(--ink-soft); font-size: 0.98rem; line-height: 1.6; }
+
+  .prog-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .prog-cta h2 { font-size: var(--step-3); }
+
+  @media (max-width: 860px) { .prog-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 540px) { .prog-grid { grid-template-columns: 1fr; } }
+</style>

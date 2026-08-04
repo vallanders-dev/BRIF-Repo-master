@@ -1,0 +1,99 @@
+---
+import { content, site } from '../data/content.js';
+import PageHero from './PageHero.astro';
+import { localizedPath } from '../i18n/ui.js';
+
+const { lang = 'en', policyKey } = Astro.props;
+const c = content[lang][policyKey];
+
+// The address block (privacy policy only) is derived from the same `site`
+// data used everywhere else on the site, so it can't drift out of sync.
+const addressLines = c.addressIntro
+  ? [site.name, site.address[lang], site.phonePrimary]
+  : null;
+---
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey={policyKey} />
+
+<section class="section">
+  <div class="wrap policy-wrap">
+    {c.welcomeTitle && (
+      <div class="policy-block" data-reveal>
+        <h2>{c.welcomeTitle}</h2>
+        {c.lede && <p class="lede policy-lede">{c.lede}</p>}
+      </div>
+    )}
+
+    {addressLines && (
+      <div class="policy-block" data-reveal>
+        {c.addressIntro && <p class="policy-p">{c.addressIntro}</p>}
+        <address class="policy-address">
+          {addressLines.map((line) => <span>{line}</span>)}
+        </address>
+      </div>
+    )}
+
+    {c.intro && (
+      <div class="policy-block" data-reveal>
+        {c.intro.map((para) => <p class="policy-p">{para}</p>)}
+      </div>
+    )}
+
+    {c.sections.map((s) => (
+      <div class="policy-block" data-reveal>
+        <h2>{s.title}</h2>
+        {s.body.map((b) => (
+          b.label
+            ? <p class="policy-p"><strong>{b.label}:</strong> {b.text}</p>
+            : <p class="policy-p">{b.text}</p>
+        ))}
+        {s.linkKey && (
+          <a class="policy-link" href={localizedPath(lang, s.linkKey)}>
+            {s.linkLabel}<span class="arw" aria-hidden="true"> →</span>
+          </a>
+        )}
+      </div>
+    ))}
+  </div>
+</section>
+
+<style>
+  .policy-wrap { max-width: 72ch; }
+  .policy-block { margin-bottom: 2.5rem; }
+  .policy-block:last-child { margin-bottom: 0; }
+  .policy-block h2 {
+    font-size: var(--step-2);
+    margin-bottom: 1rem;
+  }
+  .policy-lede { margin-top: 0.6rem; margin-bottom: 0; }
+  .policy-p {
+    color: var(--ink-soft);
+    line-height: 1.75;
+    margin-bottom: 1rem;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: none;
+  }
+  .policy-p:last-child { margin-bottom: 0; }
+  .policy-p strong { color: var(--ink); }
+  .policy-address {
+    font-style: normal;
+    display: grid;
+    gap: 0.3rem;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .policy-link {
+    display: inline-flex;
+    align-items: center;
+    margin-top: 0.4rem;
+    font-weight: 600;
+    color: var(--orange);
+  }
+  .policy-link:hover { color: var(--orange-ink); }
+  .policy-link .arw { transition: transform 0.18s ease; }
+  .policy-link:hover .arw { transform: translateX(4px); }
+
+  @media (max-width: 640px) {
+    .policy-p { text-align: left; }
+  }
+</style>

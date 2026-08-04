@@ -1,0 +1,10 @@
+---
+import Base from '../../../layouts/Base.astro';
+import AboutPage from '../../../components/AboutPage.astro';
+import { content } from '../../../data/content.js';
+const lang = 'fr';
+const c = content[lang].about;
+---
+<Base lang={lang} routeKey="about" title={c.title} description={c.intro}>
+  <AboutPage lang={lang} />
+</Base>

@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Stop-Process -Force)",
+      "PowerShell(Get-ChildItem \"c:\\\\Users\\\\nokoe\\\\Downloads\\\\BISF-Repo-master\\\\public\\\\images\" | Where-Object { $_.Name -match \"School is more|Art and Culture|clubs and societies|sport and play|service and value\" } | Select-Object Name, Length)",
+      "PowerShell(try { Invoke-WebRequest -Uri \"http://localhost:4321/en/student-life/\" -UseBasicParsing -TimeoutSec 5 | Select-Object -ExpandProperty StatusCode } catch { \"not ready: $_\" })",
+      "PowerShell(Stop-Process -Force -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Command winget -ErrorAction SilentlyContinue)",
+      "PowerShell(winget install --id Git.Git -e --source winget --accept-package-agreements --accept-source-agreements)"
+    ]
+  }
+}

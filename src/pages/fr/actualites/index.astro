@@ -1,0 +1,10 @@
+---
+import Base from '../../../layouts/Base.astro';
+import NewsPage from '../../../components/NewsPage.astro';
+import { content } from '../../../data/content.js';
+const lang = 'fr';
+const c = content[lang].news;
+---
+<Base lang={lang} routeKey="news" title={c.title} description={c.intro}>
+  <NewsPage lang={lang} />
+</Base>

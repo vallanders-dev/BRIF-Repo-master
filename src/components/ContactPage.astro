@@ -1,0 +1,136 @@
+---
+import { content, site } from '../data/content.js';
+import PageHero from './PageHero.astro';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].contact;
+
+// mailto with prefilled subject/body from the form (progressive fallback)
+const mailto = `mailto:${site.email}`;
+---
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="contact" />
+
+<section class="section">
+  <div class="wrap contact-grid">
+    <!-- Details -->
+    <div class="contact-details" data-reveal>
+      <h2>{c.detailsTitle}</h2>
+
+      <div class="detail">
+        <span class="detail-ico" aria-hidden="true">📍</span>
+        <div>
+          <span class="detail-label">{c.addressLabel}</span>
+          <a href={site.mapUrl} target="_blank" rel="noopener">{site.address[lang]}</a>
+        </div>
+      </div>
+
+      <div class="detail">
+        <span class="detail-ico" aria-hidden="true">💬</span>
+        <div>
+          <span class="detail-label">WhatsApp</span>
+          <a href={`https://wa.me/${site.whatsapp}`} target="_blank" rel="noopener">{site.phonePrimary}</a>
+        </div>
+      </div>
+
+      <div class="detail">
+        <span class="detail-ico" aria-hidden="true">📞</span>
+        <div>
+          <span class="detail-label">{c.phoneLabel}</span>
+          <a href={`tel:${site.phoneSecondary.replace(/\s+/g, '')}`}>{site.phoneSecondary}</a>
+        </div>
+      </div>
+
+      <div class="detail">
+        <span class="detail-ico" aria-hidden="true">✉️</span>
+        <div>
+          <span class="detail-label">{c.emailLabel}</span>
+          <a href={mailto}>{site.email}</a>
+        </div>
+      </div>
+
+      <div class="detail">
+        <span class="detail-ico" aria-hidden="true">🕐</span>
+        <div>
+          <span class="detail-label">{c.hoursLabel}</span>
+          <span>{c.hours}</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Map -->
+    <div class="contact-map" data-reveal>
+      <a href={site.mapUrl} target="_blank" rel="noopener" class="map-frame">
+        <div class="map-ph">
+          <span class="map-pin" aria-hidden="true">📍</span>
+          <strong>British &amp; French Academy</strong>
+          <span>{site.address[lang]}</span>
+          <span class="map-cta">{lang === 'fr' ? 'Ouvrir dans Google Maps' : 'Open in Google Maps'} →</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .contact-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(2rem, 1rem + 4vw, 4rem);
+    align-items: start;
+  }
+  .contact-details h2 { font-size: var(--step-2); margin-bottom: 2rem; }
+  .detail {
+    display: flex;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .detail:last-child { border-bottom: none; }
+  .detail-ico {
+    flex: none;
+    width: 44px; height: 44px;
+    display: grid;
+    place-items: center;
+    background: var(--mist);
+    border-radius: 10px;
+    font-size: 1.2rem;
+  }
+  .detail-label {
+    display: block;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: var(--track-label);
+    color: var(--orange);
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+  }
+  .detail a { color: var(--ink); font-weight: 500; }
+  .detail a:hover { color: var(--true-blue); }
+
+  .map-frame { display: block; }
+  .map-ph {
+    aspect-ratio: 4 / 3;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(57,108,180,0.12), transparent 60%),
+      linear-gradient(135deg, var(--mist), #e8eef7);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    text-align: center;
+    padding: 2rem;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .map-frame:hover .map-ph { box-shadow: var(--shadow); transform: translateY(-3px); }
+  .map-pin { font-size: 2.5rem; }
+  .map-ph strong { font-family: var(--font-display); font-size: 1.4rem; color: var(--oxford); }
+  .map-ph span { color: var(--ink-soft); font-size: 0.95rem; }
+  .map-cta { color: var(--orange); font-weight: 600; margin-top: 0.5rem; }
+
+  @media (max-width: 780px) {
+    .contact-grid { grid-template-columns: 1fr; }
+  }
+</style>

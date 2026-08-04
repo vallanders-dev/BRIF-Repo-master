@@ -1,0 +1,76 @@
+---
+import { site } from '../data/content.js';
+import { localizedPath, useTranslations } from '../i18n/ui.js';
+
+const { lang = 'en', kicker, title, routeKey } = Astro.props;
+const t = useTranslations(lang);
+const homeHref = localizedPath(lang, 'home');
+---
+<section class="page-hero">
+  <div class="page-hero-bg" aria-hidden="true">
+    <span class="ph-orb"></span>
+    <span class="ph-grid"></span>
+  </div>
+  <div class="wrap">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href={homeHref}>{t('nav.home')}</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{title}</span>
+    </nav>
+    {kicker && <p class="page-hero-kicker">{kicker}</p>}
+    <h1>{title}</h1>
+  </div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    background: var(--oxford);
+    color: #fff;
+    overflow: hidden;
+    isolation: isolate;
+    padding-block: clamp(3rem, 2rem + 4vw, 5rem);
+  }
+  .page-hero-bg { position: absolute; inset: 0; z-index: -1; }
+  .ph-orb {
+    position: absolute;
+    width: 380px; height: 380px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(57,108,180,0.5), transparent 70%);
+    top: -140px; right: -60px;
+    filter: blur(12px);
+  }
+  .ph-grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse at 70% 40%, #000 20%, transparent 70%);
+    mask-image: radial-gradient(ellipse at 70% 40%, #000 20%, transparent 70%);
+  }
+  .crumb {
+    display: flex;
+    gap: 0.6rem;
+    align-items: center;
+    font-size: 0.85rem;
+    color: #9fb0cc;
+    margin-bottom: 1.2rem;
+  }
+  .crumb a { color: #9fb0cc; }
+  .crumb a:hover { color: var(--yellow); }
+  .crumb [aria-current] { color: #fff; }
+  .page-hero-kicker {
+    color: var(--yellow);
+    font-weight: 600;
+    letter-spacing: var(--track-label);
+    text-transform: uppercase;
+    font-size: 0.78rem;
+    margin-bottom: 0.8rem;
+  }
+  .page-hero h1 {
+    color: #fff;
+    font-size: clamp(2.2rem, 1.6rem + 3vw, 3.6rem);
+    font-weight: 600;
+  }
+</style>

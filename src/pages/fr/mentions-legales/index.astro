@@ -1,0 +1,10 @@
+---
+import Base from '../../../layouts/Base.astro';
+import LegalPage from '../../../components/LegalPage.astro';
+import { content } from '../../../data/content.js';
+const lang = 'fr';
+const c = content[lang].legal;
+---
+<Base lang={lang} routeKey="legal" title={c.title} description={c.title}>
+  <LegalPage lang={lang} />
+</Base>
