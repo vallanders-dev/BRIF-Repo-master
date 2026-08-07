@@ -1,0 +1,10 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import ProgrammeImiPage from '../../../../components/ProgrammeImiPage.astro';
+import { content } from '../../../../data/content.js';
+const lang = 'en';
+const c = content[lang].programsImi;
+---
+<Base lang={lang} routeKey="programsImi" title={c.title} description={c.intro}>
+  <ProgrammeImiPage lang={lang} />
+</Base>

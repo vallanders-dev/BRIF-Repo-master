@@ -1,10 +1,10 @@
 ---
 import Base from '../../../layouts/Base.astro';
-import ProgramsPage from '../../../components/ProgramsPage.astro';
+import ProgrammesHubPage from '../../../components/ProgrammesHubPage.astro';
 import { content } from '../../../data/content.js';
 const lang = 'fr';
-const c = content[lang].programs;
+const c = content[lang].programsHub;
 ---
 <Base lang={lang} routeKey="programs" title={c.title} description={c.intro}>
-  <ProgramsPage lang={lang} />
+  <ProgrammesHubPage lang={lang} />
 </Base>

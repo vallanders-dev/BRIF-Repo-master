@@ -12,6 +12,14 @@ const nav = navKeys.map((key) => ({
   href: localizedPath(lang, key),
 }));
 
+const programsSubmenuKeys = ['programs', 'programsClassic', 'programsCambridge', 'programsImi'];
+const programsSubmenu = programsSubmenuKeys.map((key) => ({
+  key,
+  label: key === 'programs' ? t('nav.programsOverview') : t(`nav.${key}`),
+  href: localizedPath(lang, key),
+}));
+const programsRouteKeys = new Set(programsSubmenuKeys);
+
 const homeHref = localizedPath(lang, 'home');
 // Both language paths for the current page, for the EN|FR pill.
 const enHref = localizedPath('en', routeKey);
@@ -33,23 +41,33 @@ const frHref = localizedPath('fr', routeKey);
     <nav class="site-nav" aria-label="Primary">
       <ul>
         {nav.map((item) => (
-          <li>
-            <a
-              href={item.href}
-              aria-current={item.key === routeKey ? 'page' : undefined}
-            >{item.label}</a>
-          </li>
+          item.key === 'programs' ? (
+            <li class="has-dropdown">
+              <a
+                href={item.href}
+                aria-current={programsRouteKeys.has(routeKey) ? 'page' : undefined}
+              >{item.label}</a>
+              <div class="dropdown">
+                <ul class="dropdown-inner">
+                  {programsSubmenu.map((sub) => (
+                    <li>
+                      <a href={sub.href} aria-current={sub.key === routeKey ? 'page' : undefined}>{sub.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ) : (
+            <li>
+              <a
+                href={item.href}
+                aria-current={item.key === routeKey ? 'page' : undefined}
+              >{item.label}</a>
+            </li>
+          )
         ))}
       </ul>
       <div class="nav-actions">
-        <img
-          src="/images/cambridge-international-white.png"
-          alt="Cambridge International Education"
-          class="partner-logo"
-          width="300"
-          height="131"
-          loading="lazy"
-        />
         <div class="lang-pill" role="group" aria-label="Language / Langue">
           <a href={enHref} aria-current={lang === 'en' ? 'true' : undefined} hreflang="en">EN</a>
           <a href={frHref} aria-current={lang === 'fr' ? 'true' : undefined} hreflang="fr">FR</a>
@@ -101,14 +119,6 @@ const frHref = localizedPath('fr', routeKey);
     max-width: 12ch;
   }
 
-  /* Partner logo */
-  .partner-logo {
-    height: 40px;
-    width: auto;
-    flex: none;
-    opacity: 0.95;
-  }
-
   /* Nav */
   .site-nav {
     display: flex;
@@ -140,6 +150,70 @@ const frHref = localizedPath('fr', routeKey);
   .site-nav ul a[aria-current="page"] { color: #fff; }
   .site-nav ul a:hover::after,
   .site-nav ul a[aria-current="page"]::after { width: 100%; }
+
+  /* Programmes dropdown */
+  .has-dropdown { position: relative; }
+  .has-dropdown > a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+  }
+  .has-dropdown > a::before {
+    content: "";
+    width: 6px; height: 6px;
+    border-right: 1.5px solid currentColor;
+    border-bottom: 1.5px solid currentColor;
+    transform: rotate(45deg) translateY(-2px);
+    order: 2;
+    opacity: 0.7;
+  }
+  .dropdown {
+    position: absolute;
+    top: 100%; left: 50%;
+    /* Zero vertical offset in both states — a gap here breaks hover as the
+       cursor crosses from the link down into the menu. Padding-top instead
+       of margin keeps a hoverable bridge without a visible gap. */
+    transform: translateX(-50%);
+    padding-top: 0.6rem;
+    min-width: 260px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 0.18s ease;
+    z-index: 10;
+  }
+  .dropdown-inner {
+    background: var(--oxford-deep);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 20px 40px -12px rgba(0,0,0,0.5);
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    list-style: none;
+    margin: 0;
+  }
+  .has-dropdown:hover .dropdown,
+  .has-dropdown:focus-within .dropdown {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+  .dropdown li { width: 100%; }
+  .dropdown a {
+    display: block;
+    padding: 0.7rem 0.9rem;
+    border-radius: 6px;
+    font-size: 0.92rem;
+    white-space: nowrap;
+  }
+  .dropdown a:hover,
+  .dropdown a[aria-current="page"] {
+    background: rgba(255,255,255,0.06);
+    color: #fff;
+  }
+  .dropdown a::after { display: none; }
 
   .nav-actions { display: flex; align-items: center; gap: 0.9rem; }
 
@@ -186,6 +260,24 @@ const frHref = localizedPath('fr', routeKey);
     }
     .site-nav ul li { border-bottom: 1px solid rgba(255,255,255,0.08); }
     .site-nav ul a { display: block; padding: 0.9rem 0; }
+    .has-dropdown > a::before { transform: rotate(45deg) translateY(-2px); }
+    .dropdown {
+      position: static;
+      transform: none;
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+      min-width: 0;
+      padding: 0;
+    }
+    .dropdown-inner {
+      background: transparent;
+      border: none;
+      box-shadow: none;
+      padding: 0 0 0.5rem 1rem;
+    }
+    .dropdown li { border-bottom: none; }
+    .dropdown a { padding: 0.6rem 0; color: #aebbd4; }
     .nav-actions {
       margin-top: 1.2rem;
       justify-content: flex-start;

@@ -8,8 +8,13 @@ const c = content[lang].about;
 ---
 <PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="about" />
 
+<!-- HISTORY -->
 <section class="section">
   <div class="wrap prose-wrap">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{c.storyKicker}</p>
+      <h2>{c.storyTitle}</h2>
+    </div>
     <p class="lede" data-reveal>{c.intro}</p>
     {c.body.map((para, i) => (
       <p class="prose-p" data-reveal class:list={[`d${Math.min(i + 1, 4)}`]}>{para}</p>
@@ -17,8 +22,19 @@ const c = content[lang].about;
   </div>
 </section>
 
-<!-- FOUNDERS -->
+<!-- VISION & MISSION -->
 <section class="section section--mist">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{c.visionMissionKicker}</p>
+      <h2>{c.visionMissionTitle}</h2>
+    </div>
+    <Cards items={c.visionMission} columns={2} />
+  </div>
+</section>
+
+<!-- FOUNDERS -->
+<section class="section">
   <div class="wrap">
     <div class="section-head" data-reveal>
       <p class="eyebrow">{c.foundersKicker}</p>
@@ -39,7 +55,53 @@ const c = content[lang].about;
   </div>
 </section>
 
-<!-- PARTNERS / ACCREDITATIONS -->
+<!-- VALUES -->
+<section class="section section--mist">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{c.valuesKicker}</p>
+      <h2>{c.valuesTitle}</h2>
+    </div>
+    <Cards items={c.values} columns={4} />
+  </div>
+</section>
+
+<!-- WHY BRIF -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{c.whyKicker}</p>
+      <h2>{c.whyTitle}</h2>
+    </div>
+    <Cards items={c.whyReasons} columns={4} />
+  </div>
+</section>
+
+<!-- ACCREDITATIONS -->
+<section id="accreditations" class="section section--mist">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{c.accreditationsKicker}</p>
+      <h2>{c.accreditationsTitle}</h2>
+    </div>
+    <div class="accreditations-grid">
+      {c.accreditations.map((a, i) => (
+        <div class="accreditation-card" data-reveal class:list={[`d${i + 1}`]}>
+          <span class="accreditation-badge" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="26" height="26" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3l7 3.5v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9v-5z"></path>
+              <path d="M9 12.5l2 2 4-4.5"></path>
+            </svg>
+          </span>
+          <h3>{a.title}</h3>
+          <p>{a.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- PARTNERS -->
 <section id="partners" class="section">
   <div class="wrap">
     <div class="section-head" data-reveal>
@@ -70,17 +132,6 @@ const c = content[lang].about;
       <p class="motto-gloss-lg">{site.mottoGloss[lang]}</p>
       <p class="motto-explain">{c.mottoText}</p>
     </div>
-  </div>
-</section>
-
-<!-- VALUES -->
-<section class="section">
-  <div class="wrap">
-    <div class="section-head" data-reveal>
-      <p class="eyebrow">{c.valuesTitle}</p>
-      <h2>{c.valuesTitle}</h2>
-    </div>
-    <Cards items={c.values} columns={4} />
   </div>
 </section>
 
@@ -169,6 +220,46 @@ const c = content[lang].about;
   /* Justified text reads poorly in narrow columns (big word gaps) — go left-aligned there. */
   @media (max-width: 640px) {
     .prose-p { text-align: left; }
+  }
+
+  .accreditations-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.6rem;
+  }
+  .accreditation-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 2rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .accreditation-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .accreditation-badge {
+    display: inline-grid;
+    place-items: center;
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--mist);
+    color: var(--true-blue);
+    margin-bottom: 1.1rem;
+  }
+  .accreditation-card h3 { font-size: 1.15rem; margin-bottom: 0.6rem; }
+  .accreditation-card p {
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+    line-height: 1.7;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: none;
+  }
+  @media (max-width: 640px) {
+    .accreditation-card p { text-align: left; }
+  }
+
+  @media (max-width: 780px) {
+    .accreditations-grid { grid-template-columns: 1fr; }
   }
 
   .partners-intro { margin-top: 0.8rem; max-width: 60ch; }

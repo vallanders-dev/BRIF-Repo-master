@@ -1,0 +1,128 @@
+---
+import { content } from '../data/content.js';
+import PageHero from './PageHero.astro';
+import { localizedPath } from '../i18n/ui.js';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].programsHub;
+const enrolHref = localizedPath(lang, 'enrol');
+const learnMore = lang === 'fr' ? 'En savoir plus' : 'Learn more';
+---
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="programs" />
+
+<section class="section">
+  <div class="wrap">
+    <p class="lede intro-lede" data-reveal>{c.intro}</p>
+    <div class="track-grid">
+      {c.tracks.map((track, i) => (
+        <a href={localizedPath(lang, track.routeKey)} class="track-card" data-accent={track.routeKey} data-reveal class:list={[`d${i + 1}`]}>
+          <div class="track-card-img">
+            <img src={track.image} alt={track.title} loading="lazy" />
+          </div>
+          <div class="track-card-body">
+            <h3>{track.title}</h3>
+            <p>{track.text}</p>
+            <span class="track-link">{learnMore}<span class="arw" aria-hidden="true">→</span></span>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section section--mist">
+  <div class="wrap prog-cta" data-reveal>
+    <h2>{lang === 'fr' ? 'Une place pour votre enfant ?' : 'A place for your child?'}</h2>
+    <a href={enrolHref} class="btn">{lang === 'fr' ? 'Demander une inscription' : 'Make an enquiry'}<span class="arw" aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<style>
+  .intro-lede { max-width: 60ch; margin-bottom: 3rem; }
+  .track-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+  }
+  .track-card {
+    display: block;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+    color: inherit;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  }
+  .track-card::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 3px;
+    background: var(--true-blue);
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.25s ease;
+    z-index: 1;
+  }
+  .track-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); border-color: transparent; color: inherit; }
+  .track-card:hover::before { transform: scaleY(1); }
+
+  /* Per-track accent colours */
+  .track-card[data-accent="programsClassic"]::before { background: var(--orange); }
+  .track-card[data-accent="programsClassic"]:hover { box-shadow: 0 20px 40px -12px rgba(190,0,0,0.35); }
+  .track-card[data-accent="programsClassic"]:hover .track-link { color: var(--orange); }
+
+  .track-card[data-accent="programsCambridge"]::before { background: var(--yellow); }
+  .track-card[data-accent="programsCambridge"]:hover { box-shadow: 0 20px 40px -12px rgba(255,186,8,0.45); }
+  .track-card[data-accent="programsCambridge"]:hover .track-link { color: #b8860b; }
+
+  .track-card[data-accent="programsImi"]::before { background: #2FA8A0; }
+  .track-card[data-accent="programsImi"]:hover { box-shadow: 0 20px 40px -12px rgba(47,168,160,0.4); }
+  .track-card[data-accent="programsImi"]:hover .track-link { color: #2FA8A0; }
+  .track-card-img {
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    background: var(--mist);
+  }
+  .track-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+  .track-card:hover .track-card-img img { transform: scale(1.05); }
+  .track-card-body {
+    padding: 1.7rem 1.7rem 2rem;
+  }
+  .track-card h3 { font-size: 1.3rem; margin-bottom: 0.5rem; }
+  .track-card p {
+    color: var(--ink-soft);
+    font-size: 0.96rem;
+    line-height: 1.6;
+    margin-bottom: 1.1rem;
+  }
+  .track-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--true-blue);
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+  .track-card:hover .track-link { color: var(--orange); }
+  .track-link .arw { transition: transform 0.2s ease; }
+  .track-card:hover .track-link .arw { transform: translateX(3px); }
+
+  .prog-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .prog-cta h2 { font-size: var(--step-3); }
+
+  @media (max-width: 900px) { .track-grid { grid-template-columns: 1fr; } }
+</style>

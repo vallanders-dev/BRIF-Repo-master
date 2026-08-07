@@ -7,6 +7,7 @@ const c = content[lang].contact;
 
 // mailto with prefilled subject/body from the form (progressive fallback)
 const mailto = `mailto:${site.email}`;
+const tourWhatsappHref = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(content[lang].home.tourWhatsappMessage)}`;
 ---
 <PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="contact" />
 
@@ -55,6 +56,10 @@ const mailto = `mailto:${site.email}`;
           <span>{c.hours}</span>
         </div>
       </div>
+
+      <a href={tourWhatsappHref} class="btn book-visit-btn" target="_blank" rel="noopener">
+        {c.bookVisitButton}<span class="arw" aria-hidden="true">→</span>
+      </a>
     </div>
 
     <!-- Map -->
@@ -106,6 +111,8 @@ const mailto = `mailto:${site.email}`;
   }
   .detail a { color: var(--ink); font-weight: 500; }
   .detail a:hover { color: var(--true-blue); }
+
+  .book-visit-btn { margin-top: 2rem; }
 
   .map-frame { display: block; }
   .map-ph {

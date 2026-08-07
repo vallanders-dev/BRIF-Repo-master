@@ -1,0 +1,155 @@
+---
+import { content } from '../data/content.js';
+import PageHero from './PageHero.astro';
+import Cards from './Cards.astro';
+import { localizedPath } from '../i18n/ui.js';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].programsCambridge;
+const admissionsHref = localizedPath(lang, 'admissions');
+---
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="programsCambridge" />
+
+<section class="section">
+  <div class="wrap">
+    <img
+      src="/images/cambridge-international.png"
+      alt="Cambridge International Education"
+      class="cambridge-logo"
+      width="300"
+      height="131"
+      loading="lazy"
+      data-reveal
+    />
+    <p class="lede intro-lede" data-reveal>{c.intro}</p>
+  </div>
+</section>
+
+<!-- PATHWAY -->
+<section class="section section--mist">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <h2>{c.pathwayTitle}</h2>
+    </div>
+    <div class="pathway">
+      {c.pathway.map((stage, i) => (
+        <div class="pathway-stage" data-reveal class:list={[`d${Math.min(i + 1, 4)}`]}>
+          <span class="pathway-num">{String(i + 1).padStart(2, '0')}</span>
+          <span class="pathway-label">{stage}</span>
+          {i < c.pathway.length - 1 && <span class="pathway-arrow" aria-hidden="true">→</span>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- HIGHLIGHTS -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <h2>{c.highlightsTitle}</h2>
+    </div>
+    <Cards items={c.highlights} columns={3} />
+  </div>
+</section>
+
+<!-- UNIVERSITIES (only if provided) -->
+{c.universities && c.universities.length > 0 && (
+  <section class="section section--mist">
+    <div class="wrap">
+      <div class="section-head" data-reveal>
+        <h2>{c.universitiesTitle}</h2>
+      </div>
+      <ul class="university-list">
+        {c.universities.map((u) => <li data-reveal>{u}</li>)}
+      </ul>
+    </div>
+  </section>
+)}
+
+<!-- CTA -->
+<section class="section section--oxford">
+  <div class="wrap cambridge-cta" data-reveal>
+    <h2>{c.ctaText}</h2>
+    <a href={admissionsHref} class="btn">{c.ctaButton}<span class="arw" aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<style>
+  .cambridge-logo {
+    height: 72px;
+    width: auto;
+    margin-bottom: 1.6rem;
+  }
+  .intro-lede { max-width: 68ch; }
+  .section-head { margin-bottom: 2.5rem; text-align: center; }
+  .section-head h2 { font-size: var(--step-3); }
+
+  .pathway {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+  }
+  .pathway-stage {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .pathway-num {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--true-blue);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    width: 28px; height: 28px;
+    display: inline-grid;
+    place-items: center;
+  }
+  .pathway-label {
+    font-weight: 600;
+    color: var(--oxford);
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.6rem 1.2rem;
+  }
+  .pathway-arrow {
+    color: var(--true-blue);
+    font-weight: 600;
+  }
+
+  .university-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 0.9rem;
+    max-width: 60rem;
+    margin-inline: auto;
+  }
+  .university-list li {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.2rem;
+    text-align: center;
+    font-weight: 500;
+  }
+
+  .cambridge-cta { text-align: center; }
+  .cambridge-cta h2 {
+    color: #fff;
+    font-size: var(--step-3);
+    max-width: 40ch;
+    margin-inline: auto;
+    margin-bottom: 1.8rem;
+  }
+
+  @media (max-width: 640px) {
+    .pathway { justify-content: flex-start; }
+  }
+</style>

@@ -1,14 +1,27 @@
 ---
 // Generic card grid. Pass `items` = [{ title, text }], optional `numbered`.
+// Items may instead carry an `icon` key ('vision' | 'mission' | 'values') for
+// a centered, icon-led card style.
 const { items = [], numbered = false, columns = 3 } = Astro.props;
+
+const icons = {
+  vision: '<circle cx="12" cy="12" r="9"/><path d="M12 7.5l1.4 2.9 3.2.5-2.3 2.3.5 3.2L12 14.9l-2.8 1.5.5-3.2-2.3-2.3 3.2-.5z"/>',
+  mission: '<path d="M2 9l10-5 10 5-10 5-10-5z"/><path d="M6 11.5V16c0 1.4 2.7 3 6 3s6-1.6 6-3v-4.5"/><path d="M22 9v6"/>',
+  values: '<path d="M9 8V6.5a3 3 0 016 0V8"/><rect x="4.5" y="8" width="15" height="12" rx="2.5"/><path d="M9 12h6M9 15.5h6"/>',
+};
 ---
 <div class={`cards cards--${columns}`}>
   {items.map((item, i) => (
-    <article class="card">
-      {numbered
-        ? <span class="card-num">{item.n ?? String(i + 1).padStart(2, '0')}</span>
-        : <span class="card-tick" aria-hidden="true"></span>
-      }
+    <article class={`card${item.icon ? ' card--icon' : ''}`}>
+      {item.icon ? (
+        <span class="card-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="30" height="30" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" set:html={icons[item.icon]} />
+        </span>
+      ) : numbered ? (
+        <span class="card-num">{item.n ?? String(i + 1).padStart(2, '0')}</span>
+      ) : (
+        <span class="card-tick" aria-hidden="true"></span>
+      )}
       <h3>{item.title}</h3>
       <p>{item.text}</p>
     </article>
@@ -75,6 +88,22 @@ const { items = [], numbered = false, columns = 3 } = Astro.props;
     border-width: 0 3px 3px 0;
     transform: rotate(45deg);
   }
+
+  /* Icon-led variant (Vision / Mission / Values, etc.) */
+  .card--icon {
+    text-align: center;
+    padding-top: 2.4rem;
+  }
+  .card-icon {
+    display: inline-grid;
+    place-items: center;
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: var(--mist, #f0f4fa);
+    color: var(--true-blue);
+    margin-bottom: 1.1rem;
+  }
+
   .card h3 {
     font-size: var(--step-1);
     margin-bottom: 0.5rem;

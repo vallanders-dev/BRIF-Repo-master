@@ -1,0 +1,205 @@
+---
+import { content } from '../data/content.js';
+import PageHero from './PageHero.astro';
+import { localizedPath } from '../i18n/ui.js';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].programsImi;
+const admissionsHref = localizedPath(lang, 'admissions');
+---
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="programsImi" />
+
+<section class="section">
+  <div class="wrap">
+    <p class="sidenote" data-reveal>{c.sidenote}</p>
+    <p class="lede intro-lede" data-reveal>{c.intro}</p>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="section section--mist">
+  <div class="wrap prose-wrap">
+    <div class="section-head" data-reveal>
+      <h2>{c.aboutTitle}</h2>
+    </div>
+    <p class="prose-p" data-reveal>{c.aboutText}</p>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <h2>{c.skillsTitle}</h2>
+    </div>
+    <ul class="skills-grid">
+      {c.skills.map((skill, i) => (
+        <li data-reveal class:list={[`d${Math.min(i + 1, 4)}`]}>
+          <span class="skill-tick" aria-hidden="true"></span>{skill}
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+
+<!-- STRUCTURE -->
+<section class="section section--mist">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <h2>{c.structureTitle}</h2>
+    </div>
+    <div class="structure-grid">
+      {c.structure.map((s, i) => (
+        <div class="structure-card" data-reveal class:list={[`d${i + 1}`]}>
+          <span class="structure-num">{String(i + 1).padStart(2, '0')}</span>
+          <h3>{s.year}</h3>
+          <p>{s.text}</p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<!-- CAREERS -->
+<section class="section">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <h2>{c.careersTitle}</h2>
+    </div>
+    <div class="careers-tags">
+      {c.careers.map((career) => <span class="career-tag" data-reveal>{career}</span>)}
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATION -->
+<section class="section section--mist">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <h2>{c.certificationTitle}</h2>
+    </div>
+    <p class="lede certification-text" data-reveal>{c.certificationText}</p>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="section section--oxford">
+  <div class="wrap imi-cta" data-reveal>
+    <h2>{c.ctaText}</h2>
+    <a href={admissionsHref} class="btn">{c.ctaButton}<span class="arw" aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<style>
+  .sidenote {
+    background: var(--mist);
+    border-left: 3px solid var(--orange);
+    border-radius: var(--radius-sm);
+    padding: 1rem 1.3rem;
+    font-size: 0.92rem;
+    color: var(--ink-soft);
+    max-width: 68ch;
+    margin-bottom: 1.6rem;
+  }
+  .intro-lede { max-width: 68ch; }
+  .section-head { margin-bottom: 2.2rem; text-align: center; }
+  .section-head h2 { font-size: var(--step-3); }
+
+  .prose-wrap { max-width: 72ch; margin-inline: auto; text-align: center; }
+  .prose-p {
+    color: var(--ink);
+    font-size: 1.05rem;
+    line-height: 1.75;
+  }
+
+  .skills-grid {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem 2rem;
+    max-width: 50rem;
+    margin-inline: auto;
+  }
+  .skills-grid li {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    font-weight: 500;
+    color: var(--ink);
+  }
+  .skill-tick {
+    flex: none;
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--true-blue), var(--oxford));
+    position: relative;
+  }
+  .skill-tick::after {
+    content: "";
+    position: absolute;
+    left: 8px; top: 6px;
+    width: 6px; height: 11px;
+    border: solid var(--yellow);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .structure-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+  }
+  .structure-card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.8rem 1.6rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .structure-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .structure-num {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--true-blue);
+    display: block;
+    margin-bottom: 0.4rem;
+  }
+  .structure-card h3 { font-size: 1.2rem; margin-bottom: 0.5rem; }
+  .structure-card p { color: var(--ink-soft); font-size: 0.95rem; line-height: 1.6; }
+
+  .careers-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+    max-width: 50rem;
+    margin-inline: auto;
+  }
+  .career-tag {
+    background: var(--mist);
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: 0.7rem 1.3rem;
+    font-weight: 600;
+    font-size: 0.92rem;
+    color: var(--oxford);
+  }
+
+  .certification-text { max-width: 60ch; margin-inline: auto; text-align: center; }
+
+  .imi-cta { text-align: center; }
+  .imi-cta h2 {
+    color: #fff;
+    font-size: var(--step-3);
+    max-width: 40ch;
+    margin-inline: auto;
+    margin-bottom: 1.8rem;
+  }
+
+  @media (max-width: 780px) {
+    .skills-grid { grid-template-columns: 1fr; }
+    .structure-grid { grid-template-columns: 1fr; }
+  }
+</style>

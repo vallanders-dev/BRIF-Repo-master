@@ -14,7 +14,7 @@ const enrolHref = localizedPath(lang, 'enrol');
     <p class="lede intro-lede" data-reveal>{c.intro}</p>
     <div class="prog-grid">
       {c.items.map((item, i) => (
-        <article class="prog-card" data-reveal class:list={[`d${Math.min((i % 3) + 1, 4)}`]}>
+        <article class="prog-card" data-reveal class:list={[`d${i + 1}`]}>
           <div class="prog-card-img">
             <img src={item.image} alt={item.title} loading="lazy" />
           </div>
@@ -40,7 +40,7 @@ const enrolHref = localizedPath(lang, 'enrol');
   .intro-lede { max-width: 60ch; margin-bottom: 3rem; }
   .prog-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 1.4rem;
   }
   .prog-card {
@@ -89,7 +89,17 @@ const enrolHref = localizedPath(lang, 'enrol');
     margin-bottom: 0.5rem;
   }
   .prog-card h3 { font-size: 1.4rem; margin-bottom: 0.5rem; }
-  .prog-card p { color: var(--ink-soft); font-size: 0.98rem; line-height: 1.6; }
+  .prog-card p {
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+    line-height: 1.6;
+    text-align: justify;
+    text-justify: inter-word;
+    hyphens: none;
+  }
+  @media (max-width: 640px) {
+    .prog-card p { text-align: left; }
+  }
 
   .prog-cta {
     display: flex;
@@ -100,6 +110,5 @@ const enrolHref = localizedPath(lang, 'enrol');
   }
   .prog-cta h2 { font-size: var(--step-3); }
 
-  @media (max-width: 860px) { .prog-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 540px) { .prog-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .prog-grid { grid-template-columns: 1fr; } }
 </style>

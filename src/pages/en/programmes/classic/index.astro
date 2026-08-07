@@ -1,0 +1,10 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import ProgramsPage from '../../../../components/ProgramsPage.astro';
+import { content } from '../../../../data/content.js';
+const lang = 'en';
+const c = content[lang].programs;
+---
+<Base lang={lang} routeKey="programsClassic" title={c.title} description={c.intro}>
+  <ProgramsPage lang={lang} />
+</Base>
