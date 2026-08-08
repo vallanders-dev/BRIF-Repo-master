@@ -101,4 +101,71 @@
       btn.setAttribute('aria-expanded', String(!isOpen));
     });
   });
+
+  // ---- 6. Read-more modals ----------------------------------------------
+  // Tracks whichever element had focus before a modal opened, so it can be
+  // restored on close instead of dropping keyboard users back at the top.
+  let modalTrigger = null;
+
+  const getFocusable = (modal) =>
+    Array.from(modal.querySelectorAll(
+      'a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])'
+    ));
+
+  const openModal = (modal, trigger) => {
+    modalTrigger = trigger || document.activeElement;
+    modal.hidden = false;
+    document.body.style.overflow = 'hidden';
+    const closeBtn = modal.querySelector('[data-modal-close]');
+    if (closeBtn) closeBtn.focus();
+  };
+  const closeModal = (modal) => {
+    modal.hidden = true;
+    document.body.style.overflow = '';
+    if (modalTrigger) {
+      modalTrigger.focus();
+      modalTrigger = null;
+    }
+  };
+
+  document.querySelectorAll('[data-modal-open]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const modal = document.getElementById(btn.dataset.modalOpen);
+      if (modal) openModal(modal, btn);
+    });
+  });
+
+  document.querySelectorAll('[data-modal-backdrop]').forEach((backdrop) => {
+    // Click on the backdrop itself (not its content box) closes it.
+    backdrop.addEventListener('click', (e) => {
+      if (e.target === backdrop) closeModal(backdrop);
+    });
+    const closeBtn = backdrop.querySelector('[data-modal-close]');
+    if (closeBtn) closeBtn.addEventListener('click', () => closeModal(backdrop));
+  });
+
+  document.addEventListener('keydown', (e) => {
+    const openBackdrop = document.querySelector('[data-modal-backdrop]:not([hidden])');
+    if (!openBackdrop) return;
+
+    if (e.key === 'Escape') {
+      closeModal(openBackdrop);
+      return;
+    }
+
+    // Trap Tab focus inside the open dialog so it can't wander into the page behind it.
+    if (e.key === 'Tab') {
+      const focusable = getFocusable(openBackdrop);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  });
 })();

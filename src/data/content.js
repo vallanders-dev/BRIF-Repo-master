@@ -24,10 +24,147 @@ export const site = {
     en: 'Quartier JAK, 06 BP 129, Cotonou, Republic of Benin',
     fr: 'Quartier JAK, 06 BP 129, Cotonou, République du Bénin',
   },
-  // Formspree / Web3Forms endpoint — paste your key here to make the form live.
-  // Until set, the enrolment form falls back to a mailto: link.
-  formEndpoint: '',
+  // Web3Forms access key for the enrolment form (host-agnostic: works on
+  // Netlify now and on OVH after the move, no backend of our own needed).
+  // Tied to info@brif.one via https://web3forms.com.
+  formAccessKey: 'e014b612-b7e6-42c7-ba89-d8aaab9a7a06',
 };
+
+// Curriculum comparison tables (Programmes overview page). Class/year names
+// are the proper terms of each system and don't translate, so this data is
+// shared across languages — only surrounding labels in `content[lang]` do.
+export const curriculumTracks = [
+  {
+    key: 'british',
+    label: 'British Curriculum',
+    subtitle: '',
+    stages: [
+      {
+        key: 'lower-school',
+        title: 'Lower School',
+        subtitle: 'Nurseries',
+        accent: 'navy',
+        tables: [
+          {
+            rows: [
+              ['6 months – 2 years', 'Crèche', ''],
+              ['2+', 'Pre-Nursery', ''],
+              ['3+', 'Nursery 1', ''],
+              ['4+', 'Nursery 2', ''],
+            ],
+          },
+        ],
+      },
+      {
+        key: 'middle-school',
+        title: 'Middle School',
+        subtitle: 'Primary',
+        accent: 'yellow',
+        tables: [
+          {
+            header: 'yearClass',
+            rows: [
+              ['5+', 'Year 1', ''],
+              ['6+', 'Year 2', 'Standard Attainment Tests (SATs) (English, Mathematics & Science)'],
+              ['7+', 'Year 3', 'Progression Test (English, Mathematics & Science)'],
+              ['8+', 'Year 4', 'Progression Test (English, Mathematics & Science)'],
+              ['9+', 'Year 5', 'Progression Test (English, Mathematics & Science)'],
+              ['10+', 'Year 6', 'Primary Exam (English, Mathematics & Science)'],
+            ],
+          },
+        ],
+      },
+      {
+        key: 'upper-school',
+        title: 'Upper School',
+        accent: 'blue',
+        tables: [
+          {
+            subheading: 'Secondary 1',
+            header: 'yearClass',
+            rows: [
+              ['11+', 'Year 7', 'Progression Test (English, Mathematics & Science)'],
+              ['12+', 'Year 8', 'Progression Test (English, Mathematics & Science)'],
+              ['13+', 'Year 9', 'Progression Test (English, Mathematics & Science)'],
+              ['14+', 'Year 10', ''],
+            ],
+          },
+          {
+            subheading: 'Secondary 2',
+            header: 'yearClass',
+            rows: [
+              ['15+', 'Year 11', ''],
+              ['16+', 'Year 12', ''],
+              ['17+', 'Year 13', ''],
+            ],
+          },
+        ],
+      },
+    ],
+  },
+  {
+    key: 'french',
+    label: 'French Curriculum',
+    subtitle: 'Republic of Benin standard programme | Available in France and French countries',
+    stages: [
+      {
+        key: 'maternelles',
+        title: 'Maternelles',
+        accent: 'navy',
+        tables: [
+          {
+            rows: [
+              ['6 months – 2 years', 'Crèche', ''],
+              ['3+', 'Maternelle 1', ''],
+              ['4+', 'Maternelle 2', ''],
+            ],
+          },
+        ],
+      },
+      {
+        key: 'primary',
+        title: 'Primary',
+        accent: 'yellow',
+        tables: [
+          {
+            rows: [
+              ['5+', 'CP 1', ''],
+              ['6+', 'CP 2', ''],
+              ['7+', 'CE 1', ''],
+              ['8+', 'CE 2', ''],
+              ['9+', 'CM 1', ''],
+              ['10+', 'CM 2', 'CEP — Certificat d’Étude Primaire — Exam'],
+            ],
+          },
+        ],
+      },
+      {
+        key: 'secondary',
+        title: 'Secondary',
+        accent: 'red',
+        tables: [
+          {
+            subheading: '1st Degree',
+            rows: [
+              ['11+', 'Sixième (6ème)', ''],
+              ['12+', 'Cinquième (5ème)', ''],
+              ['13+', 'Quatrième (4ème)', ''],
+              ['14+', 'Troisième (3ème)', 'BEPC — Brevet d’Étude du Premier Cycle — Exam'],
+            ],
+          },
+          {
+            subheading: '2nd Degree',
+            rows: [
+              ['15+', 'Seconde (2nde)', ''],
+              ['16+', 'Première (1ère)', ''],
+              ['17+', 'Terminale (Tle)', 'BAC — Baccalauréat — Exam'],
+            ],
+          },
+        ],
+      },
+    ],
+  },
+];
 
 export const content = {
   en: {
@@ -41,11 +178,12 @@ export const content = {
       tourWhatsappMessage: "Hello! I'd like to book a school tour of British & French Academy. Could you help me schedule a visit?",
       statLabel: 'Numbers that build trust',
       stats: [
-        { value: '2011', label: 'Founded · 15+ years of excellence' },
-        { value: '100+', label: 'Graduates' },
-        { value: '99%', label: 'Exam success rate' },
-        { value: '3', label: 'Educational programmes' },
-        { value: '20+', label: 'Nationalities represented' },
+        { value: '2011', label: 'Founded', tooltip: '15+ years of excellence' },
+        { value: '100+', label: 'Graduates', tooltip: 'Since 2011, BRIF has seen more than 100 of its students graduate. They now pursue higher education at universities in the United Kingdom, Brazil, and Nigeria — proof that the bilingual education received at BRIF opens doors around the world.' },
+        { value: '99%', label: 'Exam success rate', tooltip: 'Fewer than one candidate in a hundred has failed since 2011.' },
+        { value: '3', label: 'Educational programmes', tooltip: 'Cambridge International, Classic Programme, and IMI Programme.' },
+        { value: '20+', label: 'Nationalities represented', tooltip: 'UK, France, Nigeria, Equatorial Guinea, Senegal, Ghana, Togo, and more.' },
+        { value: '15', label: 'Maximum class size', tooltip: 'We keep classes small so no child slips through the cracks.' },
       ],
       pillarsKicker: 'Who we are',
       pillarsTitle: 'Our vision, mission & values',
@@ -158,7 +296,7 @@ export const content = {
         },
         {
           title: 'Small classes, close attention',
-          text: 'Teachers know every student by name. We keep classes small so no child slips through the cracks.',
+          text: 'Teachers know every student by name. We keep class size to a maximum of 15 students, so no child slips through the cracks.',
         },
         {
           title: 'Rooted in character',
@@ -178,11 +316,28 @@ export const content = {
       kicker: 'What we teach',
       intro:
         'A continuous bilingual pathway from the early years through to secondary graduation, taught in English and French.',
+      readMoreLabel: 'Read more',
+      closeLabel: 'Close',
       items: [
-        { title: 'Early Years', text: 'At Early Years, BRIF welcomes each child into their first discoveries, offering a safe, stimulating environment suited to their development.', image: '/images/1.jpeg' },
-        { title: 'Primary School', text: 'The primary years at BRIF are an essential stage for building knowledge, ways of working, and each child’s character.', image: '/images/2.jpeg' },
-        { title: 'Lower Secondary', text: 'Lower Secondary guides students through an important transition between childhood and adolescence.', image: '/images/3.jpeg' },
-        { title: 'Upper Secondary', text: 'Upper Secondary is a decisive stage in preparing students for their academic and professional future.', image: '/images/4.jpeg' },
+        {
+          title: 'Early Years',
+          text: 'At British & French Academy (BRIF), children begin as early as Pre-Nursery. The younger the child, the faster they absorb vocabulary and grammar. According to Claude Hagège, linguist and professor at the Collège de France, language-learning ability peaks between ages 3 and 4. It is at this age that the capacity for mimicry, on which most language learning depends, is at its strongest.',
+          image: '/images/1.jpeg',
+        },
+        {
+          title: 'Primary School',
+          text: 'The primary years at BRIF are an essential stage for building knowledge, ways of working, and each child’s character.',
+          image: '/images/2.jpeg',
+          more: [
+            'As with the Maternelle classes, class sizes are planned for a maximum of 15 children, allowing personalised attention for every student. Each homeroom teacher is English-speaking and stays with their class, delivering the British curriculum. A second teacher, French-speaking, joins for subjects aligned with the French curriculum.',
+            'Students are taught the genuine British curriculum, engaging happily with English, Maths, and Science lessons, complemented by French and Mathematics from the authentic French curriculum.',
+            'Other core subjects are taught in both languages.',
+            'Here too, sports activities bring joy to students, instilling an early love of sport and, for some, a calling.',
+            "In CM2 (Year 6), the French curriculum is reinforced for students preparing for Benin's CEP examination. It is worth noting that, since its founding in 2011, British & French Academy has not had a single failed candidate in the CEP and BEPC examinations (French Programme) or in the BECE and Baccalauréat examinations (English/French Programme)!",
+          ],
+        },
+        { title: 'Lower Secondary', text: 'Lower Secondary is made up of the 1st cycle (Collège), then the 2nd cycle (Lycée). Between the two cycles comes the English BECE examination (the equivalent of the French BEPC).', image: '/images/3.jpeg' },
+        { title: 'Upper Secondary', text: 'Upper Secondary culminates in the BACCALAUREATE before entry into COLLEGE (University).', image: '/images/4.jpeg' },
       ],
     },
     programsHub: {
@@ -209,6 +364,56 @@ export const content = {
           image: '/images/4.jpeg',
         },
       ],
+      admissionsInfoKicker: 'Before you apply',
+      admissionsInfoTitle: 'Fees & Admission Requirements',
+      admissionsInfoCards: [
+        {
+          title: 'Payment Terms',
+          variant: 'light',
+          items: [
+            "School fees are paid directly into the school's bank account. Payment can also be made via Mobile Money.",
+            "Parents must pay at least 60% of school fees before the start of their child's classes.",
+            'Paying school fees in full before or at the start of the school year comes with a 5% discount. Discounts are not granted on other forms of fee payment.',
+          ],
+        },
+        {
+          title: 'Payment Schedule',
+          variant: 'gradient',
+          items: [
+            'At enrolment • 1st payment: 60% of tuition + enrolment fee',
+            'Mid-November • 2nd payment: 20% of tuition',
+            'Mid-January • 3rd payment: remaining 20% balance',
+          ],
+        },
+        {
+          title: 'Admission Requirements',
+          variant: 'gradient',
+          items: [
+            'New students take a separate placement test for English level and French level.',
+            'NOTE: Children enter Maternelle 1 (Nursery) at 3 years old, completed by August 31.',
+            'A child who has not turned 3 by August 31 cannot enter Maternelle 1, as this could significantly affect their schooling and development.',
+            'Crèche: 6 months to 2 years | Pre-Nursery: 2–3 years.',
+          ],
+        },
+        {
+          title: 'Documents Required',
+          variant: 'light',
+          items: [
+            'Duly completed and signed registration form (or online registration), with payment of 60% of tuition + enrolment fee.',
+            "Child's birth certificate.",
+            'Vaccination record.',
+            "Previous year's school report cards.",
+            'Two (2) passport photos (less than 6 months old).',
+            'One (1) document folder with flaps (not black).',
+            'Three (3) plastic sleeve folders.',
+            'Three (3) packs of A4 paper (80gsm), or the sum of 8,000 F per child.',
+          ],
+          footnote: 'NOTE: The list of school supplies and fees, for both the English and French programmes, will be communicated before the start of the school year.',
+        },
+      ],
+      curriculumKicker: 'Our curriculum',
+      curriculumTitle: 'From crèche to Baccalaureate',
+      curriculumIntro: 'Two complete education systems, side by side. Explore the age, class, and assessment structure of our British and French curricula.',
     },
     programsCambridge: {
       title: 'Cambridge International Programme',
@@ -274,12 +479,13 @@ export const content = {
         'From the first bell to the last, our campus hums with activity. Students move between classrooms, playing fields, and quiet corners for reading, always in a community that feels like family.',
         'Clubs and activities give every child a place to shine, whether on the pitch, on the stage, in the science lab, or in service to others. We believe character is built as much in these moments as in any exam.',
       ],
-      highlightsTitle: 'A day in the life',
+      highlightsKicker: 'Life of learners at school',
+      highlightsTitle: 'Extracurricular Activities',
       highlights: [
         { title: 'Sports & play', text: 'Football, athletics, and team games that build fitness and friendship.' },
         { title: 'Arts & culture', text: 'Music, drama, and visual arts that celebrate two cultures.' },
         { title: 'Clubs & societies', text: 'From debate to coding, spaces for every interest to grow.' },
-        { title: 'Service & values', text: 'Projects that connect students to their community in Cotonou.' },
+        { title: 'Service & values', text: 'Projects that connect students to their communities.' },
       ],
     },
     news: {
@@ -296,10 +502,11 @@ export const content = {
       stepsTitle: 'How to apply',
       steps: [
         { n: '01', title: 'Get in touch', text: 'Contact us to register your interest and ask any questions. We are happy to help in English or French.' },
-        { n: '02', title: 'Visit the school', text: 'Come and see the campus, meet our teachers, and get a feel for the community.' },
+        { n: '02', title: 'Visit the school', text: 'Come and see the campus, meet our teachers, and get a feel of the BRIF community.' },
         { n: '03', title: 'Submit an application', text: 'Complete the application form and provide your child\u2019s previous school records.' },
         { n: '04', title: 'Assessment & welcome', text: 'A friendly assessment helps us place your child well. Then we welcome you to the BRIF family.' },
       ],
+      faqKicker: 'FAQ',
       faqTitle: 'Common questions',
       faqs: [
         { q: 'What ages do you accept?', a: 'We welcome students from the early years through to the end of secondary school.' },
@@ -307,11 +514,13 @@ export const content = {
         { q: 'When can we apply?', a: 'Applications are welcome year-round, subject to availability. Contact us to check current openings.' },
         { q: 'Can my child transfer mid-year?', a: "Yes, subject to availability. Contact our admissions team to check current openings for your child's grade." },
         { q: 'How do I arrange a visit?', a: 'Use the contact page or call the school office, and we will arrange a convenient time.' },
-        { q: 'What is the fee structure?', a: 'Contact us to get information on fees.' },
+        { q: 'What is the fee structure?', a: "Tuition is paid in three installments: 60% at enrolment, 20% in mid-November, and 20% in mid-January. Families who pay in full at enrolment receive a 5% discount. For the exact document checklist and age cutoffs (including the August 31 cutoff for Maternelle 1), see the Fees & Admission Requirements section on the Programmes page." },
+        { q: 'When does the school year start and end?', a: 'The 2026–2027 school year begins on 14 September 2026. The end date will be confirmed soon, and the full school calendar will be published here shortly.' },
         { q: 'What are the school hours?', a: 'School session begins at as early as 7:30 and ends at 15:30.' },
         { q: 'What are PTA meetings?', a: "Parent Teacher Association (PTA) meetings are annual meetings, usually about a month after resumption, which bring together parents/guardians, teachers, and the school's administration. During these 2 hour-long meetings, the school administration presents the school, and its objectives to parents, after which questions from parents are answered." },
         { q: 'Does the school have a transport facility?', a: 'Yes, the school has buses for the transport of students. In addition, the school partners with a transport facility with which parents/guardians can discuss information relative to transportation of their children.' },
         { q: 'Does the school have a canteen?', a: 'Yes, canteen services are available on our premises and offer a variety of meals.' },
+        { q: 'Does the school have boarding facilities?', a: 'No, the school does not currently offer boarding facilities.' },
       ],
       ctaText: 'Ready to take the first step?',
       ctaButton: 'Contact admissions',
@@ -536,11 +745,12 @@ export const content = {
       tourWhatsappMessage: "Bonjour ! Je souhaiterais réserver une visite de l'école British & French Academy. Pourriez-vous m'aider à planifier une visite ?",
       statLabel: 'Les chiffres qui renforcent la confiance',
       stats: [
-        { value: '2011', label: "Fondée · 15+ ans d'excellence" },
-        { value: '100+', label: 'Diplômés' },
-        { value: '99%', label: 'Taux de réussite aux examens' },
-        { value: '3', label: 'Programmes éducatifs' },
-        { value: '20+', label: 'Nationalités représentées' },
+        { value: '2011', label: 'Fondée', tooltip: "15+ ans d'excellence" },
+        { value: '100+', label: 'Diplômés', tooltip: "Depuis 2011, BRIF a vu plus de 100 de ses élèves obtenir leur diplôme. Ils poursuivent aujourd'hui leurs études supérieures dans des universités au Royaume-Uni, au Brésil et au Nigéria. C'est la preuve que la formation bilingue reçue à BRIF ouvre les portes du monde entier." },
+        { value: '99%', label: 'Taux de réussite aux examens', tooltip: 'Moins d’un candidat sur cent a échoué depuis 2011.' },
+        { value: '3', label: 'Programmes éducatifs', tooltip: 'Cambridge International, Programme Classique et Programme IMI.' },
+        { value: '20+', label: 'Nationalités représentées', tooltip: 'Royaume-Uni, France, Nigeria, Guinée Équatoriale, Sénégal, Ghana, Togo, et bien d’autres.' },
+        { value: '15', label: 'Effectif maximum par classe', tooltip: 'Nous maintenons des classes réduites pour qu’aucun enfant ne soit laissé de côté.' },
       ],
       pillarsKicker: 'Qui nous sommes',
       pillarsTitle: 'Notre vision, notre mission et nos valeurs',
@@ -615,7 +825,7 @@ export const content = {
         },
         {
           title: 'Petits effectifs, grande attention',
-          text: 'Les enseignants connaissent chaque élève par son nom. Des classes réduites pour que personne ne soit laissé de côté.',
+          text: 'Les enseignants connaissent chaque élève par son nom. Nous limitons chaque classe à 15 élèves maximum, pour que personne ne soit laissé de côté.',
         },
         {
           title: 'Ancrée dans le caractère',
@@ -673,11 +883,28 @@ export const content = {
       kicker: 'Ce que nous enseignons',
       intro:
         "Un parcours bilingue continu, de la maternelle jusqu'au secondaire, en anglais et en français.",
+      readMoreLabel: 'Lire la suite',
+      closeLabel: 'Fermer',
       items: [
-        { title: 'Maternelle', text: 'À la Maternelle, BRIF accompagne chaque enfant dans ses premières découvertes en lui offrant un environnement sécurisant, stimulant et adapté à son développement.', image: '/images/1.jpeg' },
-        { title: 'Primaire', text: 'Le cycle primaire à BRIF constitue une étape essentielle dans la construction des savoirs, des méthodes de travail et de la personnalité de chaque élève.', image: '/images/2.jpeg' },
-        { title: 'Secondaire Premier Cycle', text: 'Le Premier Cycle du Secondaire accompagne les élèves dans une période importante de transition entre l’enfance et l’adolescence.', image: '/images/3.jpeg' },
-        { title: 'Secondaire Deuxi\u00e8me Cycle', text: 'Le Second Cycle du Lyc\u00e9e repr\u00e9sente une \u00e9tape d\u00e9cisive dans la pr\u00e9paration de l\u2019avenir acad\u00e9mique et professionnel des \u00e9l\u00e8ves.', image: '/images/4.jpeg' },
+        {
+          title: 'Maternelle',
+          text: 'À British & French Academy (BRIF), l’enfant commence dès la Pré-Maternelle. Plus l’enfant est jeune, plus l’assimilation du vocabulaire et de la grammaire se fait rapidement. Selon Claude Hagège, linguiste et professeur au Collège de France, la capacité d’apprentissage des langues atteint son apogée entre 3 et 4 ans. C’est à cet âge que les capacités de mimétisme, sur lesquelles repose l’essentiel de l’apprentissage d’une langue, sont à leur maximum.',
+          image: '/images/1.jpeg',
+        },
+        {
+          title: 'Primaire',
+          text: 'Le cycle primaire à BRIF constitue une étape essentielle dans la construction des savoirs, des méthodes de travail et de la personnalité de chaque élève.',
+          image: '/images/2.jpeg',
+          more: [
+            'Comme pour les Maternelles, l’effectif est planifié pour 15 enfants maximum par classe. Cette disposition permet le suivi personnalisé de chaque élève. Chaque Professeur d’école est anglophone et garde sa classe. Il exerce le programme British. Un deuxième Professeur, francophone, intervient avec des matières conformes au programme Français.',
+            'Les élèves sont pris en charge dans le pur programme British. Ils s’activent avec bonheur autour des cours d’Anglais, de Maths et de Sciences, relayés par le Français et les Mathématiques issus du pur programme Français.',
+            'Les autres matières classiques sont enseignées dans les deux langues.',
+            'Ici aussi, les activités sportives viennent égayer les élèves, leur communiquant très tôt le goût pour le sport et des vocations.',
+            'Au CM2, renforcement du programme Français pour les candidats à l’examen du CEP Béninois. Ici, il est opportun de rappeler que, depuis son avènement en 2011, l’école British & French Academy n’a pas connu un seul échec de candidat pour les examens du CEP, du BEPC (Programme Français) et pour les examens du BECE et du Baccalauréat (Programme Français Anglais) !',
+          ],
+        },
+        { title: 'Secondaire Premier Cycle', text: 'Le Secondaire est caractérisé par le 1er cycle ou Collège, puis le 2nd cycle ou Lycée. Entre les deux cycles, interviennent les examens anglais du BECE (l’équivalent français du BEPC).', image: '/images/3.jpeg' },
+        { title: 'Secondaire Deuxi\u00e8me Cycle', text: 'Le Lyc\u00e9e est sanctionn\u00e9 par le BACCALAUREATE (Baccalaur\u00e9at) avant l\u2019entr\u00e9e au COLLEGE (Universit\u00e9).', image: '/images/4.jpeg' },
       ],
     },
     programsHub: {
@@ -704,6 +931,56 @@ export const content = {
           image: '/images/4.jpeg',
         },
       ],
+      admissionsInfoKicker: 'Avant de postuler',
+      admissionsInfoTitle: "Frais et Conditions d'Admission",
+      admissionsInfoCards: [
+        {
+          title: 'Modalités de paiement',
+          variant: 'light',
+          items: [
+            "Le paiement des frais scolaires s'effectue directement sur le compte bancaire de l'école. Il peut également se faire par Mobile Money.",
+            'Les Parents doivent s’acquitter de 60 % au moins des frais de scolarité avant le démarrage des cours de l’enfant.',
+            'Le paiement total des frais de scolarité avant ou au début de la Rentrée scolaire donne l’avantage d’une réduction de 5 %. Les réductions ne sont pas accordées sur les autres formes de paiement des frais scolaires.',
+          ],
+        },
+        {
+          title: 'Périodes de paiement',
+          variant: 'gradient',
+          items: [
+            'À l’inscription • 1er Paiement : 60 % de la Scolarité + Inscription',
+            'Mi-Novembre • 2ème Paiement : 20 % de la Scolarité',
+            'Mi-Janvier • 3ème Paiement : solde des 20 % restant',
+          ],
+        },
+        {
+          title: 'Conditions d’acceptabilité',
+          variant: 'gradient',
+          items: [
+            'Les nouveaux élèves sont soumis à un Test séparé pour le Niveau d’Anglais et pour le Niveau de Français.',
+            'NOTA : Les enfants font leur entrée en classe de Maternelle 1 à l’âge de 3 ans révolus au 31 août.',
+            'L’enfant de moins de 3 ans au 31 août ne peut entrer en Maternelle 1, au risque d’affecter considérablement son cursus et son épanouissement.',
+            'CRÈCHE : 6 mois à 2 ans | PRÉMATERNELLE : 2-3 ans.',
+          ],
+        },
+        {
+          title: 'À fournir',
+          variant: 'light',
+          items: [
+            'Fiche d’enregistrement dûment remplie et signée (ou Enregistrement en ligne) avec Paiement de 60 % de la Scolarité + Frais d’Inscription.',
+            'Acte de Naissance de l’Enfant.',
+            'Carnet de vaccination.',
+            'Bulletins scolaires de l’Année précédente.',
+            'Deux (2) photos d’identité (datant de moins de 6 mois).',
+            'Une (1) Chemise Dossier à rabats (pas de couleur Noire).',
+            'Trois (3) Porte-vues.',
+            'Trois (3) paquets de feuilles A4 (80 G) ou la somme de 8 000 F par Enfant.',
+          ],
+          footnote: 'NOTA : La liste des fournitures scolaires et les frais, pour les deux programmes Anglais et Français, sera communiquée avant la Rentrée Scolaire.',
+        },
+      ],
+      curriculumKicker: 'Notre programme',
+      curriculumTitle: 'De la crèche au Baccalauréat',
+      curriculumIntro: 'Deux systèmes éducatifs complets, côte à côte. Découvrez la structure par âge, classe et évaluation de nos programmes britannique et français.',
     },
     programsCambridge: {
       title: 'Programme International Cambridge',
@@ -769,7 +1046,8 @@ export const content = {
         "De la première à la dernière sonnerie, notre campus vibre d'activité. Les élèves passent des salles de classe aux terrains de sport et aux coins de lecture, toujours au sein d'une communauté qui ressemble à une famille.",
         "Les clubs et les activités offrent à chaque enfant une occasion de briller, sur le terrain, sur scène, au laboratoire ou au service des autres. Le caractère se construit autant dans ces moments que dans les examens.",
       ],
-      highlightsTitle: 'Une journée à la BRIF',
+      highlightsKicker: "La vie des élèves à l'école",
+      highlightsTitle: 'Activités Extrascolaires',
       highlights: [
         { title: 'Sport & jeu', text: 'Football, athlétisme et jeux d\u2019équipe qui développent la forme et l\u2019amitié.' },
         { title: 'Arts & culture', text: 'Musique, théâtre et arts visuels qui célèbrent deux cultures.' },
@@ -795,6 +1073,7 @@ export const content = {
         { n: '03', title: 'Déposer un dossier', text: 'Remplissez le formulaire d\u2019inscription et fournissez les bulletins précédents de votre enfant.' },
         { n: '04', title: 'Évaluation & accueil', text: 'Une évaluation bienveillante nous aide à bien orienter votre enfant. Puis nous vous accueillons dans la famille BRIF.' },
       ],
+      faqKicker: 'FAQ',
       faqTitle: 'Questions fréquentes',
       faqs: [
         { q: 'Quels âges accueillez-vous ?', a: 'Nous accueillons les élèves de la maternelle jusqu\u2019à la fin du secondaire.' },
@@ -802,11 +1081,13 @@ export const content = {
         { q: 'Quand peut-on postuler ?', a: 'Les candidatures sont acceptées toute l\u2019année, selon les places disponibles. Contactez-nous pour vérifier.' },
         { q: "Mon enfant peut-il effectuer un transfert en cours d'année ?", a: "Oui, sous réserve de disponibilité. Contactez notre équipe des admissions pour connaître les places disponibles dans le niveau de votre enfant." },
         { q: 'Comment organiser une visite ?', a: 'Utilisez la page contact ou appelez le secrétariat, et nous fixerons un rendez-vous.' },
-        { q: 'Quelle est la structure des frais de scolarité ?', a: 'Contactez-nous pour obtenir des informations sur les frais de scolarité.' },
+        { q: 'Quelle est la structure des frais de scolarité ?', a: "Les frais de scolarité sont payés en trois versements : 60 % à l'inscription, 20 % à la mi-novembre et 20 % à la mi-janvier. Les familles qui règlent l'intégralité à l'inscription bénéficient d'une réduction de 5 %. Pour la liste exacte des documents requis et les dates limites d'âge (dont la date limite du 31 août pour la Maternelle 1), consultez la section « Frais et Conditions d'Admission » de la page Programmes." },
+        { q: 'Quand débute l’année scolaire et quand se termine-t-elle ?', a: 'L’année scolaire 2026-2027 débute le 14 septembre 2026. La date de fin sera confirmée prochainement, et le calendrier scolaire complet sera bientôt disponible ici.' },
         { q: 'Quels sont les horaires de l’école ?', a: 'Les cours débutent dès 7h30 et se terminent à 15h30.' },
         { q: 'Que sont les réunions de l’APE ?', a: 'Les réunions de l’Association des Parents d’Élèves (APE) sont des réunions annuelles, organisées généralement environ un mois après la rentrée, qui rassemblent les parents/tuteurs, les enseignants et la direction de l’école. Pendant ces réunions d’une durée de deux heures, la direction présente l’école et ses objectifs aux parents, avant de répondre à leurs questions.' },
         { q: 'L’école propose-t-elle un service de transport ?', a: 'Oui, l’école dispose de bus pour le transport des élèves. De plus, l’école est partenaire d’un service de transport avec lequel les parents/tuteurs peuvent échanger des informations relatives au transport de leurs enfants.' },
         { q: 'L’école dispose-t-elle d’une cantine ?', a: 'Oui, un service de cantine est disponible sur place et propose une variété de repas.' },
+        { q: 'L’école dispose-t-elle d’internat ?', a: 'Non, l’école ne propose pas actuellement de service d’internat.' },
       ],
       ctaText: 'Prêt à faire le premier pas ?',
       ctaButton: 'Contacter les admissions',

@@ -58,31 +58,19 @@ const altHref = new URL(alternatePath(lang, routeKey), Astro.site).href;
     <meta name="theme-color" content="#132340" />
     <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32.png" />
     <link rel="apple-touch-icon" sizes="180x180" href="/images/favicon-180.png" />
+
+    <!-- [data-reveal] elements start hidden and wait for interactions.js to reveal them.
+         If JS is blocked/fails, show everything immediately instead of leaving the page blank. -->
+    <noscript><style>[data-reveal] { opacity: 1 !important; transform: none !important; }</style></noscript>
   </head>
   <body>
     <a href="#main" class="skip-link">Skip to content</a>
-    <div id="fb-root"></div>
     <Header lang={lang} routeKey={routeKey} />
     <main id="main">
       <slot />
     </main>
     <Footer lang={lang} />
     <script src="/scripts/interactions.js" defer></script>
-    <!-- Facebook SDK: powers the Page Plugin on the News page.
-         Loads asynchronously and only affects .fb-page elements. -->
-    <script>
-      (function (d, s, id) {
-        if (d.getElementById(id)) return;
-        var js = d.createElement(s);
-        js.id = id;
-        // @ts-ignore — d.createElement(s) is always a <script> tag here (see call at bottom)
-        js.src = 'https://connect.facebook.net/' +
-          (document.documentElement.lang === 'fr' ? 'fr_FR' : 'en_GB') +
-          '/sdk.js#xfbml=1&version=v19.0';
-        var fjs = d.getElementsByTagName(s)[0];
-        fjs.parentNode.insertBefore(js, fjs);
-      })(document, 'script', 'facebook-jssdk');
-    </script>
   </body>
 </html>
 

@@ -1,0 +1,116 @@
+---
+import { content } from '../data/content.js';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].programsHub;
+---
+<section class="section admissions-info-section">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{c.admissionsInfoKicker}</p>
+      <h2>{c.admissionsInfoTitle}</h2>
+    </div>
+
+    <div class="info-grid">
+      {c.admissionsInfoCards.map((card, i) => (
+        <div class={`info-card info-card--${card.variant}`} data-reveal class:list={[`d${Math.min(i + 1, 4)}`]}>
+          <h3>{card.title}</h3>
+          <span class="info-divider" aria-hidden="true"></span>
+          <ul class="info-list">
+            {card.items.map((item) => (
+              <li>
+                <span class="info-tick" aria-hidden="true"></span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          {card.footnote && <p class="info-footnote">{card.footnote}</p>}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .admissions-info-section .section-head { text-align: center; margin-bottom: 3rem; }
+
+  .info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.4rem;
+  }
+  .info-card {
+    border-radius: var(--radius);
+    padding: 2.2rem 2rem;
+    text-align: center;
+  }
+  .info-card--light {
+    background: var(--mist);
+    color: var(--ink);
+  }
+  .info-card--gradient {
+    background: linear-gradient(135deg, var(--true-blue), var(--oxford));
+    color: #fff;
+  }
+  .info-card h3 {
+    font-size: 1.4rem;
+  }
+  .info-divider {
+    display: block;
+    width: 48px;
+    height: 2px;
+    margin: 0.9rem auto 1.6rem;
+    background: currentColor;
+    opacity: 0.5;
+  }
+  .info-list {
+    list-style: none;
+    padding: 0;
+    text-align: left;
+    display: grid;
+    gap: 1rem;
+  }
+  .info-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.7rem;
+    font-size: 0.94rem;
+    line-height: 1.6;
+  }
+  .info-card--light .info-list li { color: var(--ink-soft); }
+  .info-card--gradient .info-list li { color: #eef1fc; }
+
+  .info-tick {
+    flex: none;
+    width: 20px; height: 20px;
+    margin-top: 0.15rem;
+    border-radius: 50%;
+    position: relative;
+  }
+  .info-card--light .info-tick { background: linear-gradient(135deg, var(--true-blue), var(--oxford)); }
+  .info-card--gradient .info-tick { background: rgba(255,255,255,0.22); }
+  .info-tick::after {
+    content: "";
+    position: absolute;
+    left: 6px; top: 4px;
+    width: 5px; height: 9px;
+    border: solid #fff;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+
+  .info-footnote {
+    margin-top: 1.4rem;
+    padding-top: 1.2rem;
+    border-top: 1px solid currentColor;
+    opacity: 0.75;
+    font-size: 0.85rem;
+    font-style: italic;
+    text-align: left;
+    line-height: 1.6;
+  }
+
+  @media (max-width: 780px) {
+    .info-grid { grid-template-columns: 1fr; }
+  }
+</style>

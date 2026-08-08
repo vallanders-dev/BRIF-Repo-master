@@ -23,9 +23,10 @@
   --sand:     #fbf9f4;  /* alt section background (warm) */
 
   /* --- Typography --- */
-  /* Cormorant Garamond gives an academic, prospectus-like gravitas for display;
-     Inter stays as the clean, legible body/utility face. */
-  --font-display: 'Cormorant Garamond', 'Fraunces', Georgia, serif;
+  /* Fraunces gives an academic, prospectus-like gravitas for display;
+     Georgia is the legible fallback if it hasn't loaded yet. Inter
+     stays as the clean, legible body/utility face. */
+  --font-display: 'Fraunces', Georgia, serif;
   --font-body:    'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
 
   /* Tracking for uppercase labels — wider reads more formal */
@@ -84,7 +85,7 @@ h1, h2, h3, h4 {
   color: var(--oxford);
   letter-spacing: 0;
 }
-/* Cormorant runs large; nudge the display scale up for presence */
+/* Fraunces runs large; nudge the display scale up for presence */
 h1 { font-weight: 600; }
 h2 { font-weight: 600; }
 

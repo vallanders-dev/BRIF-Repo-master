@@ -4,7 +4,8 @@ import PageHero from './PageHero.astro';
 
 const { lang = 'en' } = Astro.props;
 const c = content[lang].enrol;
-const hasEndpoint = Boolean(site.formEndpoint);
+const subjectLine = lang === 'fr' ? 'Demande d’inscription · BRIF' : 'Enrolment enquiry · BRIF';
+const redirectUrl = new URL(`${Astro.url.pathname}?sent=true`, Astro.site).href;
 ---
 <PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="enrol" />
 
@@ -16,13 +17,23 @@ const hasEndpoint = Boolean(site.formEndpoint);
       id="enrol-form"
       class="enrol-form"
       data-reveal
-      data-endpoint={site.formEndpoint}
       data-email={site.email}
       data-lang={lang}
       method="POST"
-      action={hasEndpoint ? site.formEndpoint : undefined}
+      action="https://api.web3forms.com/submit"
       novalidate
     >
+      <input type="hidden" name="access_key" value={site.formAccessKey} />
+      <input type="hidden" name="subject" value={subjectLine} />
+      <input type="hidden" name="from_name" value={site.name} />
+      <input type="hidden" name="redirect" value={redirectUrl} />
+      <p class="hp-field" aria-hidden="true">
+        <label>
+          {lang === 'fr' ? 'Ne remplissez pas ce champ' : 'Leave this field blank'}
+          <input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" />
+        </label>
+      </p>
+
       <div class="field">
         <label for="parentName">{c.parentName}</label>
         <input type="text" id="parentName" name="parentName" required autocomplete="name" />
@@ -78,20 +89,31 @@ const hasEndpoint = Boolean(site.formEndpoint);
   </div>
 </section>
 
-<script is:inline define:vars={{ successMsg: c.successThanks, subjectLine: (lang === 'fr' ? 'Demande d\u2019inscription · BRIF' : 'Enrolment enquiry · BRIF') }}>
+<script is:inline>
   (function () {
     const form = document.getElementById('enrol-form');
     if (!form) return;
-    const endpoint = form.dataset.endpoint;
     const email = form.dataset.email;
     const success = document.getElementById('form-success');
+
+    // If we've just landed back here via the form's own "redirect" field
+    // (the no-JS fallback path — see below), show the same success state.
+    if (new URLSearchParams(window.location.search).get('sent') === 'true') {
+      success.hidden = false;
+      const url = new URL(window.location.href);
+      url.searchParams.delete('sent');
+      window.history.replaceState({}, '', url);
+    }
 
     function markError(field, on) {
       field.closest('.field').classList.toggle('has-error', on);
     }
 
+    // The <form> itself posts straight to Web3Forms (action="https://api.web3forms.com/submit"),
+    // so it still delivers the enquiry via a normal full-page POST — and its
+    // own "redirect" field brings the visitor back here — if JS never runs.
+    // This handler only upgrades that into a smooth, no-reload submit.
     form.addEventListener('submit', async (e) => {
-      // Client-side required validation
       let valid = true;
       form.querySelectorAll('[required]').forEach((el) => {
         const ok = el.value.trim() !== '' && (el.type !== 'email' || /.+@.+\..+/.test(el.value));
@@ -100,41 +122,29 @@ const hasEndpoint = Boolean(site.formEndpoint);
       });
       if (!valid) { e.preventDefault(); return; }
 
-      // If a form endpoint is configured, submit via fetch for a smooth UX.
-      if (endpoint) {
-        e.preventDefault();
-        const btn = form.querySelector('button[type=submit]');
-        btn.disabled = true;
-        try {
-          const res = await fetch(endpoint, {
-            method: 'POST',
-            headers: { Accept: 'application/json' },
-            body: new FormData(form),
-          });
-          if (res.ok) {
-            form.reset();
-            success.hidden = false;
-            success.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          } else {
-            btn.disabled = false;
-            alert('Something went wrong. Please try again or email us directly.');
-          }
-        } catch {
-          btn.disabled = false;
-          alert('Network error. Please try again or email us directly.');
-        }
-        return;
-      }
-
-      // No endpoint yet: fall back to a prefilled mailto so the form is never broken.
       e.preventDefault();
-      const data = new FormData(form);
-      const lines = [];
-      for (const [k, v] of data.entries()) if (v) lines.push(k + ': ' + v);
-      const body = encodeURIComponent(lines.join('\n'));
-      const subject = encodeURIComponent(subjectLine);
-      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
-      success.hidden = false;
+      const btn = form.querySelector('button[type=submit]');
+      btn.disabled = true;
+      const data = Object.fromEntries(new FormData(form).entries());
+      try {
+        const res = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const json = await res.json().catch(() => ({}));
+        if (res.status === 200 && json.success) {
+          form.reset();
+          success.hidden = false;
+          success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } else {
+          btn.disabled = false;
+          alert(json.message || ('Something went wrong. Please try again, or email us directly at ' + email + '.'));
+        }
+      } catch {
+        btn.disabled = false;
+        alert('Network error. Please try again, or email us directly at ' + email + '.');
+      }
     });
   })();
 </script>
@@ -142,6 +152,7 @@ const hasEndpoint = Boolean(site.formEndpoint);
 <style>
   .form-wrap { max-width: 760px; }
   .intro-lede { margin-bottom: 2.5rem; }
+  .hp-field { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
   .enrol-form { display: grid; gap: 1.3rem; }
   .row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.3rem; }
   .field { display: flex; flex-direction: column; gap: 0.4rem; }

@@ -1,6 +1,8 @@
 ---
 import { content } from '../data/content.js';
 import PageHero from './PageHero.astro';
+import AdmissionsInfoSection from './AdmissionsInfoSection.astro';
+import CurriculumSection from './CurriculumSection.astro';
 import { localizedPath } from '../i18n/ui.js';
 
 const { lang = 'en' } = Astro.props;
@@ -29,6 +31,10 @@ const learnMore = lang === 'fr' ? 'En savoir plus' : 'Learn more';
     </div>
   </div>
 </section>
+
+<AdmissionsInfoSection lang={lang} />
+
+<CurriculumSection lang={lang} />
 
 <section class="section section--mist">
   <div class="wrap prog-cta" data-reveal>

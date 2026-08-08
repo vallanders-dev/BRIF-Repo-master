@@ -1,0 +1,164 @@
+---
+import { content, curriculumTracks } from '../data/content.js';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].programsHub;
+
+const ageLabel = lang === 'fr' ? 'Âge' : 'Age';
+const classLabel = lang === 'fr' ? 'Classe' : 'Class';
+const yearClassLabel = lang === 'fr' ? 'Année (Classe)' : 'Year (Class)';
+const assessmentLabel = lang === 'fr' ? 'Évaluation' : 'Assessment';
+---
+<section class="section curriculum-section" id="curriculum">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">{c.curriculumKicker}</p>
+      <h2>{c.curriculumTitle}</h2>
+      <p class="lede">{c.curriculumIntro}</p>
+    </div>
+
+    <div class="curr-tracks">
+      {curriculumTracks.map((track) => (
+        <div class="curr-track">
+          <div class="curr-track-head" data-reveal>
+            <h3>{track.label}</h3>
+            {track.subtitle && <p class="curr-track-subtitle">{track.subtitle}</p>}
+          </div>
+
+          {track.stages.map((stage, i) => (
+            <div class="curr-stage" data-accent={stage.accent} data-reveal class:list={[`d${Math.min(i + 1, 4)}`]}>
+              <div class="curr-stage-head">
+                <h4>{stage.title}</h4>
+                {stage.subtitle && <p class="curr-stage-subtitle">{stage.subtitle}</p>}
+              </div>
+
+              {stage.tables.map((table) => (
+                <div class="curr-table-block">
+                  {table.subheading && <p class="curr-table-subheading">{table.subheading}</p>}
+                  <div class="curr-table-scroll">
+                    <table class="curr-table">
+                      <thead>
+                        <tr>
+                          <th>{ageLabel}</th>
+                          <th>{table.header === 'yearClass' ? yearClassLabel : classLabel}</th>
+                          <th>{assessmentLabel}</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {table.rows.map((row) => (
+                          <tr>
+                            <td>{row[0]}</td>
+                            <td>{row[1]}</td>
+                            <td>{row[2]}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .curriculum-section .section-head { max-width: 68ch; margin-bottom: 3rem; }
+  .curriculum-section .lede { margin-top: 1rem; color: var(--ink-soft); }
+
+  .curr-tracks {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+    align-items: start;
+  }
+
+  .curr-track-head { margin-bottom: 1.6rem; }
+  .curr-track-head h3 {
+    font-size: var(--step-2);
+    color: var(--oxford);
+  }
+  .curr-track-subtitle {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    margin-top: 0.4rem;
+  }
+
+  .curr-stage {
+    position: relative;
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.6rem 1.6rem 1.6rem 2rem;
+    margin-bottom: 1.6rem;
+    overflow: hidden;
+  }
+  .curr-stage::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 9px;
+  }
+  .curr-stage[data-accent="navy"]::before { background: linear-gradient(180deg, var(--oxford), var(--oxford-deep)); }
+  .curr-stage[data-accent="yellow"]::before { background: linear-gradient(180deg, var(--yellow-soft), var(--yellow)); }
+  .curr-stage[data-accent="blue"]::before { background: linear-gradient(180deg, var(--true-blue), var(--true-blue-ink)); }
+  .curr-stage[data-accent="red"]::before { background: linear-gradient(180deg, var(--orange), var(--orange-ink)); }
+
+  .curr-stage-head { margin-bottom: 1.1rem; }
+  .curr-stage-head h4 {
+    font-size: 1.2rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--oxford);
+  }
+  .curr-stage-subtitle {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--track-label);
+    color: var(--orange);
+    margin-top: 0.2rem;
+  }
+
+  .curr-table-block + .curr-table-block { margin-top: 1.2rem; }
+  .curr-table-subheading {
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: var(--track-label);
+    color: var(--true-blue);
+    margin-bottom: 0.6rem;
+  }
+  .curr-table-scroll { overflow-x: auto; }
+  .curr-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+  .curr-table th {
+    text-align: left;
+    color: var(--true-blue);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--line);
+    white-space: nowrap;
+  }
+  .curr-table td {
+    padding: 0.6rem 0.8rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .curr-table tbody tr:last-child td { border-bottom: none; }
+  .curr-table tbody tr:nth-child(odd) { background: var(--mist); }
+  .curr-table td:first-child { white-space: nowrap; color: var(--ink-soft); }
+
+  @media (max-width: 940px) {
+    .curr-tracks { grid-template-columns: 1fr; gap: 0; }
+  }
+</style>

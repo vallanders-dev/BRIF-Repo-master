@@ -22,12 +22,29 @@ const enrolHref = localizedPath(lang, 'enrol');
             <span class="prog-num">{String(i + 1).padStart(2, '0')}</span>
             <h3>{item.title}</h3>
             <p>{item.text}</p>
+            {item.more && (
+              <button type="button" class="read-more-btn" data-modal-open={`prog-modal-${i}`}>
+                {c.readMoreLabel}<span class="arw" aria-hidden="true">→</span>
+              </button>
+            )}
           </div>
         </article>
       ))}
     </div>
   </div>
 </section>
+
+{c.items.map((item, i) => item.more && (
+  <div class="modal-backdrop" id={`prog-modal-${i}`} data-modal-backdrop hidden>
+    <div class="modal-box" role="dialog" aria-modal="true" aria-labelledby={`prog-modal-${i}-title`}>
+      <button type="button" class="modal-close" data-modal-close aria-label={c.closeLabel}>
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"></path></svg>
+      </button>
+      <h3 id={`prog-modal-${i}-title`}>{item.title}</h3>
+      {item.more.map((para) => <p>{para}</p>)}
+    </div>
+  </div>
+))}
 
 <section class="section section--mist">
   <div class="wrap prog-cta" data-reveal>
@@ -100,6 +117,73 @@ const enrolHref = localizedPath(lang, 'enrol');
   @media (max-width: 640px) {
     .prog-card p { text-align: left; }
   }
+
+  .read-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.9rem;
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--true-blue);
+    font-weight: 600;
+    font-size: 0.92rem;
+    cursor: pointer;
+  }
+  .read-more-btn:hover { color: var(--orange); }
+  .read-more-btn .arw { transition: transform 0.2s ease; }
+  .read-more-btn:hover .arw { transform: translateX(3px); }
+
+  /* Read-more modal */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(10, 18, 36, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    z-index: 200;
+  }
+  .modal-backdrop[hidden] { display: none; }
+  .modal-box {
+    position: relative;
+    background: var(--paper);
+    border-radius: var(--radius);
+    max-width: 640px;
+    width: 100%;
+    max-height: 85vh;
+    overflow-y: auto;
+    padding: 2.4rem 2.2rem 2.2rem;
+    box-shadow: 0 30px 60px -15px rgba(0,0,0,0.5);
+  }
+  .modal-box h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    padding-right: 1.5rem;
+  }
+  .modal-box p {
+    color: var(--ink-soft);
+    font-size: 0.98rem;
+    line-height: 1.7;
+    margin-bottom: 1.1rem;
+  }
+  .modal-box p:last-child { margin-bottom: 0; }
+  .modal-close {
+    position: absolute;
+    top: 1.2rem; right: 1.2rem;
+    width: 36px; height: 36px;
+    display: grid;
+    place-items: center;
+    background: var(--mist);
+    border: none;
+    border-radius: 50%;
+    color: var(--ink);
+    cursor: pointer;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  .modal-close:hover { background: var(--orange); color: #fff; }
 
   .prog-cta {
     display: flex;

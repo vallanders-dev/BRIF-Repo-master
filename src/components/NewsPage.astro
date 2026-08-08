@@ -69,6 +69,21 @@ const dateFmt = (iso) =>
   </div>
 </section>
 
+<div id="fb-root"></div>
+<script>
+  (function (d, s, id) {
+    if (d.getElementById(id)) return;
+    var js = d.createElement(s);
+    js.id = id;
+    // @ts-ignore — d.createElement(s) is always a <script> tag here (see call at bottom)
+    js.src = 'https://connect.facebook.net/' +
+      (document.documentElement.lang === 'fr' ? 'fr_FR' : 'en_GB') +
+      '/sdk.js#xfbml=1&version=v19.0';
+    var fjs = d.getElementsByTagName(s)[0];
+    fjs.parentNode.insertBefore(js, fjs);
+  })(document, 'script', 'facebook-jssdk');
+</script>
+
 <style>
   .intro-lede { max-width: 60ch; margin-bottom: 3rem; }
   .news-list { display: grid; gap: 1.6rem; }
