@@ -1,0 +1,60 @@
+---
+import { content, reglementInterieurPages } from '../data/content.js';
+import PageHero from './PageHero.astro';
+import { localizedPath } from '../i18n/ui.js';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].reglementInterieur;
+const parentsHref = localizedPath(lang, 'parents');
+---
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="reglementInterieur" />
+
+<section class="section">
+  <div class="wrap ri-wrap">
+    <p class="lede intro-lede" data-reveal>{c.intro}</p>
+
+    <div class="ri-viewer" oncontextmenu="return false">
+      {reglementInterieurPages.map((src, i) => (
+        <img
+          src={src}
+          alt={`Règlement Intérieur / Internal Regulations — page ${i + 1}`}
+          loading={i < 2 ? 'eager' : 'lazy'}
+          draggable="false"
+        />
+      ))}
+    </div>
+
+    <a href={parentsHref} class="btn btn--ghost back-link">
+      <span class="arw arw--back" aria-hidden="true">←</span>{c.backToParents}
+    </a>
+  </div>
+</section>
+
+<style>
+  .ri-wrap { max-width: 900px; }
+  .intro-lede { margin-bottom: 2.5rem; }
+
+  .ri-viewer {
+    display: grid;
+    gap: 1.2rem;
+    margin-bottom: 2.5rem;
+  }
+  .ri-viewer img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .arw--back { transition: transform 0.2s ease; }
+  .back-link:hover .arw--back { transform: translateX(-3px); }
+</style>

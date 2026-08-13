@@ -182,6 +182,15 @@ export const schoolCalendar = [
   },
 ];
 
+// Règlement Intérieur / Internal Regulations — the source PDF is already a
+// single bilingual document (EN/FR side by side on every page), rendered here
+// as page images rather than linked as a downloadable file. Shared across
+// languages for the same reason as schoolCalendar: one set of pages, not two.
+export const reglementInterieurPages = Array.from(
+  { length: 14 },
+  (_, i) => `/images/reglement-interieur/page-${String(i + 1).padStart(2, '0')}.png`
+);
+
 export const content = {
   en: {
     home: {
@@ -551,7 +560,7 @@ export const content = {
       documents: [
         { title: 'School supply lists', description: 'Per-level supply lists for the English and French programmes.', status: 'comingSoon' },
         { title: 'Uniform & dress code', description: 'What students wear day-to-day and for special occasions.', status: 'comingSoon' },
-        { title: 'Règlement Intérieur (school rules)', description: "The school's internal regulations, shared and signed at enrolment.", status: 'comingSoon' },
+        { title: 'Règlement Intérieur (school rules)', description: "The school's internal regulations, shared and signed at enrolment.", status: 'available', href: '/en/parents/internal-regulations/', linkLabel: 'View', external: false },
         { title: 'Transport & bus routes', description: 'Routes, stops, and how to arrange transport for your child.', status: 'comingSoon' },
         { title: 'Canteen information', description: 'Menus and how the canteen works.', status: 'comingSoon' },
       ],
@@ -567,6 +576,12 @@ export const content = {
       title: 'School Calendar',
       intro: "Confirmed key dates for the school year. More dates — term breaks, holidays, exams, and PTA meetings — will be added here as they're confirmed.",
       typeLabels: { term: 'Term', holiday: 'Holiday', exam: 'Exam', pta: 'PTA meeting', event: 'Event' },
+      backToParents: 'Back to Parents',
+    },
+    reglementInterieur: {
+      kicker: 'For BRIF families',
+      title: 'Internal Regulations',
+      intro: 'The official Règlement Intérieur / Internal Regulations, shown here in the original bilingual document for reference. Every parent acknowledges these regulations at enrolment.',
       backToParents: 'Back to Parents',
     },
     contact: {
@@ -1146,7 +1161,7 @@ export const content = {
       documents: [
         { title: 'Listes de fournitures scolaires', description: 'Listes de fournitures par niveau, pour les programmes anglais et français.', status: 'comingSoon' },
         { title: 'Uniforme et tenue vestimentaire', description: 'La tenue au quotidien et pour les occasions spéciales.', status: 'comingSoon' },
-        { title: 'Règlement Intérieur', description: 'Le règlement intérieur de l’école, remis et signé à l’inscription.', status: 'comingSoon' },
+        { title: 'Règlement Intérieur', description: 'Le règlement intérieur de l’école, remis et signé à l’inscription.', status: 'available', href: '/fr/parents/reglement-interieur/', linkLabel: 'Consulter', external: false },
         { title: 'Transport et circuits de bus', description: 'Les circuits, arrêts, et comment organiser le transport de votre enfant.', status: 'comingSoon' },
         { title: 'Informations sur la cantine', description: 'Les menus et le fonctionnement de la cantine.', status: 'comingSoon' },
       ],
@@ -1162,6 +1177,12 @@ export const content = {
       title: 'Calendrier scolaire',
       intro: 'Les dates clés confirmées pour l’année scolaire. D’autres dates — vacances, examens et réunions APE — seront ajoutées ici au fur et à mesure qu’elles seront confirmées.',
       typeLabels: { term: 'Rentrée', holiday: 'Vacances', exam: 'Examen', pta: 'Réunion APE', event: 'Évènement' },
+      backToParents: 'Retour à Parents',
+    },
+    reglementInterieur: {
+      kicker: 'Pour les familles de la BRIF',
+      title: 'Règlement Intérieur',
+      intro: 'Le Règlement Intérieur officiel, présenté ici dans le document bilingue original à titre de référence. Chaque parent en prend connaissance et l’accepte lors de l’inscription.',
       backToParents: 'Retour à Parents',
     },
     contact: {

@@ -93,6 +93,7 @@ export const routes = {
   admissions: { en: 'admissions',  fr: 'admissions' },
   parents:         { en: 'parents',          fr: 'parents' },
   parentsCalendar: { en: 'parents/calendar', fr: 'parents/calendar' },
+  reglementInterieur: { en: 'parents/internal-regulations', fr: 'parents/reglement-interieur' },
   contact:    { en: 'contact',     fr: 'contact' },
   enrol:      { en: 'enrol',       fr: 'inscription' },
   legal:      { en: 'legal-mentions', fr: 'mentions-legales' },

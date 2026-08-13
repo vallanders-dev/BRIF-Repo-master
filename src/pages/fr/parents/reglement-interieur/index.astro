@@ -1,0 +1,10 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import ReglementInterieurPage from '../../../../components/ReglementInterieurPage.astro';
+import { content } from '../../../../data/content.js';
+const lang = 'fr';
+const c = content[lang].reglementInterieur;
+---
+<Base lang={lang} routeKey="reglementInterieur" title={c.title} description={c.intro}>
+  <ReglementInterieurPage lang={lang} />
+</Base>

@@ -22,8 +22,8 @@ const calendarHref = localizedPath(lang, 'parentsCalendar');
           <h3>{doc.title}</h3>
           <p>{doc.description}</p>
           {doc.status === 'available' && doc.href ? (
-            <a href={doc.href} class="doc-link" target="_blank" rel="noopener">
-              {c.downloadLabel}<span class="arw" aria-hidden="true">→</span>
+            <a href={doc.href} class="doc-link" {...(doc.external !== false ? { target: '_blank', rel: 'noopener' } : {})}>
+              {doc.linkLabel ?? c.downloadLabel}<span class="arw" aria-hidden="true">→</span>
             </a>
           ) : (
             <span class="doc-badge">{c.comingSoonLabel}</span>
