@@ -1,0 +1,10 @@
+---
+import Base from '../../../layouts/Base.astro';
+import ParentsHubPage from '../../../components/ParentsHubPage.astro';
+import { content } from '../../../data/content.js';
+const lang = 'fr';
+const c = content[lang].parentsHub;
+---
+<Base lang={lang} routeKey="parents" title={c.title} description={c.intro}>
+  <ParentsHubPage lang={lang} />
+</Base>

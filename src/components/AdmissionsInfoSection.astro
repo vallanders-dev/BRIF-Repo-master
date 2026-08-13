@@ -1,5 +1,6 @@
 ---
 import { content } from '../data/content.js';
+import { localizedPath } from '../i18n/ui.js';
 
 const { lang = 'en' } = Astro.props;
 const c = content[lang].programsHub;
@@ -24,7 +25,17 @@ const c = content[lang].programsHub;
               </li>
             ))}
           </ul>
-          {card.footnote && <p class="info-footnote">{card.footnote}</p>}
+          {card.footnote && (
+            <p class="info-footnote">
+              {card.footnote}
+              {card.footnoteLinkKey && (
+                <>
+                  {' '}
+                  <a href={localizedPath(lang, card.footnoteLinkKey)} class="info-footnote-link">{card.footnoteLinkLabel}</a>
+                </>
+              )}
+            </p>
+          )}
         </div>
       ))}
     </div>
@@ -108,6 +119,12 @@ const c = content[lang].programsHub;
     font-style: italic;
     text-align: left;
     line-height: 1.6;
+  }
+  .info-footnote-link {
+    color: currentColor;
+    font-weight: 600;
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
   @media (max-width: 780px) {

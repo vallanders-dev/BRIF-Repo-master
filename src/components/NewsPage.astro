@@ -7,10 +7,15 @@ const c = content[lang].news;
 const fb = content[lang].fbModule;
 const items = news[lang];
 
-const dateFmt = (iso) =>
-  new Date(iso).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', {
+const dateFmt = (iso) => {
+  // Parse as local-timezone date components, not a UTC instant — new Date(iso)
+  // on a date-only string parses as UTC midnight, which can render as the
+  // previous day for any viewer west of UTC.
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', {
     day: 'numeric', month: 'long', year: 'numeric',
   });
+};
 ---
 <PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="news" />
 

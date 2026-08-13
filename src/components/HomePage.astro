@@ -16,10 +16,15 @@ const enrolHref = localizedPath(lang, 'enrol');
 const social = content[lang].social;
 const tourWhatsappHref = `https://wa.me/${site.whatsapp}?text=${encodeURIComponent(c.tourWhatsappMessage)}`;
 
-const dateFmt = (iso) =>
-  new Date(iso).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', {
+const dateFmt = (iso) => {
+  // Parse as local-timezone date components, not a UTC instant — new Date(iso)
+  // on a date-only string parses as UTC midnight, which can render as the
+  // previous day for any viewer west of UTC.
+  const [y, m, d] = iso.split('-').map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', {
     day: 'numeric', month: 'long', year: 'numeric',
   });
+};
 ---
 
 <!-- HERO -->

@@ -1,0 +1,112 @@
+---
+import { content } from '../data/content.js';
+import PageHero from './PageHero.astro';
+import { localizedPath } from '../i18n/ui.js';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].parentsHub;
+const calendarHref = localizedPath(lang, 'parentsCalendar');
+---
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="parents" />
+
+<section class="section">
+  <div class="wrap">
+    <p class="lede intro-lede" data-reveal>{c.intro}</p>
+
+    <div class="section-head" data-reveal>
+      <h2>{c.documentsTitle}</h2>
+    </div>
+    <div class="doc-grid">
+      {c.documents.map((doc, i) => (
+        <article class="doc-card" data-reveal class:list={[`d${Math.min(i + 1, 4)}`]}>
+          <h3>{doc.title}</h3>
+          <p>{doc.description}</p>
+          {doc.status === 'available' && doc.href ? (
+            <a href={doc.href} class="doc-link" target="_blank" rel="noopener">
+              {c.downloadLabel}<span class="arw" aria-hidden="true">→</span>
+            </a>
+          ) : (
+            <span class="doc-badge">{c.comingSoonLabel}</span>
+          )}
+        </article>
+      ))}
+    </div>
+  </div>
+</section>
+
+<section class="section section--mist">
+  <div class="wrap calendar-teaser" data-reveal>
+    <div>
+      <p class="eyebrow">{c.calendarTeaserKicker}</p>
+      <h2>{c.calendarTeaserTitle}</h2>
+      <p>{c.calendarTeaserText}</p>
+    </div>
+    <a href={calendarHref} class="btn">{c.calendarTeaserButton}<span class="arw" aria-hidden="true">→</span></a>
+  </div>
+</section>
+
+<style>
+  .intro-lede { max-width: 60ch; margin-bottom: 3rem; }
+  .section-head { margin-bottom: 2rem; }
+  .section-head h2 { font-size: var(--step-3); }
+
+  .doc-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.4rem;
+  }
+  .doc-card {
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.7rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .doc-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+  .doc-card h3 { font-size: 1.15rem; }
+  .doc-card p { color: var(--ink-soft); font-size: 0.92rem; line-height: 1.55; flex: 1; }
+
+  .doc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.4rem;
+    color: var(--true-blue);
+    font-weight: 600;
+    font-size: 0.92rem;
+  }
+  .doc-link:hover { color: var(--orange); }
+  .doc-link .arw { transition: transform 0.2s ease; }
+  .doc-link:hover .arw { transform: translateX(3px); }
+
+  .doc-badge {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    margin-top: 0.4rem;
+    padding: 0.3rem 0.7rem;
+    border-radius: 999px;
+    background: var(--mist);
+    color: var(--ink-soft);
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .calendar-teaser {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  .calendar-teaser .eyebrow { margin-bottom: 0.6rem; }
+  .calendar-teaser h2 { font-size: var(--step-3); margin-bottom: 0.6rem; }
+  .calendar-teaser p:not(.eyebrow) { color: var(--ink-soft); max-width: 46ch; }
+
+  @media (max-width: 940px) { .doc-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 640px) { .doc-grid { grid-template-columns: 1fr; } }
+</style>

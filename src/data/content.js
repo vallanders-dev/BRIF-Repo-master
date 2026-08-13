@@ -166,6 +166,22 @@ export const curriculumTracks = [
   },
 ];
 
+// School calendar events, shared across languages — dates are facts, only the
+// label translates, so they can't drift between the EN and FR pages. This is
+// also the shape a future ERP/API would return, so swapping this array for a
+// fetch later is a data-source change, not a component rewrite.
+// Only school-confirmed dates belong here. Term breaks, holidays, exam dates,
+// and PTA meeting dates get added as the school confirms each one — do not
+// invent plausible-looking dates to fill this out.
+// `type` is one of: 'term' | 'holiday' | 'exam' | 'pta' | 'event'.
+export const schoolCalendar = [
+  {
+    date: '2026-09-14',
+    type: 'term',
+    label: { en: 'First day of the 2026–2027 school year', fr: 'Rentrée scolaire 2026-2027' },
+  },
+];
+
 export const content = {
   en: {
     home: {
@@ -408,7 +424,9 @@ export const content = {
             'Three (3) plastic sleeve folders.',
             'Three (3) packs of A4 paper (80gsm), or the sum of 8,000 F per child.',
           ],
-          footnote: 'NOTE: The list of school supplies and fees, for both the English and French programmes, will be communicated before the start of the school year.',
+          footnote: 'NOTE: The list of school supplies and fees, for both the English and French programmes, will be published in the Parents area before the start of the school year.',
+          footnoteLinkKey: 'parents',
+          footnoteLinkLabel: 'Go to the Parents area',
         },
       ],
       curriculumKicker: 'Our curriculum',
@@ -515,15 +533,41 @@ export const content = {
         { q: 'Can my child transfer mid-year?', a: "Yes, subject to availability. Contact our admissions team to check current openings for your child's grade." },
         { q: 'How do I arrange a visit?', a: 'Use the contact page or call the school office, and we will arrange a convenient time.' },
         { q: 'What is the fee structure?', a: "Tuition is paid in three installments: 60% at enrolment, 20% in mid-November, and 20% in mid-January. Families who pay in full at enrolment receive a 5% discount. For the exact document checklist and age cutoffs (including the August 31 cutoff for Maternelle 1), see the Fees & Admission Requirements section on the Programmes page." },
-        { q: 'When does the school year start and end?', a: 'The 2026–2027 school year begins on 14 September 2026. The end date will be confirmed soon, and the full school calendar will be published here shortly.' },
+        { q: 'When does the school year start and end?', a: 'The 2026–2027 school year begins on 14 September 2026. The end date will be confirmed soon.', linkKey: 'parentsCalendar', linkLabel: 'See the school calendar' },
         { q: 'What are the school hours?', a: 'School session begins at as early as 7:30 and ends at 15:30.' },
-        { q: 'What are PTA meetings?', a: "Parent Teacher Association (PTA) meetings are annual meetings, usually about a month after resumption, which bring together parents/guardians, teachers, and the school's administration. During these 2 hour-long meetings, the school administration presents the school, and its objectives to parents, after which questions from parents are answered." },
+        { q: 'What are PTA meetings?', a: "Parent Teacher Association (PTA) meetings are annual meetings, usually about a month after resumption, which bring together parents/guardians, teachers, and the school's administration. During these 2 hour-long meetings, the school administration presents the school, and its objectives to parents, after which questions from parents are answered.", linkKey: 'parentsCalendar', linkLabel: 'See PTA meeting dates' },
         { q: 'Does the school have a transport facility?', a: 'Yes, the school has buses for the transport of students. In addition, the school partners with a transport facility with which parents/guardians can discuss information relative to transportation of their children.' },
         { q: 'Does the school have a canteen?', a: 'Yes, canteen services are available on our premises and offer a variety of meals.' },
         { q: 'Does the school have boarding facilities?', a: 'No, the school does not currently offer boarding facilities.' },
       ],
       ctaText: 'Ready to take the first step?',
       ctaButton: 'Contact admissions',
+    },
+    parentsHub: {
+      kicker: 'For BRIF families',
+      title: 'Parents',
+      intro: 'A single place for the forms, lists, and dates that come up most often once your child is enrolled.',
+      documentsTitle: 'Documents & lists',
+      documents: [
+        { title: 'School supply lists', description: 'Per-level supply lists for the English and French programmes.', status: 'comingSoon' },
+        { title: 'Uniform & dress code', description: 'What students wear day-to-day and for special occasions.', status: 'comingSoon' },
+        { title: 'Règlement Intérieur (school rules)', description: "The school's internal regulations, shared and signed at enrolment.", status: 'comingSoon' },
+        { title: 'Transport & bus routes', description: 'Routes, stops, and how to arrange transport for your child.', status: 'comingSoon' },
+        { title: 'Canteen information', description: 'Menus and how the canteen works.', status: 'comingSoon' },
+      ],
+      comingSoonLabel: 'Coming soon',
+      downloadLabel: 'Download',
+      calendarTeaserKicker: 'Key dates',
+      calendarTeaserTitle: 'School calendar',
+      calendarTeaserText: 'Term dates, holidays, and key events for the school year.',
+      calendarTeaserButton: 'View the calendar',
+    },
+    parentsCalendar: {
+      kicker: 'For BRIF families',
+      title: 'School Calendar',
+      intro: "Confirmed key dates for the school year. More dates — term breaks, holidays, exams, and PTA meetings — will be added here as they're confirmed.",
+      typeLabels: { term: 'Term', holiday: 'Holiday', exam: 'Exam', pta: 'PTA meeting', event: 'Event' },
+      backToParents: 'Back to Parents',
     },
     contact: {
       title: 'Contact',
@@ -975,7 +1019,9 @@ export const content = {
             'Trois (3) Porte-vues.',
             'Trois (3) paquets de feuilles A4 (80 G) ou la somme de 8 000 F par Enfant.',
           ],
-          footnote: 'NOTA : La liste des fournitures scolaires et les frais, pour les deux programmes Anglais et Français, sera communiquée avant la Rentrée Scolaire.',
+          footnote: 'NOTA : La liste des fournitures scolaires et les frais, pour les deux programmes Anglais et Français, sera publiée dans l’espace Parents avant la Rentrée Scolaire.',
+          footnoteLinkKey: 'parents',
+          footnoteLinkLabel: 'Accéder à l’espace Parents',
         },
       ],
       curriculumKicker: 'Notre programme',
@@ -1082,15 +1128,41 @@ export const content = {
         { q: "Mon enfant peut-il effectuer un transfert en cours d'année ?", a: "Oui, sous réserve de disponibilité. Contactez notre équipe des admissions pour connaître les places disponibles dans le niveau de votre enfant." },
         { q: 'Comment organiser une visite ?', a: 'Utilisez la page contact ou appelez le secrétariat, et nous fixerons un rendez-vous.' },
         { q: 'Quelle est la structure des frais de scolarité ?', a: "Les frais de scolarité sont payés en trois versements : 60 % à l'inscription, 20 % à la mi-novembre et 20 % à la mi-janvier. Les familles qui règlent l'intégralité à l'inscription bénéficient d'une réduction de 5 %. Pour la liste exacte des documents requis et les dates limites d'âge (dont la date limite du 31 août pour la Maternelle 1), consultez la section « Frais et Conditions d'Admission » de la page Programmes." },
-        { q: 'Quand débute l’année scolaire et quand se termine-t-elle ?', a: 'L’année scolaire 2026-2027 débute le 14 septembre 2026. La date de fin sera confirmée prochainement, et le calendrier scolaire complet sera bientôt disponible ici.' },
+        { q: 'Quand débute l’année scolaire et quand se termine-t-elle ?', a: 'L’année scolaire 2026-2027 débute le 14 septembre 2026. La date de fin sera confirmée prochainement.', linkKey: 'parentsCalendar', linkLabel: 'Voir le calendrier scolaire' },
         { q: 'Quels sont les horaires de l’école ?', a: 'Les cours débutent dès 7h30 et se terminent à 15h30.' },
-        { q: 'Que sont les réunions de l’APE ?', a: 'Les réunions de l’Association des Parents d’Élèves (APE) sont des réunions annuelles, organisées généralement environ un mois après la rentrée, qui rassemblent les parents/tuteurs, les enseignants et la direction de l’école. Pendant ces réunions d’une durée de deux heures, la direction présente l’école et ses objectifs aux parents, avant de répondre à leurs questions.' },
+        { q: 'Que sont les réunions de l’APE ?', a: 'Les réunions de l’Association des Parents d’Élèves (APE) sont des réunions annuelles, organisées généralement environ un mois après la rentrée, qui rassemblent les parents/tuteurs, les enseignants et la direction de l’école. Pendant ces réunions d’une durée de deux heures, la direction présente l’école et ses objectifs aux parents, avant de répondre à leurs questions.', linkKey: 'parentsCalendar', linkLabel: 'Voir les dates des réunions APE' },
         { q: 'L’école propose-t-elle un service de transport ?', a: 'Oui, l’école dispose de bus pour le transport des élèves. De plus, l’école est partenaire d’un service de transport avec lequel les parents/tuteurs peuvent échanger des informations relatives au transport de leurs enfants.' },
         { q: 'L’école dispose-t-elle d’une cantine ?', a: 'Oui, un service de cantine est disponible sur place et propose une variété de repas.' },
         { q: 'L’école dispose-t-elle d’internat ?', a: 'Non, l’école ne propose pas actuellement de service d’internat.' },
       ],
       ctaText: 'Prêt à faire le premier pas ?',
       ctaButton: 'Contacter les admissions',
+    },
+    parentsHub: {
+      kicker: 'Pour les familles de la BRIF',
+      title: 'Parents',
+      intro: 'Un espace unique pour les formulaires, listes et dates qui reviennent le plus souvent une fois votre enfant inscrit.',
+      documentsTitle: 'Documents et listes',
+      documents: [
+        { title: 'Listes de fournitures scolaires', description: 'Listes de fournitures par niveau, pour les programmes anglais et français.', status: 'comingSoon' },
+        { title: 'Uniforme et tenue vestimentaire', description: 'La tenue au quotidien et pour les occasions spéciales.', status: 'comingSoon' },
+        { title: 'Règlement Intérieur', description: 'Le règlement intérieur de l’école, remis et signé à l’inscription.', status: 'comingSoon' },
+        { title: 'Transport et circuits de bus', description: 'Les circuits, arrêts, et comment organiser le transport de votre enfant.', status: 'comingSoon' },
+        { title: 'Informations sur la cantine', description: 'Les menus et le fonctionnement de la cantine.', status: 'comingSoon' },
+      ],
+      comingSoonLabel: 'Bientôt disponible',
+      downloadLabel: 'Télécharger',
+      calendarTeaserKicker: 'Dates clés',
+      calendarTeaserTitle: 'Calendrier scolaire',
+      calendarTeaserText: 'Dates de rentrée, vacances et évènements clés de l’année scolaire.',
+      calendarTeaserButton: 'Voir le calendrier',
+    },
+    parentsCalendar: {
+      kicker: 'Pour les familles de la BRIF',
+      title: 'Calendrier scolaire',
+      intro: 'Les dates clés confirmées pour l’année scolaire. D’autres dates — vacances, examens et réunions APE — seront ajoutées ici au fur et à mesure qu’elles seront confirmées.',
+      typeLabels: { term: 'Rentrée', holiday: 'Vacances', exam: 'Examen', pta: 'Réunion APE', event: 'Évènement' },
+      backToParents: 'Retour à Parents',
     },
     contact: {
       title: 'Contact',

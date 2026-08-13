@@ -331,7 +331,7 @@ img { max-width: 100%; height: auto; display: block; }
   transition: max-height 0.3s ease;
   color: var(--ink-soft);
 }
-.acc-item.is-open .acc-a { max-height: 320px; }
+.acc-item.is-open .acc-a { max-height: 360px; }
 .acc-a-inner { padding: 0 0 1.3rem; max-width: 62ch; }
 
 /* Reveal stagger helpers */

@@ -1,0 +1,10 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import ParentsCalendarPage from '../../../../components/ParentsCalendarPage.astro';
+import { content } from '../../../../data/content.js';
+const lang = 'fr';
+const c = content[lang].parentsCalendar;
+---
+<Base lang={lang} routeKey="parentsCalendar" title={c.title} description={c.intro}>
+  <ParentsCalendarPage lang={lang} />
+</Base>
