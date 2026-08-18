@@ -1,14 +1,21 @@
 ---
+import { Image } from 'astro:assets';
 import { content } from '../data/content.js';
 import PageHero from './PageHero.astro';
 import AdmissionsInfoSection from './AdmissionsInfoSection.astro';
 import CurriculumSection from './CurriculumSection.astro';
 import { localizedPath } from '../i18n/ui.js';
+import classicPhoto from '../assets/photos/brif-primary-hallway.jpg';
+import cambridgePhoto from '../assets/photos/brif-basketball-play.jpg';
+import imiPhoto from '../assets/photos/brif-older-students-group.jpg';
 
 const { lang = 'en' } = Astro.props;
 const c = content[lang].programsHub;
 const enrolHref = localizedPath(lang, 'enrol');
 const learnMore = lang === 'fr' ? 'En savoir plus' : 'Learn more';
+
+// Positional match to c.tracks (Classic, Cambridge, IMI).
+const trackPhotos = [classicPhoto, cambridgePhoto, imiPhoto];
 ---
 <PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="programs" />
 
@@ -19,7 +26,7 @@ const learnMore = lang === 'fr' ? 'En savoir plus' : 'Learn more';
       {c.tracks.map((track, i) => (
         <a href={localizedPath(lang, track.routeKey)} class="track-card" data-accent={track.routeKey} data-reveal class:list={[`d${i + 1}`]}>
           <div class="track-card-img">
-            <img src={track.image} alt={track.title} loading="lazy" />
+            <Image src={trackPhotos[i]} alt={track.title} width={500} widths={[350, 500, 750]} sizes="(max-width: 900px) 100vw, 350px" loading="lazy" />
           </div>
           <div class="track-card-body">
             <h3>{track.title}</h3>

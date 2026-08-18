@@ -1,11 +1,20 @@
 ---
+import { Image } from 'astro:assets';
 import { content } from '../data/content.js';
 import PageHero from './PageHero.astro';
 import { localizedPath } from '../i18n/ui.js';
+import earlyYearsPhoto from '../assets/photos/brif-early-years-desk.jpg';
+import primaryPhoto from '../assets/photos/brif-primary-hallway.jpg';
+import lowerSecondaryPhoto from '../assets/photos/brif-basketball-play.jpg';
+import upperSecondaryPhoto from '../assets/photos/brif-graduate-portrait.jpg';
 
 const { lang = 'en' } = Astro.props;
 const c = content[lang].programs;
 const enrolHref = localizedPath(lang, 'enrol');
+
+// Positional match to c.items (Early Years, Primary School, Lower Secondary,
+// Upper Secondary) — same pattern as LifePage.astro's highlightImages.
+const itemPhotos = [earlyYearsPhoto, primaryPhoto, lowerSecondaryPhoto, upperSecondaryPhoto];
 ---
 <PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="programs" />
 
@@ -16,7 +25,7 @@ const enrolHref = localizedPath(lang, 'enrol');
       {c.items.map((item, i) => (
         <article class="prog-card" data-reveal class:list={[`d${i + 1}`]}>
           <div class="prog-card-img">
-            <img src={item.image} alt={item.title} loading="lazy" />
+            <Image src={itemPhotos[i]} alt={item.title} width={600} widths={[400, 600, 900]} sizes="(max-width: 640px) 100vw, 400px" loading="lazy" />
           </div>
           <div class="prog-card-body">
             <span class="prog-num">{String(i + 1).padStart(2, '0')}</span>

@@ -1,15 +1,22 @@
 ---
+import { Image } from 'astro:assets';
 import { content } from '../data/content.js';
 import PageHero from './PageHero.astro';
+import heroPhoto from '../assets/photos/brif-playground-climbing.jpg';
+import sportsPhoto from '../assets/photos/brif-sports-football.jpg';
+import artsPhoto from '../assets/photos/brif-cultural-day-presentation.jpg';
+import clubsPhoto from '../assets/photos/brif-drone-stem.jpg';
+import servicePhoto from '../assets/photos/brif-first-aid-training.jpg';
 
 const { lang = 'en' } = Astro.props;
 const c = content[lang].life;
 
 // Highlight photos, matched by position to c.highlights (Sports & play,
-// Arts & culture, Clubs & societies, Service & values).
-const highlightImages = ['/images/sport-and-play.jpg', '/images/art-and-culture.jpg', '/images/clubs-and-societies.jpg', '/images/service-and-values.jpg'];
+// Arts & culture, Clubs & societies, Service & values). Alt text lives in
+// content.js (c.highlights[i].imageAlt) so it stays translated per language.
+const highlightImages = [sportsPhoto, artsPhoto, clubsPhoto, servicePhoto];
 ---
-<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="life" />
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="life" image={heroPhoto} imagePosition="center 78%" />
 
 <section class="section">
   <div class="wrap life-intro">
@@ -33,7 +40,7 @@ const highlightImages = ['/images/sport-and-play.jpg', '/images/art-and-culture.
       {c.highlights.map((h, i) => (
         <article class="life-card" data-reveal class:list={[`d${Math.min(i + 1, 4)}`]}>
           {highlightImages[i]
-            ? <div class="life-card-img life-card-img--photo"><img src={highlightImages[i]} alt="" width="400" height="300" loading="lazy" /></div>
+            ? <div class="life-card-img life-card-img--photo"><Image src={highlightImages[i]} alt={h.imageAlt ?? ''} width={400} height={300} widths={[300, 400, 600]} sizes="(max-width: 480px) 100vw, 130px" loading="lazy" /></div>
             : <div class="life-card-img" aria-hidden="true"><span>📷</span></div>}
           <div class="life-card-body">
             <h3>{h.title}</h3>
@@ -89,8 +96,20 @@ const highlightImages = ['/images/sport-and-play.jpg', '/images/art-and-culture.
   }
   .life-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
   .life-card-img { font-size: 1.8rem; border: none; border-right: 1px dashed var(--true-blue); border-radius: 0; }
-  .life-card-img--photo { border-right: none; padding: 0; background: none; }
-  .life-card-img--photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .life-card-img--photo {
+    border-right: none;
+    padding: 0;
+    background: none;
+    position: relative;
+    /* Absolutely positioning the img keeps it from contributing its own
+       intrinsic (source-photo) aspect ratio to this grid row's height —
+       the container just stretches (default grid behavior) to match
+       whatever height the row ends up being, driven by the body text
+       column instead. Without this, a portrait-oriented source photo
+       inflates the whole row, or a fixed aspect-ratio here leaves a gap
+       below the image on any row a taller sibling stretches out. */
+  }
+  .life-card-img--photo img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; }
   .life-card-body { padding: 1.4rem; }
   .life-card-body h3 { font-size: 1.3rem; margin-bottom: 0.4rem; }
   .life-card-body p { color: var(--ink-soft); font-size: 0.95rem; }

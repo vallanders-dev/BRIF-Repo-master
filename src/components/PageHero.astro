@@ -1,13 +1,20 @@
 ---
+import { Image } from 'astro:assets';
 import { site } from '../data/content.js';
 import { localizedPath, useTranslations } from '../i18n/ui.js';
 
-const { lang = 'en', kicker, title, routeKey } = Astro.props;
+const { lang = 'en', kicker, title, routeKey, image, imagePosition = 'center 30%' } = Astro.props;
 const t = useTranslations(lang);
 const homeHref = localizedPath(lang, 'home');
 ---
-<section class="page-hero">
+<section class="page-hero" class:list={[{ 'page-hero--photo': !!image }]}>
   <div class="page-hero-bg" aria-hidden="true">
+    {image && (
+      <>
+        <Image src={image} alt="" class="ph-photo" style={`object-position: ${imagePosition}`} width={1200} widths={[480, 768, 1200]} sizes="100vw" format="webp" quality={80} loading="eager" />
+        <span class="ph-scrim"></span>
+      </>
+    )}
     <span class="ph-orb"></span>
     <span class="ph-grid"></span>
   </div>
@@ -32,6 +39,20 @@ const homeHref = localizedPath(lang, 'home');
     padding-block: clamp(3rem, 2rem + 4vw, 5rem);
   }
   .page-hero-bg { position: absolute; inset: 0; z-index: -1; }
+  .page-hero--photo { padding-block: clamp(4rem, 3rem + 6vw, 6.5rem); }
+  .ph-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+  .ph-scrim {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(100deg, rgba(19,35,64,0.94) 0%, rgba(19,35,64,0.85) 45%, rgba(19,35,64,0.55) 100%);
+  }
   .ph-orb {
     position: absolute;
     width: 380px; height: 380px;

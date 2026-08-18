@@ -2,13 +2,14 @@
 import { content } from '../data/content.js';
 import PageHero from './PageHero.astro';
 import { localizedPath } from '../i18n/ui.js';
+import heroPhoto from '../assets/photos/brif-classroom-birthday.jpg';
 
 const { lang = 'en' } = Astro.props;
 const c = content[lang].admissions;
 const enrolHref = localizedPath(lang, 'enrol');
 const contactHref = localizedPath(lang, 'contact');
 ---
-<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="admissions" />
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="admissions" image={heroPhoto} imagePosition="center 55%" />
 
 <section class="section">
   <div class="wrap">

@@ -168,4 +168,21 @@
       }
     }
   });
+
+  // ---- 7. Homepage hero photo rotation -----------------------------------
+  // Crossfades between the hero photos in place. The opacity transition is
+  // already collapsed to near-zero by the prefers-reduced-motion rule above,
+  // so this degrades to an instant swap for those users automatically.
+  const heroRotate = document.querySelector('[data-hero-rotate]');
+  if (heroRotate) {
+    const heroPhotos = heroRotate.querySelectorAll('.hero-photo');
+    if (heroPhotos.length > 1) {
+      let heroIndex = 0;
+      setInterval(() => {
+        heroPhotos[heroIndex].classList.remove('is-active');
+        heroIndex = (heroIndex + 1) % heroPhotos.length;
+        heroPhotos[heroIndex].classList.add('is-active');
+      }, 150000); // 2 minutes 30 seconds
+    }
+  }
 })();

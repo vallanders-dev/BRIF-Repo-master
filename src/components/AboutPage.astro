@@ -2,11 +2,12 @@
 import { content, site } from '../data/content.js';
 import PageHero from './PageHero.astro';
 import Cards from './Cards.astro';
+import heroPhoto from '../assets/photos/brif-principal-certificate.jpg';
 
 const { lang = 'en' } = Astro.props;
 const c = content[lang].about;
 ---
-<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="about" />
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="about" image={heroPhoto} />
 
 <!-- HISTORY -->
 <section class="section">

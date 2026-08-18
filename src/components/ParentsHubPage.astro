@@ -1,17 +1,29 @@
 ---
+import { Image } from 'astro:assets';
 import { content } from '../data/content.js';
 import PageHero from './PageHero.astro';
 import { localizedPath } from '../i18n/ui.js';
+import heroPhoto from '../assets/photos/brif-parents-event-table.jpg';
+import canteenServicePhoto from '../assets/photos/brif-canteen-service.jpg';
+import canteenPlate1 from '../assets/photos/brif-canteen-plate-01.png';
+import canteenPlate2 from '../assets/photos/brif-canteen-plate-02.png';
+import communityPhoto from '../assets/photos/brif-parents-gala-table.jpg';
 
 const { lang = 'en' } = Astro.props;
 const c = content[lang].parentsHub;
 const calendarHref = localizedPath(lang, 'parentsCalendar');
+const canteenPlates = [canteenPlate1, canteenPlate2];
 ---
-<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="parents" />
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="parents" image={heroPhoto} />
 
 <section class="section">
   <div class="wrap">
     <p class="lede intro-lede" data-reveal>{c.intro}</p>
+
+    <figure class="community-photo" data-reveal>
+      <Image src={communityPhoto} alt={c.communityPhotoAlt} width={1200} widths={[600, 900, 1200]} sizes="100vw" loading="lazy" />
+      <figcaption>{c.communityPhotoCaption}</figcaption>
+    </figure>
 
     <div class="section-head" data-reveal>
       <h2>{c.documentsTitle}</h2>
@@ -34,6 +46,27 @@ const calendarHref = localizedPath(lang, 'parentsCalendar');
   </div>
 </section>
 
+<section class="section">
+  <div class="wrap">
+    <div class="section-head" data-reveal>
+      <h2>{c.canteenTitle}</h2>
+      <p class="canteen-intro">{c.canteenIntro}</p>
+    </div>
+    <div class="canteen-grid">
+      <div class="canteen-photo canteen-photo--service" data-reveal>
+        <Image src={canteenServicePhoto} alt={c.canteenPhotoAlts[0]} width={760} height={507} widths={[400, 600, 760]} sizes="(max-width: 780px) 100vw, 50vw" loading="lazy" />
+      </div>
+      <div class="canteen-plates">
+        {canteenPlates.map((plate, i) => (
+          <div class="canteen-photo canteen-photo--plate" data-reveal class:list={[`d${i + 2}`]}>
+            <Image src={plate} alt={c.canteenPhotoAlts[i + 1]} width={360} height={300} widths={[240, 360]} sizes="(max-width: 780px) 50vw, 25vw" loading="lazy" />
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="section section--mist">
   <div class="wrap calendar-teaser" data-reveal>
     <div>
@@ -49,6 +82,25 @@ const calendarHref = localizedPath(lang, 'parentsCalendar');
   .intro-lede { max-width: 60ch; margin-bottom: 3rem; }
   .section-head { margin-bottom: 2rem; }
   .section-head h2 { font-size: var(--step-3); }
+
+  .community-photo {
+    margin-bottom: 3rem;
+  }
+  .community-photo img {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    object-position: center 35%;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-sm);
+    display: block;
+  }
+  .community-photo figcaption {
+    margin-top: 0.7rem;
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+    text-align: center;
+  }
 
   .doc-grid {
     display: grid;
@@ -107,6 +159,34 @@ const calendarHref = localizedPath(lang, 'parentsCalendar');
   .calendar-teaser h2 { font-size: var(--step-3); margin-bottom: 0.6rem; }
   .calendar-teaser p:not(.eyebrow) { color: var(--ink-soft); max-width: 46ch; }
 
+  .canteen-intro { color: var(--ink-soft); margin-top: 0.6rem; max-width: 60ch; }
+  .canteen-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 1.4rem;
+  }
+  .canteen-plates {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.4rem;
+  }
+  .canteen-photo {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+  }
+  .canteen-photo--service { aspect-ratio: 3 / 2; }
+  .canteen-photo--service img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .canteen-photo--plate {
+    aspect-ratio: 1 / 1;
+    background: var(--mist);
+    display: grid;
+    place-items: center;
+    padding: 0.8rem;
+  }
+  .canteen-photo--plate img { width: 100%; height: 100%; object-fit: contain; display: block; }
+
   @media (max-width: 940px) { .doc-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 780px) { .canteen-grid { grid-template-columns: 1fr; } }
   @media (max-width: 640px) { .doc-grid { grid-template-columns: 1fr; } }
 </style>
