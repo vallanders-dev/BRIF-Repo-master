@@ -494,6 +494,7 @@ export const content = {
       kicker: 'Life at BRIF',
       intro:
         'School is more than lessons. It is friendships, discovery, and finding out who you are.',
+      introPhotoAlt: 'Two BRIF students share a warm hug on the playground, surrounded by classmates.',
       body: [
         'From the first bell to the last, our campus hums with activity. Students move between classrooms, playing fields, and quiet corners for reading, always in a community that feels like family.',
         'Clubs and activities give every child a place to shine, whether on the pitch, on the stage, in the science lab, or in service to others. We believe character is built as much in these moments as in any exam.',
@@ -1096,6 +1097,7 @@ export const content = {
       kicker: 'La vie à la BRIF',
       intro:
         "L'école, c'est bien plus que des cours. Ce sont des amitiés, des découvertes et la construction de soi.",
+      introPhotoAlt: 'Deux élèves de la BRIF se donnent une accolade chaleureuse dans la cour, entourés de camarades.',
       body: [
         "De la première à la dernière sonnerie, notre campus vibre d'activité. Les élèves passent des salles de classe aux terrains de sport et aux coins de lecture, toujours au sein d'une communauté qui ressemble à une famille.",
         "Les clubs et les activités offrent à chaque enfant une occasion de briller, sur le terrain, sur scène, au laboratoire ou au service des autres. Le caractère se construit autant dans ces moments que dans les examens.",

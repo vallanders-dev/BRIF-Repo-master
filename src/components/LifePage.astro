@@ -3,6 +3,7 @@ import { Image } from 'astro:assets';
 import { content } from '../data/content.js';
 import PageHero from './PageHero.astro';
 import heroPhoto from '../assets/photos/brif-playground-climbing.jpg';
+import introPhoto from '../assets/photos/brif-friendship-hug.jpg';
 import sportsPhoto from '../assets/photos/brif-sports-football.jpg';
 import artsPhoto from '../assets/photos/brif-cultural-day-presentation.jpg';
 import clubsPhoto from '../assets/photos/brif-drone-stem.jpg';
@@ -25,7 +26,7 @@ const highlightImages = [sportsPhoto, artsPhoto, clubsPhoto, servicePhoto];
       {c.body.map((para) => <p class="life-p">{para}</p>)}
     </div>
     <div class="life-photo" data-reveal>
-      <img src="/images/school-life-intro.jpg" alt="" width="1600" height="1066" loading="lazy" />
+      <Image src={introPhoto} alt={c.introPhotoAlt} width={800} widths={[500, 800, 1200]} sizes="(max-width: 860px) 100vw, 50vw" loading="lazy" />
     </div>
   </div>
 </section>
