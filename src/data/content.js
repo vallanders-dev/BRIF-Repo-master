@@ -1233,7 +1233,7 @@ export const content = {
       title: 'Parents',
       intro: 'Un espace unique pour les formulaires, listes et dates qui reviennent le plus souvent une fois votre enfant inscrit.',
       communityPhotoAlt: 'Parents et personnel réunis lors d’un évènement de la BRIF.',
-      communityPhotoCaption: 'Parents et personnel lors d’un évènement de la BRIF.',
+      communityPhotoCaption: 'Parents et personnel lors d’un évènement.',
       documentsTitle: 'Documents et listes',
       documents: [
         { title: 'Listes de fournitures scolaires', description: 'Listes de fournitures par niveau, pour les programmes anglais et français.', status: 'comingSoon' },
