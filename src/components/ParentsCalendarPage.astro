@@ -1,23 +1,11 @@
 ---
-import { content, schoolCalendar } from '../data/content.js';
+import { content, schoolCalendarPages } from '../data/content.js';
 import PageHero from './PageHero.astro';
 import { localizedPath } from '../i18n/ui.js';
 
 const { lang = 'en' } = Astro.props;
 const c = content[lang].parentsCalendar;
 const parentsHref = localizedPath(lang, 'parents');
-
-const events = [...schoolCalendar].sort((a, b) => a.date.localeCompare(b.date));
-
-const dateFmt = (iso) => {
-  // Parse as local-timezone date components, not a UTC instant — new Date(iso)
-  // on a date-only string parses as UTC midnight, which can render as the
-  // previous day for any viewer west of UTC.
-  const [y, m, d] = iso.split('-').map(Number);
-  return new Date(y, m - 1, d).toLocaleDateString(lang === 'fr' ? 'fr-FR' : 'en-GB', {
-    day: 'numeric', month: 'long', year: 'numeric',
-  });
-};
 ---
 <PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="parentsCalendar" />
 
@@ -25,15 +13,16 @@ const dateFmt = (iso) => {
   <div class="wrap cal-wrap">
     <p class="lede intro-lede" data-reveal>{c.intro}</p>
 
-    <ol class="cal-list" data-reveal>
-      {events.map((e) => (
-        <li class="cal-row">
-          <span class={`cal-type cal-type--${e.type}`}>{c.typeLabels[e.type] ?? e.type}</span>
-          <span class="cal-date">{dateFmt(e.date)}</span>
-          <span class="cal-label">{e.label[lang]}</span>
-        </li>
+    <div class="cal-viewer" oncontextmenu="return false">
+      {schoolCalendarPages.map((src, i) => (
+        <img
+          src={src}
+          alt={`Academic Year Calendar 2026-2027 — page ${i + 1}`}
+          loading={i < 1 ? 'eager' : 'lazy'}
+          draggable="false"
+        />
       ))}
-    </ol>
+    </div>
 
     <a href={parentsHref} class="btn btn--ghost back-link">
       <span class="arw arw--back" aria-hidden="true">←</span>{c.backToParents}
@@ -42,54 +31,24 @@ const dateFmt = (iso) => {
 </section>
 
 <style>
-  .cal-wrap { max-width: 760px; }
-  .intro-lede { margin-bottom: 2.5rem; }
+  .cal-wrap { max-width: 1100px; }
+  .intro-lede { max-width: 70ch; margin-bottom: 2.5rem; }
 
-  .cal-list {
-    list-style: none;
-    padding: 0;
+  .cal-viewer {
     display: grid;
-    gap: 0;
+    gap: 1.2rem;
     margin-bottom: 2.5rem;
   }
-  .cal-row {
-    display: grid;
-    grid-template-columns: auto 1fr;
-    align-items: center;
-    gap: 0.5rem 1rem;
-    padding: 1.1rem 0;
-    border-bottom: 1px solid var(--line);
+  .cal-viewer img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-sm);
+    box-shadow: var(--shadow-sm);
+    user-select: none;
+    -webkit-user-drag: none;
   }
-  .cal-date {
-    grid-column: 2;
-    font-weight: 600;
-    color: var(--oxford);
-    font-size: 0.95rem;
-  }
-  .cal-label {
-    grid-column: 2;
-    color: var(--ink-soft);
-    font-size: 0.92rem;
-  }
-
-  .cal-type {
-    grid-row: 1 / 3;
-    grid-column: 1;
-    display: inline-flex;
-    align-items: center;
-    padding: 0.3rem 0.7rem;
-    border-radius: 999px;
-    font-size: 0.72rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-  }
-  .cal-type--term    { background: var(--true-blue); color: #fff; }
-  .cal-type--holiday { background: var(--yellow); color: var(--oxford); }
-  .cal-type--exam    { background: var(--orange); color: #fff; }
-  .cal-type--pta     { background: var(--oxford); color: #fff; }
-  .cal-type--event   { background: var(--mist); color: var(--ink); }
 
   .back-link {
     display: inline-flex;
@@ -98,10 +57,4 @@ const dateFmt = (iso) => {
   }
   .arw--back { transition: transform 0.2s ease; }
   .back-link:hover .arw--back { transform: translateX(-3px); }
-
-  @media (max-width: 480px) {
-    .cal-row { grid-template-columns: 1fr; }
-    .cal-type { grid-row: 1; grid-column: 1; align-self: start; margin-bottom: 0.4rem; }
-    .cal-date, .cal-label { grid-column: 1; }
-  }
 </style>

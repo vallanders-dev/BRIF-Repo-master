@@ -1,6 +1,6 @@
 ---
 import { Image } from 'astro:assets';
-import { content } from '../data/content.js';
+import { content, canteenMenu } from '../data/content.js';
 import PageHero from './PageHero.astro';
 import { localizedPath } from '../i18n/ui.js';
 import heroPhoto from '../assets/photos/brif-parents-event-table.jpg';
@@ -63,6 +63,30 @@ const canteenPlates = [canteenPlate1, canteenPlate2];
           </div>
         ))}
       </div>
+    </div>
+
+    <div id="canteen-menu" class="menu-anchor"></div>
+    <div class="section-head menu-head" data-reveal>
+      <h3>{c.canteenMenuTitle}</h3>
+    </div>
+    <div class="menu-categories">
+      {canteenMenu.map((cat) => (
+        <div class="menu-category" data-reveal>
+          <h4>{cat.label[lang]}</h4>
+          {cat.items.length > 0 ? (
+            <ul>
+              {cat.items.map((item) => (
+                <li>
+                  {item.name}
+                  {item.gloss?.[lang] && <span class="menu-gloss"> — {item.gloss[lang]}</span>}
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p class="menu-empty">{c.canteenMenuEmptyNote}</p>
+          )}
+        </div>
+      ))}
     </div>
   </div>
 </section>
@@ -186,7 +210,51 @@ const canteenPlates = [canteenPlate1, canteenPlate2];
   }
   .canteen-photo--plate img { width: 100%; height: 100%; object-fit: contain; display: block; }
 
-  @media (max-width: 940px) { .doc-grid { grid-template-columns: repeat(2, 1fr); } }
+  .menu-anchor { scroll-margin-top: 100px; }
+  .menu-head { margin-top: 3rem; }
+  .menu-head h3 { font-size: var(--step-2); }
+
+  /* Multi-column flow, not a grid: categories vary wildly in length (22
+     mains vs. 0 for Pizzas), and a grid row stretches every card in that
+     row to match its tallest sibling — the same issue fixed on the Student
+     Life cards. Columns let each card size to its own content instead. */
+  .menu-categories {
+    columns: 3;
+    column-gap: 1.4rem;
+  }
+  .menu-category {
+    display: inline-block;
+    width: 100%;
+    break-inside: avoid;
+    margin-bottom: 1.4rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    padding: 1.4rem 1.5rem;
+  }
+  .menu-category h4 {
+    font-size: 1.05rem;
+    margin-bottom: 0.8rem;
+    color: var(--oxford);
+  }
+  .menu-category ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .menu-category li {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+  .menu-gloss { color: var(--ink-soft); opacity: 0.75; font-style: italic; }
+  .menu-empty {
+    color: var(--ink-soft);
+    font-size: 0.88rem;
+    font-style: italic;
+  }
+
+  @media (max-width: 940px) { .doc-grid { grid-template-columns: repeat(2, 1fr); } .menu-categories { columns: 2; } }
   @media (max-width: 780px) { .canteen-grid { grid-template-columns: 1fr; } }
-  @media (max-width: 640px) { .doc-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 640px) { .doc-grid { grid-template-columns: 1fr; } .menu-categories { columns: 1; } }
 </style>

@@ -166,26 +166,107 @@ export const curriculumTracks = [
   },
 ];
 
-// School calendar events, shared across languages — dates are facts, only the
-// label translates, so they can't drift between the EN and FR pages. This is
-// also the shape a future ERP/API would return, so swapping this array for a
-// fetch later is a data-source change, not a component rewrite.
-// Only school-confirmed dates belong here. Term breaks, holidays, exam dates,
-// and PTA meeting dates get added as the school confirms each one — do not
-// invent plausible-looking dates to fill this out.
-// `type` is one of: 'term' | 'holiday' | 'exam' | 'pta' | 'event'.
-export const schoolCalendar = [
+// Canteen menu — dish names are largely proper nouns (Beninese/West African
+// dishes, or already-international names like Cassoulet) that don't
+// translate, so this is one shared list, not two. Category labels translate;
+// item names stay as given. `gloss.en` is a short explainer for anglophone
+// parents where the name alone wouldn't mean anything to them — omitted
+// (null) where the dish is self-evident (Ketchup, Orange) or where nobody
+// here actually knows the exact preparation well enough to describe it
+// confidently (Côme, Télibo, Piron rouge, Akpan glacé — see the school
+// before publishing glosses for these). Every non-null gloss on a dish kept
+// in French should still be confirmed with the school before launch.
+export const canteenMenu = [
   {
-    date: '2026-09-14',
-    type: 'term',
-    label: { en: 'First day of the 2026–2027 school year', fr: 'Rentrée scolaire 2026-2027' },
+    key: 'mains',
+    label: { en: 'Main dishes', fr: 'Repas consistants / Plats principaux' },
+    items: [
+      { name: 'Riz blanc', gloss: { en: 'White rice', fr: null } },
+      { name: 'Riz au gras', gloss: { en: 'Jollof rice', fr: null } },
+      { name: 'Riz créole', gloss: { en: 'Creole-style rice', fr: null } },
+      { name: 'Riz cantonais', gloss: { en: 'Cantonese fried rice', fr: null } },
+      { name: 'Riz au curcuma', gloss: { en: 'Turmeric rice', fr: null } },
+      { name: 'Atassi', gloss: { en: 'Rice and beans', fr: null } },
+      { name: 'Côme', gloss: null },
+      { name: 'Cassoulet', gloss: { en: 'French bean & meat stew', fr: null } },
+      { name: 'Spaghetti bolognaise', gloss: { en: 'Spaghetti bolognese', fr: null } },
+      { name: 'Coquillettes sautées', gloss: { en: 'Sautéed pasta shells', fr: null } },
+      { name: 'Farfalles à la bolognaise', gloss: { en: 'Bow-tie pasta bolognese', fr: null } },
+      { name: 'Atchèkè', gloss: { en: 'Grated cassava couscous', fr: null } },
+      { name: 'Ablo', gloss: { en: 'Steamed rice cake', fr: null } },
+      { name: 'Télibo', gloss: null },
+      { name: 'Piron rouge', gloss: null },
+      { name: 'Amiwo', gloss: { en: 'Corn dough with tomato & palm oil', fr: null } },
+      { name: 'Akassa', gloss: { en: 'Fermented corn dough', fr: null } },
+      { name: 'Igname pilée', gloss: { en: 'Pounded yam', fr: null } },
+      { name: 'Igname frite', gloss: { en: 'Fried yam', fr: null } },
+      { name: 'Aloco', gloss: { en: 'Fried plantain', fr: null } },
+      { name: 'Salade d’avocat au thon', gloss: { en: 'Avocado & tuna salad', fr: null } },
+      { name: 'Macédoine', gloss: { en: 'Mixed vegetable salad', fr: null } },
+    ],
+  },
+  {
+    key: 'sauces',
+    label: { en: 'Sauces & sides', fr: 'Sauces / Accompagnements' },
+    items: [
+      { name: 'Sauce tomate', gloss: { en: 'Tomato sauce', fr: null } },
+      { name: 'Sauce Moyo', gloss: { en: 'Tomato, onion & chilli relish', fr: null } },
+      { name: 'Sauce d’arachide', gloss: { en: 'Peanut sauce', fr: null } },
+      { name: 'Sauce aux légumes', gloss: { en: 'Vegetable sauce', fr: null } },
+      { name: 'Friture de tomates', gloss: { en: 'Fried tomato sauce', fr: null } },
+      { name: 'Crin-crin', gloss: { en: 'Jute-leaf sauce', fr: null } },
+      { name: 'Ketchup', gloss: null },
+    ],
+  },
+  {
+    key: 'proteins',
+    label: { en: 'Meat & protein', fr: 'Viandes et protéines' },
+    items: [
+      { name: 'Viande de bœuf', gloss: { en: 'Beef', fr: null } },
+      { name: 'Viande de mouton', gloss: { en: 'Mutton', fr: null } },
+      { name: 'Viande de lapin', gloss: { en: 'Rabbit', fr: null } },
+      { name: 'Poulet bicyclette', gloss: { en: 'Free-range chicken', fr: null } },
+      { name: 'Gésiers de poulet/dinde', gloss: { en: 'Chicken & turkey gizzards', fr: null } },
+      { name: 'Poisson de mer', gloss: { en: 'Sea fish', fr: null } },
+      { name: 'Boulettes de viande', gloss: { en: 'Meatballs', fr: null } },
+      { name: 'Boulettes de poisson', gloss: { en: 'Fish balls', fr: null } },
+      { name: 'Œufs brouillés', gloss: { en: 'Scrambled eggs', fr: null } },
+      { name: 'Œufs bouillis', gloss: { en: 'Boiled eggs', fr: null } },
+      { name: 'Œufs de caille', gloss: { en: 'Quail eggs', fr: null } },
+      { name: 'Wangashi', gloss: { en: 'Local soft cheese', fr: null } },
+    ],
+  },
+  { key: 'pizzas', label: { en: 'Pizzas', fr: 'Pizzas' }, items: [] },
+  { key: 'chawarma', label: { en: 'Chawarma', fr: 'Chawarma' }, items: [] },
+  { key: 'hamburger', label: { en: 'Hamburger', fr: 'Hamburger' }, items: [] },
+  {
+    key: 'other',
+    label: { en: 'Other sides & desserts', fr: 'Autres accompagnements / Desserts' },
+    items: [
+      { name: 'Frites', gloss: { en: 'Chips / fries', fr: null } },
+      { name: 'Pain', gloss: { en: 'Bread', fr: null } },
+      { name: 'Banane', gloss: { en: 'Banana', fr: null } },
+      { name: 'Orange', gloss: null },
+      { name: 'Pastèque', gloss: { en: 'Watermelon', fr: null } },
+      { name: 'Papaye', gloss: { en: 'Papaya', fr: null } },
+      { name: 'Akpan glacé', gloss: null },
+    ],
   },
 ];
+
+// School calendar — the source PDF is already a single bilingual document
+// (EN/FR month names and labels together), rendered here as page images
+// rather than linked as a downloadable file, same treatment as the
+// Règlement Intérieur below. Shared across languages: one set of pages.
+export const schoolCalendarPages = Array.from(
+  { length: 1 },
+  (_, i) => `/images/school-calendar/page-${String(i + 1).padStart(2, '0')}.png`
+);
 
 // Règlement Intérieur / Internal Regulations — the source PDF is already a
 // single bilingual document (EN/FR side by side on every page), rendered here
 // as page images rather than linked as a downloadable file. Shared across
-// languages for the same reason as schoolCalendar: one set of pages, not two.
+// languages for the same reason as schoolCalendarPages: one set of pages.
 export const reglementInterieurPages = Array.from(
   { length: 14 },
   (_, i) => `/images/reglement-interieur/page-${String(i + 1).padStart(2, '0')}.png`
@@ -250,7 +331,7 @@ export const content = {
         "Founded in 2011 by parents, British & French Academy carries a singular conviction: to be the extension of every family in the education of their child.",
       body: [
         "It began with a group of parents united by a single conviction: that a school should not simply pass on knowledge. It should be a place where every child is known, respected, and encouraged with the same care they receive at home.",
-        "It was from that search that British & French Academy was born, not as a variation on an existing system, but as the project of parents determined to build, themselves, the school they wanted for their children. More than a decade on, that spirit still shapes our work every day.",
+        "It was from that search that British & French Academy was born — not as a variation on an existing system, but as the project of parents determined to build, themselves, the school they wanted for their children. Years later, that spirit still drives our work every day: staying attentive to you, the parents, and carrying your vision as far as our own. Because here, your child never truly leaves home — at school, they find an extension of their parents.",
       ],
       visionMissionKicker: 'What guides us',
       visionMissionTitle: 'Our Vision, Our Mission',
@@ -393,7 +474,6 @@ export const content = {
           items: [
             "School fees are paid directly into the school's bank account. Payment can also be made via Mobile Money.",
             "Parents must pay at least 60% of school fees before the start of their child's classes.",
-            'Paying school fees in full before or at the start of the school year comes with a 5% discount. Discounts are not granted on other forms of fee payment.',
           ],
         },
         {
@@ -534,8 +614,8 @@ export const content = {
         { q: 'When can we apply?', a: 'Applications are welcome year-round, subject to availability. Contact us to check current openings.' },
         { q: 'Can my child transfer mid-year?', a: "Yes, subject to availability. Contact our admissions team to check current openings for your child's grade." },
         { q: 'How do I arrange a visit?', a: 'Use the contact page or call the school office, and we will arrange a convenient time.' },
-        { q: 'What is the fee structure?', a: "Tuition is paid in three installments: 60% at enrolment, 20% in mid-November, and 20% in mid-January. Families who pay in full at enrolment receive a 5% discount. For the exact document checklist and age cutoffs (including the August 31 cutoff for Maternelle 1), see the Fees & Admission Requirements section on the Programmes page." },
-        { q: 'When does the school year start and end?', a: 'The 2026–2027 school year begins on 14 September 2026. The end date will be confirmed soon.', linkKey: 'parentsCalendar', linkLabel: 'See the school calendar' },
+        { q: 'What is the fee structure?', a: "Tuition is paid in three installments: 60% at enrolment, 20% in mid-November, and 20% in mid-January. For the exact document checklist and age cutoffs (including the August 31 cutoff for Maternelle 1), see the Fees & Admission Requirements section on the Programmes page." },
+        { q: 'When does the school year start and end?', a: 'The 2026–2027 school year begins on 14 September 2026 and ends on 26 June 2027. The summer break then runs from 25 June 2027 to 12 September 2027, with the following school year starting on 13 September 2027.', linkKey: 'parentsCalendar', linkLabel: 'See the school calendar' },
         { q: 'What are the school hours?', a: 'School session begins at as early as 7:30 and ends at 15:30.' },
         { q: 'What are PTA meetings?', a: "Parent Teacher Association (PTA) meetings are annual meetings, usually about a month after resumption, which bring together parents/guardians, teachers, and the school's administration. During these 2 hour-long meetings, the school administration presents the school, and its objectives to parents, after which questions from parents are answered." },
         { q: 'Does the school have a transport facility?', a: 'Yes, the school has buses for the transport of students. In addition, the school partners with a transport facility with which parents/guardians can discuss information relative to transportation of their children.' },
@@ -557,12 +637,14 @@ export const content = {
         { title: 'Uniform & dress code', description: 'What students wear day-to-day and for special occasions.', status: 'comingSoon' },
         { title: 'Règlement Intérieur (school rules)', description: "The school's internal regulations, shared and signed at enrolment.", status: 'available', href: '/en/parents/internal-regulations/', linkLabel: 'View', external: false },
         { title: 'Transport & bus routes', description: 'Routes, stops, and how to arrange transport for your child.', status: 'comingSoon' },
-        { title: 'Canteen information', description: 'Menus and how the canteen works.', status: 'comingSoon' },
+        { title: 'Canteen information', description: 'Menus and how the canteen works.', status: 'available', href: '#canteen-menu', linkLabel: 'View menu', external: false },
       ],
       comingSoonLabel: 'Coming soon',
       downloadLabel: 'Download',
       canteenTitle: 'A look at the canteen',
-      canteenIntro: 'The full menu is coming soon — in the meantime, here is a glimpse of a canteen service day.',
+      canteenIntro: 'A glimpse of a canteen service day, and the full menu below.',
+      canteenMenuTitle: 'Canteen menu',
+      canteenMenuEmptyNote: 'Offered — no specific varieties listed.',
       canteenPhotoAlts: [
         'A staff member serves a hot meal at the BRIF canteen.',
         'A plated canteen meal with a starchy side and a meat sauce.',
@@ -576,8 +658,7 @@ export const content = {
     parentsCalendar: {
       kicker: 'For BRIF families',
       title: 'School Calendar',
-      intro: "Confirmed key dates for the school year. More dates — term breaks, holidays, exams, and PTA meetings — will be added here as they're confirmed.",
-      typeLabels: { term: 'Term', holiday: 'Holiday', exam: 'Exam', pta: 'PTA meeting', event: 'Event' },
+      intro: 'The official 2026–2027 academic year calendar — term dates, test and exam weeks, holidays, and key school events — shown here in the original document for reference.',
       backToParents: 'Back to Parents',
     },
     reglementInterieur: {
@@ -853,7 +934,7 @@ export const content = {
         "Fondée en 2011 par des parents, British & French Academy porte une conviction unique : être le prolongement de chaque famille dans l'éducation de l'enfant.",
       body: [
         "Tout a commencé avec un groupe de parents unis par une même conviction : une école ne devrait pas se limiter à transmettre un savoir. Elle devrait être un lieu où chaque enfant est connu, respecté et encouragé avec la même attention que celle qu'il reçoit chez lui.",
-        "C'est de cette recherche qu'est née British & French Academy, non pas comme la déclinaison d'un système préexistant, mais comme le projet de parents décidés à construire eux-mêmes l'école qu'ils souhaitaient pour leurs enfants. Plus de dix ans après, cet esprit continue d'animer notre travail au quotidien.",
+        "C'est de cette recherche qu'est née British & French Academy, non pas la déclinaison d'un système préexistant, mais le projet de parents décidés à construire eux-mêmes l'école qu'ils voulaient pour leurs enfants. Des années plus tard, cet esprit anime toujours notre travail au quotidien : rester à l'écoute de vous, parents, et porter votre vision aussi loin que la nôtre. Car ici, votre enfant ne quitte pas vraiment le foyer : il retrouve, à l'école, le prolongement de ses parents.",
       ],
       visionMissionKicker: 'Ce qui nous guide',
       visionMissionTitle: 'Notre Vision, Notre Mission',
@@ -996,7 +1077,6 @@ export const content = {
           items: [
             "Le paiement des frais scolaires s'effectue directement sur le compte bancaire de l'école. Il peut également se faire par Mobile Money.",
             'Les Parents doivent s’acquitter de 60 % au moins des frais de scolarité avant le démarrage des cours de l’enfant.',
-            'Le paiement total des frais de scolarité avant ou au début de la Rentrée scolaire donne l’avantage d’une réduction de 5 %. Les réductions ne sont pas accordées sur les autres formes de paiement des frais scolaires.',
           ],
         },
         {
@@ -1137,8 +1217,8 @@ export const content = {
         { q: 'Quand peut-on postuler ?', a: 'Les candidatures sont acceptées toute l\u2019année, selon les places disponibles. Contactez-nous pour vérifier.' },
         { q: "Mon enfant peut-il effectuer un transfert en cours d'année ?", a: "Oui, sous réserve de disponibilité. Contactez notre équipe des admissions pour connaître les places disponibles dans le niveau de votre enfant." },
         { q: 'Comment organiser une visite ?', a: 'Utilisez la page contact ou appelez le secrétariat, et nous fixerons un rendez-vous.' },
-        { q: 'Quelle est la structure des frais de scolarité ?', a: "Les frais de scolarité sont payés en trois versements : 60 % à l'inscription, 20 % à la mi-novembre et 20 % à la mi-janvier. Les familles qui règlent l'intégralité à l'inscription bénéficient d'une réduction de 5 %. Pour la liste exacte des documents requis et les dates limites d'âge (dont la date limite du 31 août pour la Maternelle 1), consultez la section « Frais et Conditions d'Admission » de la page Programmes." },
-        { q: 'Quand débute l’année scolaire et quand se termine-t-elle ?', a: 'L’année scolaire 2026-2027 débute le 14 septembre 2026. La date de fin sera confirmée prochainement.', linkKey: 'parentsCalendar', linkLabel: 'Voir le calendrier scolaire' },
+        { q: 'Quelle est la structure des frais de scolarité ?', a: "Les frais de scolarité sont payés en trois versements : 60 % à l'inscription, 20 % à la mi-novembre et 20 % à la mi-janvier. Pour la liste exacte des documents requis et les dates limites d'âge (dont la date limite du 31 août pour la Maternelle 1), consultez la section « Frais et Conditions d'Admission » de la page Programmes." },
+        { q: 'Quand débute l’année scolaire et quand se termine-t-elle ?', a: 'L’année scolaire 2026-2027 débute le 14 septembre 2026 et se termine le 26 juin 2027. Par ailleurs, les grandes vacances s’étendent du 25 juin 2027 au 12 septembre 2027, et la rentrée suivante est le 13 septembre 2027.', linkKey: 'parentsCalendar', linkLabel: 'Voir le calendrier scolaire' },
         { q: 'Quels sont les horaires de l’école ?', a: 'Les cours débutent dès 7h30 et se terminent à 15h30.' },
         { q: 'Que sont les réunions de l’APE ?', a: 'Les réunions de l’Association des Parents d’Élèves (APE) sont des réunions annuelles, organisées généralement environ un mois après la rentrée, qui rassemblent les parents/tuteurs, les enseignants et la direction de l’école. Pendant ces réunions d’une durée de deux heures, la direction présente l’école et ses objectifs aux parents, avant de répondre à leurs questions.' },
         { q: 'L’école propose-t-elle un service de transport ?', a: 'Oui, l’école dispose de bus pour le transport des élèves. De plus, l’école est partenaire d’un service de transport avec lequel les parents/tuteurs peuvent échanger des informations relatives au transport de leurs enfants.' },
@@ -1160,12 +1240,14 @@ export const content = {
         { title: 'Uniforme et tenue vestimentaire', description: 'La tenue au quotidien et pour les occasions spéciales.', status: 'comingSoon' },
         { title: 'Règlement Intérieur', description: 'Le règlement intérieur de l’école, remis et signé à l’inscription.', status: 'available', href: '/fr/parents/reglement-interieur/', linkLabel: 'Consulter', external: false },
         { title: 'Transport et circuits de bus', description: 'Les circuits, arrêts, et comment organiser le transport de votre enfant.', status: 'comingSoon' },
-        { title: 'Informations sur la cantine', description: 'Les menus et le fonctionnement de la cantine.', status: 'comingSoon' },
+        { title: 'Informations sur la cantine', description: 'Les menus et le fonctionnement de la cantine.', status: 'available', href: '#canteen-menu', linkLabel: 'Voir le menu', external: false },
       ],
       comingSoonLabel: 'Bientôt disponible',
       downloadLabel: 'Télécharger',
       canteenTitle: 'Un aperçu de la cantine',
-      canteenIntro: 'Le menu complet arrive bientôt — en attendant, voici un aperçu d’un service à la cantine.',
+      canteenIntro: 'Un aperçu d’un service à la cantine, et le menu complet ci-dessous.',
+      canteenMenuTitle: 'Menu de la cantine',
+      canteenMenuEmptyNote: 'Proposé — aucune variante précisée.',
       canteenPhotoAlts: [
         'Un membre du personnel sert un repas chaud à la cantine de la BRIF.',
         'Un plat de la cantine, avec un accompagnement et une sauce à la viande.',
@@ -1179,8 +1261,7 @@ export const content = {
     parentsCalendar: {
       kicker: 'Pour les familles de la BRIF',
       title: 'Calendrier scolaire',
-      intro: 'Les dates clés confirmées pour l’année scolaire. D’autres dates — vacances, examens et réunions APE — seront ajoutées ici au fur et à mesure qu’elles seront confirmées.',
-      typeLabels: { term: 'Rentrée', holiday: 'Vacances', exam: 'Examen', pta: 'Réunion APE', event: 'Évènement' },
+      intro: 'Le calendrier officiel de l’année scolaire 2026-2027 — dates de rentrée, semaines de tests et d’examens, vacances et évènements clés — présenté ici dans le document original à titre de référence.',
       backToParents: 'Retour à Parents',
     },
     reglementInterieur: {
