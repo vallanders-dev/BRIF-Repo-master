@@ -71,7 +71,13 @@ const assessmentLabel = lang === 'fr' ? 'Évaluation' : 'Assessment';
 
   .curr-tracks {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    /* minmax(0, 1fr), not 1fr — a bare 1fr track still won't shrink below
+       its content's intrinsic width, so the wide (nowrap) table inside
+       forces this column wider than the viewport, which drags .wrap and
+       the whole page along with it (the header included). minmax(0, 1fr)
+       lets the track — and the overflow-x:auto div inside it — actually
+       be the thing that's narrower than its content. */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 2.5rem;
     align-items: start;
   }
@@ -159,6 +165,19 @@ const assessmentLabel = lang === 'fr' ? 'Évaluation' : 'Assessment';
   .curr-table td:first-child { white-space: nowrap; color: var(--ink-soft); }
 
   @media (max-width: 940px) {
-    .curr-tracks { grid-template-columns: 1fr; gap: 0; }
+    .curr-tracks { grid-template-columns: minmax(0, 1fr); gap: 0; }
+  }
+
+  /* Let long cell text wrap instead of forcing the table wider than the
+     screen — with minmax(0, 1fr) above, this now actually has room to
+     compress into instead of triggering the scroll container. */
+  @media (max-width: 640px) {
+    .curr-table th,
+    .curr-table td,
+    .curr-table td:first-child {
+      white-space: normal;
+    }
+    .curr-table { font-size: 0.83rem; }
+    .curr-table th, .curr-table td { padding: 0.5rem 0.4rem; }
   }
 </style>
