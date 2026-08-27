@@ -247,13 +247,21 @@ const frHref = localizedPath('fr', routeKey);
       flex-direction: column;
       align-items: stretch;
       gap: 0;
-      padding: 0.5rem var(--gutter) 1.5rem;
-      border-bottom: 3px solid var(--yellow);
+      /* No padding/border while collapsed — max-height:0 only stops content
+         from showing, it never shrinks padding or border below their set
+         size, so a padded, bordered box at max-height:0 still renders at
+         padding+border height, leaking the first nav link into view. */
+      padding: 0 var(--gutter);
+      border-bottom: 0 solid var(--yellow);
       max-height: 0;
       overflow: hidden;
-      transition: max-height 0.3s ease;
+      transition: max-height 0.3s ease, padding 0.3s ease, border-bottom-width 0.3s ease;
     }
-    .nav-toggle:checked ~ .site-nav { max-height: 80vh; }
+    .nav-toggle:checked ~ .site-nav {
+      max-height: 80vh;
+      padding: 0.5rem var(--gutter) 1.5rem;
+      border-bottom-width: 3px;
+    }
     .site-nav ul {
       flex-direction: column;
       gap: 0;
