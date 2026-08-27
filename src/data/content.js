@@ -645,6 +645,8 @@ export const content = {
       canteenIntro: 'A glimpse of a canteen service day, and the full menu below.',
       canteenMenuTitle: 'Canteen menu',
       canteenMenuEmptyNote: 'Offered — no specific varieties listed.',
+      canteenAllergenLabel: 'Allergies & dietary needs:',
+      canteenAllergenNotice: 'Please let the school know about any food allergies or dietary restrictions your child has. This information is taken into account by the canteen team in preparing and serving meals.',
       canteenPhotoAlts: [
         'A staff member serves a hot meal at the BRIF canteen.',
         'A plated canteen meal with a starchy side and a meat sauce.',
@@ -1248,6 +1250,8 @@ export const content = {
       canteenIntro: 'Un aperçu d’un service à la cantine, et le menu complet ci-dessous.',
       canteenMenuTitle: 'Menu de la cantine',
       canteenMenuEmptyNote: 'Proposé — aucune variante précisée.',
+      canteenAllergenLabel: 'Allergies et besoins alimentaires :',
+      canteenAllergenNotice: 'Merci de signaler à l’école toute allergie alimentaire ou restriction alimentaire connue de votre enfant. Cette information est prise en compte par l’équipe de la cantine dans la préparation et le service des repas.',
       canteenPhotoAlts: [
         'Un membre du personnel sert un repas chaud à la cantine de la BRIF.',
         'Un plat de la cantine, avec un accompagnement et une sauce à la viande.',

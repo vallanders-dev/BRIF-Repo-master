@@ -88,6 +88,10 @@ const canteenPlates = [canteenPlate1, canteenPlate2];
         </div>
       ))}
     </div>
+
+    <p class="menu-allergen-notice" data-reveal>
+      <strong>{c.canteenAllergenLabel}</strong> {c.canteenAllergenNotice}
+    </p>
   </div>
 </section>
 
@@ -253,6 +257,18 @@ const canteenPlates = [canteenPlate1, canteenPlate2];
     font-size: 0.88rem;
     font-style: italic;
   }
+
+  .menu-allergen-notice {
+    margin-top: 2rem;
+    padding: 1.1rem 1.4rem;
+    background: var(--mist);
+    border-left: 4px solid var(--orange);
+    border-radius: var(--radius-sm);
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.6;
+  }
+  .menu-allergen-notice strong { color: var(--oxford); }
 
   @media (max-width: 940px) { .doc-grid { grid-template-columns: repeat(2, 1fr); } .menu-categories { columns: 2; } }
   @media (max-width: 780px) { .canteen-grid { grid-template-columns: 1fr; } }
