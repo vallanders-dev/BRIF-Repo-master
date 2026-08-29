@@ -1,0 +1,116 @@
+---
+import { content, supplyLists } from '../data/content.js';
+import PageHero from './PageHero.astro';
+import { localizedPath } from '../i18n/ui.js';
+
+const { lang = 'en' } = Astro.props;
+const c = content[lang].parentsSuppliesIndex;
+const parentsHref = localizedPath(lang, 'parents');
+
+// Same grouping/order as the curriculum tables on the Programmes page.
+const stageOrder = ['nursery', 'primary', 'secondary1', 'secondary2'];
+const groups = stageOrder.map((stage) => ({
+  stage,
+  label: c.stageLabels[stage],
+  classes: supplyLists.filter((list) => list.stage === stage),
+}));
+---
+<PageHero lang={lang} kicker={c.kicker} title={c.title} routeKey="parentsSupplies" />
+
+<section class="section">
+  <div class="wrap supplies-wrap">
+    <p class="lede intro-lede" data-reveal>{c.intro}</p>
+    <p class="supplies-note" data-reveal>{c.note}</p>
+
+    {groups.map((group) => (
+      <div class="stage-group" data-reveal>
+        <h2>{group.label}</h2>
+        <div class="class-grid">
+          {group.classes.map((list) => (
+            <a href={localizedPath(lang, list.routeKey)} class="class-card">
+              <span class="class-card-name">{list.classLabel}</span>
+              <span class="class-card-link">{c.viewListLabel}<span class="arw" aria-hidden="true">→</span></span>
+            </a>
+          ))}
+        </div>
+      </div>
+    ))}
+
+    <a href={parentsHref} class="btn btn--ghost back-link">
+      <span class="arw arw--back" aria-hidden="true">←</span>{c.backToParents}
+    </a>
+  </div>
+</section>
+
+<style>
+  .supplies-wrap { max-width: 1100px; }
+  .intro-lede { max-width: 70ch; margin-bottom: 1.2rem; text-align: justify; }
+  .supplies-note {
+    max-width: 70ch;
+    margin-bottom: 3rem;
+    padding: 0.9rem 1.2rem;
+    background: var(--mist);
+    border-left: 4px solid var(--true-blue);
+    border-radius: var(--radius-sm);
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+
+  .stage-group { margin-bottom: 2.8rem; }
+  .stage-group h2 {
+    font-size: var(--step-2);
+    margin-bottom: 1.2rem;
+  }
+
+  .class-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 1rem;
+  }
+  .class-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 1.2rem 1.3rem;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--ink);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+  }
+  .class-card:hover {
+    color: var(--ink);
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-sm);
+    border-color: var(--true-blue);
+  }
+  .class-card-name {
+    font-family: var(--font-display);
+    font-weight: 600;
+    color: var(--oxford);
+    font-size: 1.05rem;
+  }
+  .class-card-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--true-blue);
+    font-weight: 600;
+    font-size: 0.86rem;
+  }
+  .class-card-link .arw { transition: transform 0.2s ease; }
+  .class-card:hover .class-card-link .arw { transform: translateX(3px); }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .arw--back { transition: transform 0.2s ease; }
+  .back-link:hover .arw--back { transform: translateX(-3px); }
+
+  @media (max-width: 480px) {
+    .class-grid { grid-template-columns: 1fr; }
+  }
+</style>

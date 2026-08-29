@@ -94,6 +94,28 @@ export const routes = {
   parents:         { en: 'parents',          fr: 'parents' },
   parentsCalendar: { en: 'parents/calendar', fr: 'parents/calendar' },
   reglementInterieur: { en: 'parents/internal-regulations', fr: 'parents/reglement-interieur' },
+  // Supply lists: an index page grouping all classes by stage, plus one page
+  // per class. Slugs reverse word order between languages on purpose — e.g.
+  // "year-1-cp1" in English reads as "cp1-year-1" in French — to match how
+  // each language actually names the class (English leads with "Year N",
+  // French leads with the French class name).
+  parentsSupplies:        { en: 'parents/supplies',                    fr: 'parents/fournitures' },
+  suppliesPreNursery:     { en: 'parents/supplies/pre-nursery-prematernelle', fr: 'parents/fournitures/prematernelle-pre-nursery' },
+  suppliesNursery1:       { en: 'parents/supplies/nursery-1-maternelle-1',    fr: 'parents/fournitures/maternelle-1-nursery-1' },
+  suppliesNursery2:       { en: 'parents/supplies/nursery-2-maternelle-2',    fr: 'parents/fournitures/maternelle-2-nursery-2' },
+  suppliesCp1:            { en: 'parents/supplies/year-1-cp1',   fr: 'parents/fournitures/cp1-year-1' },
+  suppliesCp2:            { en: 'parents/supplies/year-2-cp2',   fr: 'parents/fournitures/cp2-year-2' },
+  suppliesCe1:            { en: 'parents/supplies/year-3-ce1',   fr: 'parents/fournitures/ce1-year-3' },
+  suppliesCe2:            { en: 'parents/supplies/year-4-ce2',   fr: 'parents/fournitures/ce2-year-4' },
+  suppliesCm1:            { en: 'parents/supplies/year-5-cm1',   fr: 'parents/fournitures/cm1-year-5' },
+  suppliesCm2:            { en: 'parents/supplies/year-6-cm2',   fr: 'parents/fournitures/cm2-year-6' },
+  supplies6e:             { en: 'parents/supplies/year-7-6e',    fr: 'parents/fournitures/6e-year-7' },
+  supplies5e:             { en: 'parents/supplies/year-8-5e',    fr: 'parents/fournitures/5e-year-8' },
+  supplies4e:             { en: 'parents/supplies/year-9-4e',    fr: 'parents/fournitures/4e-year-9' },
+  supplies3e:             { en: 'parents/supplies/year-10-3e',   fr: 'parents/fournitures/3e-year-10' },
+  supplies2ndeCd:         { en: 'parents/supplies/year-11-2nde-cd', fr: 'parents/fournitures/2nde-cd-year-11' },
+  supplies1ereCd:         { en: 'parents/supplies/year-12-1ere-cd', fr: 'parents/fournitures/1ere-cd-year-12' },
+  suppliesTerminaleCd:    { en: 'parents/supplies/terminale-cd', fr: 'parents/fournitures/terminale-cd' },
   contact:    { en: 'contact',     fr: 'contact' },
   enrol:      { en: 'enrol',       fr: 'inscription' },
   legal:      { en: 'legal-mentions', fr: 'mentions-legales' },

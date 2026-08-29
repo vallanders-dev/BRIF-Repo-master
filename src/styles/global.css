@@ -339,3 +339,23 @@ img { max-width: 100%; height: auto; display: block; }
 .d2 { --reveal-delay: 160ms; }
 .d3 { --reveal-delay: 240ms; }
 .d4 { --reveal-delay: 320ms; }
+
+/* =========================================================================
+   Print — used by the printable supply-list pages (and applies site-wide,
+   so printing any page gives a plain, ink-friendly result rather than the
+   dark header/footer chrome). Site chrome, the breadcrumb, and the language
+   switcher never belong on paper; page-specific "don't print this" bits
+   (buttons, back-links, the official-PDF callout) opt in via .no-print.
+   ========================================================================= */
+@media print {
+  @page { margin: 1.5cm; }
+  .site-header,
+  .site-footer,
+  .skip-link,
+  .page-hero,
+  .lang-pill,
+  [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .site-header, .site-footer, .skip-link, .page-hero, .lang-pill { display: none !important; }
+  body { background: #fff; color: #000; }
+  a { color: #000; }
+}

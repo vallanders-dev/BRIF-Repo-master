@@ -1,0 +1,285 @@
+---
+import { content, supplyLists, supplyCommonItem } from '../data/content.js';
+import PageHero from './PageHero.astro';
+import { localizedPath } from '../i18n/ui.js';
+
+const { lang = 'en', listKey } = Astro.props;
+const c = content[lang].parentsSuppliesClass;
+const list = supplyLists.find((l) => l.key === listKey);
+const parentsHref = localizedPath(lang, 'parents');
+const indexHref = localizedPath(lang, 'parentsSupplies');
+const officialHref = `/documents/supplies/${list.key}.pdf`;
+// Every class except the three not-yet-published lycée levels shares this
+// one item — see the comment on supplyCommonItem in content.js.
+const hasCommonItem = !list.suppliesPending;
+---
+<PageHero lang={lang} kicker={c.kicker} title={list.classLabel} routeKey={list.routeKey} />
+
+<section class="section">
+  <div class="wrap supplies-class-wrap">
+    <div class="no-print top-actions" data-reveal>
+      <a href={indexHref} class="btn btn--ghost">
+        <span class="arw arw--back" aria-hidden="true">←</span>{c.backToAllLists}
+      </a>
+      <button type="button" class="btn btn--yellow" data-print-btn>{c.printButton}</button>
+    </div>
+
+    <div class="printable" data-reveal>
+      <p class="print-heading">{list.classLabel}</p>
+
+      {list.suppliesPending && (
+        <div class="pending-notice">
+          <strong>{c.pendingTitle}</strong>
+          <p>{c.pendingText}</p>
+        </div>
+      )}
+
+      <h2>{c.itemsHeading}</h2>
+      <table class="supply-table">
+        <thead>
+          <tr>
+            <th class="col-check"><span class="sr-only">{c.checkColumnLabel}</span></th>
+            <th class="col-qty">{c.qtyColumnLabel}</th>
+            <th>{c.itemColumnLabel}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {list.items.map((item) => (
+            <tr>
+              <td class="col-check"><span class="chk" aria-hidden="true"></span></td>
+              <td class="col-qty">{item.qty}</td>
+              <td>{item.name}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+      {hasCommonItem && (
+        <p class="common-item-note">
+          {c.commonItemNote} <strong>{supplyCommonItem.qty} {supplyCommonItem.name}</strong>
+        </p>
+      )}
+
+      <h2>{c.textbooksHeading}</h2>
+      {list.textbooks.groups.length > 0 ? (
+        <div class="textbook-groups">
+          {list.textbooks.groups.map((group) => (
+            <div class="textbook-group">
+              <h3>{group.subject}</h3>
+              <ul>
+                {group.items.map((title) => <li>{title}</li>)}
+              </ul>
+              {group.note && <p class="textbook-note">{group.note}</p>}
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p class="textbook-note">{list.textbooks.note}</p>
+      )}
+    </div>
+
+    <div class="no-print official-doc" data-reveal>
+      <p class="official-label">{c.officialLabel}</p>
+      <p>{c.officialText}</p>
+      <a href={officialHref} target="_blank" rel="noopener">{c.officialLinkLabel}<span class="arw" aria-hidden="true">→</span></a>
+    </div>
+
+    <a href={parentsHref} class="btn btn--ghost back-link no-print">
+      <span class="arw arw--back" aria-hidden="true">←</span>{c.backToParents}
+    </a>
+  </div>
+</section>
+
+<script>
+  document.querySelectorAll('[data-print-btn]').forEach((btn) => {
+    btn.addEventListener('click', () => window.print());
+  });
+</script>
+
+<style>
+  .supplies-class-wrap { max-width: 900px; }
+
+  .top-actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2.5rem;
+  }
+
+  .print-heading { display: none; }
+
+  .pending-notice {
+    margin-bottom: 2rem;
+    padding: 1.1rem 1.4rem;
+    background: var(--mist);
+    border-left: 4px solid var(--orange);
+    border-radius: var(--radius-sm);
+  }
+  .pending-notice strong {
+    display: block;
+    color: var(--oxford);
+    font-family: var(--font-display);
+    margin-bottom: 0.3rem;
+  }
+  .pending-notice p { color: var(--ink-soft); font-size: 0.92rem; line-height: 1.6; }
+
+  .printable h2 {
+    font-size: var(--step-2);
+    margin-top: 2.5rem;
+    margin-bottom: 1.2rem;
+  }
+  .printable h2:first-of-type { margin-top: 0; }
+
+  .supply-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  .supply-table th {
+    text-align: left;
+    color: var(--true-blue);
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    padding: 0.6rem 0.7rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .supply-table td {
+    padding: 0.65rem 0.7rem;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink);
+  }
+  .supply-table tbody tr:nth-child(odd) { background: var(--mist); }
+  .col-check { width: 3rem; }
+  .col-qty { width: 3.5rem; color: var(--ink-soft); }
+
+  .chk {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 1.5px solid var(--ink-soft);
+    border-radius: 3px;
+  }
+
+  .common-item-note {
+    margin-top: 1.2rem;
+    padding: 0.8rem 1.1rem;
+    background: var(--mist);
+    border-left: 4px solid var(--true-blue);
+    border-radius: var(--radius-sm);
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .common-item-note strong { color: var(--ink); }
+
+  .textbook-groups {
+    display: grid;
+    gap: 1.4rem;
+  }
+  .textbook-group h3 {
+    font-size: 0.95rem;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    color: var(--oxford);
+    margin-bottom: 0.5rem;
+  }
+  .textbook-group ul {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    gap: 0.4rem;
+  }
+  .textbook-group li {
+    color: var(--ink-soft);
+    font-size: 0.92rem;
+    line-height: 1.5;
+    padding-left: 1rem;
+    position: relative;
+  }
+  .textbook-group li::before {
+    content: "";
+    position: absolute;
+    left: 0; top: 0.65em;
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--orange);
+  }
+  .textbook-note {
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+    line-height: 1.6;
+    font-style: italic;
+  }
+  .textbook-group .textbook-note { margin-top: 0.5rem; font-style: normal; }
+
+  .official-doc {
+    margin-top: 3rem;
+    padding: 1.2rem 1.4rem;
+    border: 1px dashed var(--line);
+    border-radius: var(--radius-sm);
+  }
+  .official-label {
+    font-weight: 600;
+    font-size: 0.78rem;
+    text-transform: uppercase;
+    letter-spacing: var(--track-label);
+    color: var(--ink-soft);
+    margin-bottom: 0.4rem;
+  }
+  .official-doc p:not(.official-label) { color: var(--ink-soft); font-size: 0.9rem; margin-bottom: 0.6rem; }
+  .official-doc a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: var(--true-blue);
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+  .official-doc a:hover { color: var(--orange); }
+  .official-doc a .arw { transition: transform 0.2s ease; }
+  .official-doc a:hover .arw { transform: translateX(3px); }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+  }
+  .arw--back { transition: transform 0.2s ease; }
+  .back-link:hover .arw--back { transform: translateX(-3px); }
+
+  /* ---------------------------------------------------------------------
+     Print: a clean, black-on-white, one-page checklist. Chrome (header,
+     footer, breadcrumb, buttons, language switcher) is hidden globally in
+     global.css; the rest — hiding this page's own back links / print
+     button / official-PDF callout — is handled here via .no-print.
+     --------------------------------------------------------------------- */
+  @media print {
+    .no-print { display: none !important; }
+    .print-heading {
+      display: block;
+      font-family: var(--font-display);
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #000;
+      margin-bottom: 1rem;
+    }
+    .printable h2 { color: #000; font-size: 1.15rem; margin-top: 1.2rem; margin-bottom: 0.6rem; }
+    .printable h2:first-of-type { margin-top: 0; }
+    .pending-notice { border-color: #000; background: none; break-inside: avoid; }
+    .pending-notice strong, .pending-notice p { color: #000; }
+    .supply-table th, .supply-table td { color: #000; border-color: #999; }
+    .supply-table tbody tr:nth-child(odd) { background: none; }
+    .supply-table tr { break-inside: avoid; }
+    .chk { border-color: #000; }
+    .common-item-note { background: none; border-color: #000; color: #000; }
+    .common-item-note strong { color: #000; }
+    .textbook-group { break-inside: avoid; }
+    .textbook-group h3, .textbook-group li, .textbook-note { color: #000; }
+    .textbook-group li::before { background: #000; }
+    a { color: #000 !important; text-decoration: none; }
+  }
+</style>

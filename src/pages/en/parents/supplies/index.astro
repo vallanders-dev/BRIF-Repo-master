@@ -1,0 +1,10 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import ParentsSuppliesIndexPage from '../../../../components/ParentsSuppliesIndexPage.astro';
+import { content } from '../../../../data/content.js';
+const lang = 'en';
+const c = content[lang].parentsSuppliesIndex;
+---
+<Base lang={lang} routeKey="parentsSupplies" title={c.title} description={c.intro}>
+  <ParentsSuppliesIndexPage lang={lang} />
+</Base>

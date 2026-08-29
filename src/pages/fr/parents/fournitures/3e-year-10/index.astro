@@ -1,0 +1,11 @@
+---
+import Base from '../../../../../layouts/Base.astro';
+import ParentsSuppliesClassPage from '../../../../../components/ParentsSuppliesClassPage.astro';
+import { supplyLists } from '../../../../../data/content.js';
+const lang = 'fr';
+const listKey = '3e';
+const list = supplyLists.find((l) => l.key === listKey);
+---
+<Base lang={lang} routeKey="supplies3e" title={list.classLabel} description="Liste de fournitures scolaires pour Year 10 · 3è à la British & French Academy.">
+  <ParentsSuppliesClassPage lang={lang} listKey={listKey} />
+</Base>
