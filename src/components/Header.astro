@@ -259,6 +259,10 @@ const frHref = localizedPath('fr', routeKey);
     }
     .nav-toggle:checked ~ .site-nav {
       max-height: 80vh;
+      /* auto, not hidden — on a short viewport the full link list plus the
+         language pill can exceed 80vh; auto lets the panel scroll instead
+         of silently clipping whatever comes last (the lang switcher). */
+      overflow-y: auto;
       padding: 0.5rem var(--gutter) 1.5rem;
       border-bottom-width: 3px;
     }
@@ -287,8 +291,13 @@ const frHref = localizedPath('fr', routeKey);
     .dropdown li { border-bottom: none; }
     .dropdown a { padding: 0.6rem 0; color: #aebbd4; }
     .nav-actions {
-      margin-top: 1.2rem;
+      /* Placed first, above the link list, so it's visible the instant the
+         menu opens rather than requiring a scroll to the bottom to find it. */
+      order: -1;
       justify-content: flex-start;
+      margin-bottom: 1rem;
+      padding-bottom: 1rem;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
     }
     .nav-toggle:checked ~ .nav-burger span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .nav-toggle:checked ~ .nav-burger span:nth-child(2) { opacity: 0; }
