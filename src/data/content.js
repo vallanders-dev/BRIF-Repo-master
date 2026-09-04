@@ -792,6 +792,194 @@ export const supplyLists = [
   },
 ];
 
+// Uniform & dress code — one entry per outfit, grouped by category ('daily'
+// or 'sports'). Confirmed by the school: standard uniform (shirt & shorts,
+// or the pinafore for girls) is worn Monday–Thursday; the pinafore itself
+// is optional; sports kit (jersey or sports t-shirt, either is fine) is
+// Friday only; socks are worn every school day; sizes run S–XXL; no special
+// care beyond ironing before school. NOT yet confirmed: whether each piece
+// is included in the standard uniform pack or ordered separately — every
+// callout below still carries a [TO CONFIRM] placeholder for just that one
+// field. See this feature's summary for that outstanding item.
+//
+// The render images themselves are NOT imported here — UniformPage.astro
+// imports them directly (the same way ParentsHubPage.astro imports its
+// photos) and looks them up by `key`, so this file stays data-only. Same
+// plan for realPhotos once flat-lay garment photos exist: keyed lookup in
+// the component, imported there, not here.
+//
+// Callout dot coordinates (x/y, percent of the render) are calibrated
+// against the actual supplied renders, accounting for the fixed 4:5
+// object-fit:contain frame (see UniformPage.astro) — images narrower than
+// 4:5 are letterboxed on the sides only (never top/bottom), so y needs no
+// correction but an off-center x does.
+export const uniforms = [
+  {
+    key: 'daily-shirt-shorts',
+    category: 'daily',
+    label: { en: 'Daily uniform — shirt & shorts', fr: 'Tenue quotidienne — chemise et short' },
+    renderAlt: {
+      en: 'Studio render of the daily uniform: shirt, shorts and socks.',
+      fr: 'Rendu studio de la tenue quotidienne : chemise, short et chaussettes.',
+    },
+    realPhotos: [],
+    callouts: [
+      {
+        x: 50, y: 22,
+        label: { en: 'Shirt', fr: 'Chemise' },
+        detail: {
+          en: 'Worn: Monday to Thursday. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+        },
+      },
+      {
+        x: 50, y: 49,
+        label: { en: 'Shorts', fr: 'Short' },
+        detail: {
+          en: 'Worn: Monday to Thursday. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+        },
+      },
+      {
+        x: 50, y: 72,
+        label: { en: 'Socks', fr: 'Chaussettes' },
+        detail: {
+          en: 'Worn: every school day. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: N/A.',
+          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : N/A.',
+        },
+      },
+    ],
+    items: [
+      { name: { en: 'Shirt', fr: 'Chemise' }, note: { en: 'Mon–Thu. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Lun–jeu. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
+      { name: { en: 'Shorts', fr: 'Short' }, note: { en: 'Mon–Thu. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Lun–jeu. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
+      { name: { en: 'Socks', fr: 'Chaussettes' }, note: { en: 'Every school day. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Care: N/A.', fr: 'Tous les jours d’école. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Entretien : N/A.' } },
+    ],
+  },
+  {
+    key: 'daily-pinafore',
+    category: 'daily',
+    label: { en: 'Daily uniform — pinafore', fr: 'Tenue quotidienne — robe chasuble' },
+    renderAlt: {
+      en: 'Studio render of the daily uniform: pinafore worn over a shirt, with socks.',
+      fr: 'Rendu studio de la tenue quotidienne : robe chasuble portée sur une chemise, avec des chaussettes.',
+    },
+    realPhotos: [],
+    callouts: [
+      {
+        x: 50, y: 30,
+        label: { en: 'Pinafore', fr: 'Robe chasuble' },
+        detail: {
+          en: 'Worn: Monday to Thursday (the girls’ standard daily uniform); the pinafore itself is optional. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : du lundi au jeudi (tenue quotidienne standard des filles) ; la robe chasuble elle-même est facultative. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+        },
+      },
+      {
+        x: 60, y: 9,
+        label: { en: 'Shirt (worn underneath)', fr: 'Chemise (portée dessous)' },
+        detail: {
+          en: 'Worn: Monday to Thursday. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+        },
+      },
+      {
+        x: 50, y: 81,
+        label: { en: 'Socks', fr: 'Chaussettes' },
+        detail: {
+          en: 'Worn: every school day. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: N/A.',
+          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : N/A.',
+        },
+      },
+    ],
+    items: [
+      { name: { en: 'Pinafore', fr: 'Robe chasuble' }, note: { en: 'Mon–Thu, optional. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Lun–jeu, facultatif. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
+      { name: { en: 'Shirt', fr: 'Chemise' }, note: { en: 'Mon–Thu. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Lun–jeu. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
+      { name: { en: 'Socks', fr: 'Chaussettes' }, note: { en: 'Every school day. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Care: N/A.', fr: 'Tous les jours d’école. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Entretien : N/A.' } },
+    ],
+  },
+  {
+    key: 'sports-tshirt-shorts',
+    category: 'sports',
+    label: { en: 'Sports kit — t-shirt & shorts', fr: 'Tenue de sport — t-shirt et short' },
+    renderAlt: {
+      en: 'Studio render of the sports kit: t-shirt, shorts and socks.',
+      fr: 'Rendu studio de la tenue de sport : t-shirt, short et chaussettes.',
+    },
+    realPhotos: [],
+    callouts: [
+      {
+        x: 50, y: 30,
+        label: { en: 'T-shirt', fr: 'T-shirt' },
+        detail: {
+          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+        },
+      },
+      {
+        x: 50, y: 59,
+        label: { en: 'Shorts', fr: 'Short' },
+        detail: {
+          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+        },
+      },
+      {
+        x: 50, y: 80,
+        label: { en: 'Socks', fr: 'Chaussettes' },
+        detail: {
+          en: 'Worn: every school day. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: N/A.',
+          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : N/A.',
+        },
+      },
+    ],
+    items: [
+      { name: { en: 'T-shirt', fr: 'T-shirt' }, note: { en: 'Fri (sports day). Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Ven (jour de sport). Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
+      { name: { en: 'Shorts', fr: 'Short' }, note: { en: 'Fri (sports day). Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Ven (jour de sport). Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
+      { name: { en: 'Socks', fr: 'Chaussettes' }, note: { en: 'Every school day. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Care: N/A.', fr: 'Tous les jours d’école. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Entretien : N/A.' } },
+    ],
+  },
+  {
+    key: 'sports-jersey-shorts',
+    category: 'sports',
+    label: { en: 'Sports kit — jersey & shorts', fr: 'Tenue de sport — maillot et short' },
+    renderAlt: {
+      en: 'Studio render of the sports kit: jersey, shorts and socks.',
+      fr: 'Rendu studio de la tenue de sport : maillot, short et chaussettes.',
+    },
+    realPhotos: [],
+    callouts: [
+      {
+        x: 50, y: 28,
+        label: { en: 'Jersey', fr: 'Maillot' },
+        detail: {
+          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+        },
+      },
+      {
+        x: 50, y: 55,
+        label: { en: 'Shorts', fr: 'Short' },
+        detail: {
+          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+        },
+      },
+      {
+        x: 50, y: 72,
+        label: { en: 'Socks', fr: 'Chaussettes' },
+        detail: {
+          en: 'Worn: every school day. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: N/A.',
+          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : N/A.',
+        },
+      },
+    ],
+    items: [
+      { name: { en: 'Jersey', fr: 'Maillot' }, note: { en: 'Fri (sports day). Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Ven (jour de sport). Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
+      { name: { en: 'Shorts', fr: 'Short' }, note: { en: 'Fri (sports day). Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Ven (jour de sport). Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
+      { name: { en: 'Socks', fr: 'Chaussettes' }, note: { en: 'Every school day. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Care: N/A.', fr: 'Tous les jours d’école. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Entretien : N/A.' } },
+    ],
+  },
+];
+
 // School calendar — the source PDF is already a single bilingual document
 // (EN/FR month names and labels together), rendered here as page images
 // rather than linked as a downloadable file, same treatment as the
@@ -1172,7 +1360,7 @@ export const content = {
       documentsTitle: 'Documents & lists',
       documents: [
         { title: 'School supply lists', description: 'Per-class supply lists, printable and easy to check on the go.', status: 'available', href: '/en/parents/supplies/', linkLabel: 'View lists', external: false },
-        { title: 'Uniform & dress code', description: 'What students wear day-to-day and for special occasions.', status: 'comingSoon' },
+        { title: 'Uniform & dress code', description: 'What students wear day-to-day, with photos of every outfit.', status: 'available', href: '/en/parents/uniform/', linkLabel: 'View', external: false },
         { title: 'Règlement Intérieur (school rules)', description: "The school's internal regulations, shared and signed at enrolment.", status: 'available', href: '/en/parents/internal-regulations/', linkLabel: 'View', external: false },
         { title: 'Transport & bus routes', description: 'Routes, stops, and how to arrange transport for your child.', status: 'comingSoon' },
         { title: 'Canteen information', description: 'Menus and how the canteen works.', status: 'available', href: '#canteen-menu', linkLabel: 'View menu', external: false },
@@ -1238,6 +1426,24 @@ export const content = {
       officialText: 'This page is a clean, printable copy of the school’s official list below.',
       officialLinkLabel: 'View the original PDF',
       itemNameLang: 'fr',
+    },
+    uniformPage: {
+      kicker: 'For BRIF families',
+      title: 'Uniform & Dress Code',
+      intro: 'Each outfit below shows the assembled uniform alongside the actual garments, with numbered callouts for what to know about each piece. Tap or click any numbered dot for detail, or tap the render itself to zoom in.',
+      categoryLabels: {
+        daily: 'Daily uniform',
+        sports: 'Sports kit',
+      },
+      renderLabel: 'Studio render',
+      realPhotoLabel: 'Actual garment',
+      renderPlaceholder: 'Studio render coming soon.',
+      photosPlaceholder: 'Photos of the actual garments coming soon.',
+      itemsHeading: 'In this outfit',
+      calloutsListLabel: 'Callout details',
+      zoomLabel: 'Tap to zoom',
+      zoomCloseLabel: 'Close',
+      backToParents: 'Back to Parents',
     },
     contact: {
       title: 'Contact',
@@ -1809,7 +2015,7 @@ export const content = {
       documentsTitle: 'Documents et listes',
       documents: [
         { title: 'Listes de fournitures scolaires', description: 'Listes de fournitures par classe, imprimables et faciles à consulter.', status: 'available', href: '/fr/parents/fournitures/', linkLabel: 'Voir les listes', external: false },
-        { title: 'Uniforme et tenue vestimentaire', description: 'La tenue au quotidien et pour les occasions spéciales.', status: 'comingSoon' },
+        { title: 'Uniforme et tenue vestimentaire', description: 'La tenue au quotidien, avec des photos de chaque ensemble.', status: 'available', href: '/fr/parents/uniforme/', linkLabel: 'Consulter', external: false },
         { title: 'Règlement Intérieur', description: 'Le règlement intérieur de l’école, remis et signé à l’inscription.', status: 'available', href: '/fr/parents/reglement-interieur/', linkLabel: 'Consulter', external: false },
         { title: 'Transport et circuits de bus', description: 'Les circuits, arrêts, et comment organiser le transport de votre enfant.', status: 'comingSoon' },
         { title: 'Informations sur la cantine', description: 'Les menus et le fonctionnement de la cantine.', status: 'available', href: '#canteen-menu', linkLabel: 'Voir le menu', external: false },
@@ -1875,6 +2081,24 @@ export const content = {
       officialText: 'Cette page reprend, de façon claire et imprimable, la liste officielle de l’école ci-dessous.',
       officialLinkLabel: 'Voir le PDF original',
       itemNameLang: 'fr',
+    },
+    uniformPage: {
+      kicker: 'Pour les familles de la BRIF',
+      title: 'Uniforme et tenue vestimentaire',
+      intro: 'Chaque tenue ci-dessous montre la tenue assemblée aux côtés des vêtements réels, avec des repères numérotés pour ce qu’il faut savoir sur chaque pièce. Touchez ou cliquez sur un repère numéroté pour le détail, ou touchez le rendu lui-même pour zoomer.',
+      categoryLabels: {
+        daily: 'Tenue quotidienne',
+        sports: 'Tenue de sport',
+      },
+      renderLabel: 'Rendu studio',
+      realPhotoLabel: 'Vêtement réel',
+      renderPlaceholder: 'Rendu studio à venir.',
+      photosPlaceholder: 'Photos des vêtements réels à venir.',
+      itemsHeading: 'Composition de la tenue',
+      calloutsListLabel: 'Détails des repères',
+      zoomLabel: 'Toucher pour zoomer',
+      zoomCloseLabel: 'Fermer',
+      backToParents: 'Retour à Parents',
     },
     contact: {
       title: 'Contact',

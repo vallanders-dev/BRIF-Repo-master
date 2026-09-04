@@ -5,7 +5,7 @@ import { site } from '../data/content.js';
 const { lang = 'en', routeKey = 'home' } = Astro.props;
 const t = useTranslations(lang);
 
-const navKeys = ['home', 'programs', 'admissions', 'life', 'news', 'about', 'contact'];
+const navKeys = ['home', 'programs', 'admissions', 'parents', 'life', 'news', 'about', 'contact'];
 const nav = navKeys.map((key) => ({
   key,
   label: t(`nav.${key}`),
@@ -19,6 +19,14 @@ const programsSubmenu = programsSubmenuKeys.map((key) => ({
   href: localizedPath(lang, key),
 }));
 const programsRouteKeys = new Set(programsSubmenuKeys);
+
+const parentsSubmenuKeys = ['parents', 'parentsCalendar', 'parentsSupplies', 'reglementInterieur', 'parentsUniform'];
+const parentsSubmenu = parentsSubmenuKeys.map((key) => ({
+  key,
+  label: key === 'parents' ? t('nav.parentsOverview') : t(`nav.${key}`),
+  href: localizedPath(lang, key),
+}));
+const parentsRouteKeys = new Set(parentsSubmenuKeys);
 
 const homeHref = localizedPath(lang, 'home');
 // Both language paths for the current page, for the EN|FR pill.
@@ -50,6 +58,22 @@ const frHref = localizedPath('fr', routeKey);
               <div class="dropdown">
                 <ul class="dropdown-inner">
                   {programsSubmenu.map((sub) => (
+                    <li>
+                      <a href={sub.href} aria-current={sub.key === routeKey ? 'page' : undefined}>{sub.label}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </li>
+          ) : item.key === 'parents' ? (
+            <li class="has-dropdown">
+              <a
+                href={item.href}
+                aria-current={parentsRouteKeys.has(routeKey) ? 'page' : undefined}
+              >{item.label}</a>
+              <div class="dropdown">
+                <ul class="dropdown-inner">
+                  {parentsSubmenu.map((sub) => (
                     <li>
                       <a href={sub.href} aria-current={sub.key === routeKey ? 'page' : undefined}>{sub.label}</a>
                     </li>

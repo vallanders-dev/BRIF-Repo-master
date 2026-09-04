@@ -28,6 +28,9 @@ export const ui = {
     'nav.parents': 'Parents',
     'nav.parentsOverview': 'Overview',
     'nav.parentsCalendar': 'Calendar',
+    'nav.parentsSupplies': 'Supply Lists',
+    'nav.reglementInterieur': 'Internal Regulations',
+    'nav.parentsUniform': 'Uniform',
     'nav.contact': 'Contact',
     'nav.apply': 'Apply now',
     'lang.switch': 'FR',
@@ -56,6 +59,9 @@ export const ui = {
     'nav.parents': 'Parents',
     'nav.parentsOverview': "Vue d'ensemble",
     'nav.parentsCalendar': 'Calendrier',
+    'nav.parentsSupplies': 'Fournitures scolaires',
+    'nav.reglementInterieur': 'Règlement Intérieur',
+    'nav.parentsUniform': 'Uniforme',
     'nav.contact': 'Contact',
     'nav.apply': 'Inscription',
     'lang.switch': 'EN',
@@ -92,8 +98,9 @@ export const routes = {
   news:       { en: 'news',        fr: 'actualites' },
   admissions: { en: 'admissions',  fr: 'admissions' },
   parents:         { en: 'parents',          fr: 'parents' },
-  parentsCalendar: { en: 'parents/calendar', fr: 'parents/calendar' },
+  parentsCalendar: { en: 'parents/calendar', fr: 'parents/calendrier' },
   reglementInterieur: { en: 'parents/internal-regulations', fr: 'parents/reglement-interieur' },
+  parentsUniform: { en: 'parents/uniform', fr: 'parents/uniforme' },
   // Supply lists: an index page grouping all classes by stage, plus one page
   // per class. Slugs reverse word order between languages on purpose — e.g.
   // "year-1-cp1" in English reads as "cp1-year-1" in French — to match how

@@ -1,0 +1,10 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import UniformPage from '../../../../components/UniformPage.astro';
+import { content } from '../../../../data/content.js';
+const lang = 'fr';
+const c = content[lang].uniformPage;
+---
+<Base lang={lang} routeKey="parentsUniform" title={c.title} description={c.intro}>
+  <UniformPage lang={lang} />
+</Base>
