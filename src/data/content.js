@@ -797,10 +797,10 @@ export const supplyLists = [
 // or the pinafore for girls) is worn Monday–Thursday; the pinafore itself
 // is optional; sports kit (jersey or sports t-shirt, either is fine) is
 // Friday only; socks are worn every school day; sizes run S–XXL; no special
-// care beyond ironing before school. NOT yet confirmed: whether each piece
-// is included in the standard uniform pack or ordered separately — every
-// callout below still carries a [TO CONFIRM] placeholder for just that one
-// field. See this feature's summary for that outstanding item.
+// care beyond ironing before school. Pack inclusion (also confirmed): the
+// daily shirt & shorts outfit, the pinafore outfit, and the sports jersey
+// & shorts outfit are included in the standard uniform pack; the sports
+// t-shirt & shorts outfit is ordered separately.
 //
 // The render images themselves are NOT imported here — UniformPage.astro
 // imports them directly (the same way ParentsHubPage.astro imports its
@@ -828,31 +828,31 @@ export const uniforms = [
         x: 50, y: 22,
         label: { en: 'Shirt', fr: 'Chemise' },
         detail: {
-          en: 'Worn: Monday to Thursday. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Monday to Thursday. Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 50, y: 49,
         label: { en: 'Shorts', fr: 'Short' },
         detail: {
-          en: 'Worn: Monday to Thursday. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Monday to Thursday. Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 50, y: 72,
         label: { en: 'Socks', fr: 'Chaussettes' },
         detail: {
-          en: 'Worn: every school day. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: N/A.',
-          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : N/A.',
+          en: 'Worn: every school day. Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: N/A.',
+          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : N/A.',
         },
       },
     ],
     items: [
-      { name: { en: 'Shirt', fr: 'Chemise' }, note: { en: 'Mon–Thu. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Lun–jeu. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
-      { name: { en: 'Shorts', fr: 'Short' }, note: { en: 'Mon–Thu. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Lun–jeu. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
-      { name: { en: 'Socks', fr: 'Chaussettes' }, note: { en: 'Every school day. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Care: N/A.', fr: 'Tous les jours d’école. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Entretien : N/A.' } },
+      { name: { en: 'Shirt', fr: 'Chemise' }, note: { en: 'Mon–Thu. Sizes S–XXL. Included in the standard pack. Iron before school.', fr: 'Lun–jeu. Tailles S à XXL. Inclus dans le pack standard. Repassage avant l’école.' } },
+      { name: { en: 'Shorts', fr: 'Short' }, note: { en: 'Mon–Thu. Sizes S–XXL. Included in the standard pack. Iron before school.', fr: 'Lun–jeu. Tailles S à XXL. Inclus dans le pack standard. Repassage avant l’école.' } },
+      { name: { en: 'Socks', fr: 'Chaussettes' }, note: { en: 'Every school day. Sizes S–XXL. Included in the standard pack. Care: N/A.', fr: 'Tous les jours d’école. Tailles S à XXL. Inclus dans le pack standard. Entretien : N/A.' } },
     ],
   },
   {
@@ -869,31 +869,31 @@ export const uniforms = [
         x: 50, y: 30,
         label: { en: 'Pinafore', fr: 'Robe chasuble' },
         detail: {
-          en: 'Worn: Monday to Thursday (the girls’ standard daily uniform); the pinafore itself is optional. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : du lundi au jeudi (tenue quotidienne standard des filles) ; la robe chasuble elle-même est facultative. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Monday to Thursday (the girls’ standard daily uniform); the pinafore itself is optional. Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : du lundi au jeudi (tenue quotidienne standard des filles) ; la robe chasuble elle-même est facultative. Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 60, y: 9,
         label: { en: 'Shirt (worn underneath)', fr: 'Chemise (portée dessous)' },
         detail: {
-          en: 'Worn: Monday to Thursday. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Monday to Thursday. Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 50, y: 81,
         label: { en: 'Socks', fr: 'Chaussettes' },
         detail: {
-          en: 'Worn: every school day. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: N/A.',
-          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : N/A.',
+          en: 'Worn: every school day. Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: N/A.',
+          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : N/A.',
         },
       },
     ],
     items: [
-      { name: { en: 'Pinafore', fr: 'Robe chasuble' }, note: { en: 'Mon–Thu, optional. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Lun–jeu, facultatif. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
-      { name: { en: 'Shirt', fr: 'Chemise' }, note: { en: 'Mon–Thu. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Lun–jeu. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
-      { name: { en: 'Socks', fr: 'Chaussettes' }, note: { en: 'Every school day. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Care: N/A.', fr: 'Tous les jours d’école. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Entretien : N/A.' } },
+      { name: { en: 'Pinafore', fr: 'Robe chasuble' }, note: { en: 'Mon–Thu, optional. Sizes S–XXL. Included in the standard pack. Iron before school.', fr: 'Lun–jeu, facultatif. Tailles S à XXL. Inclus dans le pack standard. Repassage avant l’école.' } },
+      { name: { en: 'Shirt', fr: 'Chemise' }, note: { en: 'Mon–Thu. Sizes S–XXL. Included in the standard pack. Iron before school.', fr: 'Lun–jeu. Tailles S à XXL. Inclus dans le pack standard. Repassage avant l’école.' } },
+      { name: { en: 'Socks', fr: 'Chaussettes' }, note: { en: 'Every school day. Sizes S–XXL. Included in the standard pack. Care: N/A.', fr: 'Tous les jours d’école. Tailles S à XXL. Inclus dans le pack standard. Entretien : N/A.' } },
     ],
   },
   {
@@ -910,31 +910,31 @@ export const uniforms = [
         x: 50, y: 30,
         label: { en: 'T-shirt', fr: 'T-shirt' },
         detail: {
-          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: Ordered separately. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : Commandé séparément. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 50, y: 59,
         label: { en: 'Shorts', fr: 'Short' },
         detail: {
-          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: Ordered separately. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : Commandé séparément. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 50, y: 80,
         label: { en: 'Socks', fr: 'Chaussettes' },
         detail: {
-          en: 'Worn: every school day. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: N/A.',
-          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : N/A.',
+          en: 'Worn: every school day. Included in standard pack or ordered separately: Ordered separately. Sizes available: S to XXL. Care: N/A.',
+          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : Commandé séparément. Tailles disponibles : S à XXL. Entretien : N/A.',
         },
       },
     ],
     items: [
-      { name: { en: 'T-shirt', fr: 'T-shirt' }, note: { en: 'Fri (sports day). Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Ven (jour de sport). Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
-      { name: { en: 'Shorts', fr: 'Short' }, note: { en: 'Fri (sports day). Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Ven (jour de sport). Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
-      { name: { en: 'Socks', fr: 'Chaussettes' }, note: { en: 'Every school day. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Care: N/A.', fr: 'Tous les jours d’école. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Entretien : N/A.' } },
+      { name: { en: 'T-shirt', fr: 'T-shirt' }, note: { en: 'Fri (sports day). Sizes S–XXL. Ordered separately. Iron before school.', fr: 'Ven (jour de sport). Tailles S à XXL. Commandé séparément. Repassage avant l’école.' } },
+      { name: { en: 'Shorts', fr: 'Short' }, note: { en: 'Fri (sports day). Sizes S–XXL. Ordered separately. Iron before school.', fr: 'Ven (jour de sport). Tailles S à XXL. Commandé séparément. Repassage avant l’école.' } },
+      { name: { en: 'Socks', fr: 'Chaussettes' }, note: { en: 'Every school day. Sizes S–XXL. Ordered separately. Care: N/A.', fr: 'Tous les jours d’école. Tailles S à XXL. Commandé séparément. Entretien : N/A.' } },
     ],
   },
   {
@@ -951,31 +951,31 @@ export const uniforms = [
         x: 50, y: 28,
         label: { en: 'Jersey', fr: 'Maillot' },
         detail: {
-          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 50, y: 55,
         label: { en: 'Shorts', fr: 'Short' },
         detail: {
-          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 50, y: 72,
         label: { en: 'Socks', fr: 'Chaussettes' },
         detail: {
-          en: 'Worn: every school day. Included in standard pack or ordered separately: [TO CONFIRM]. Sizes available: S to XXL. Care: N/A.',
-          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : [À CONFIRMER]. Tailles disponibles : S à XXL. Entretien : N/A.',
+          en: 'Worn: every school day. Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: N/A.',
+          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : N/A.',
         },
       },
     ],
     items: [
-      { name: { en: 'Jersey', fr: 'Maillot' }, note: { en: 'Fri (sports day). Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Ven (jour de sport). Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
-      { name: { en: 'Shorts', fr: 'Short' }, note: { en: 'Fri (sports day). Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Iron before school.', fr: 'Ven (jour de sport). Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Repassage avant l’école.' } },
-      { name: { en: 'Socks', fr: 'Chaussettes' }, note: { en: 'Every school day. Sizes S–XXL. [TO CONFIRM: included in pack or ordered separately]. Care: N/A.', fr: 'Tous les jours d’école. Tailles S à XXL. [À CONFIRMER : inclus dans le pack ou commandé séparément]. Entretien : N/A.' } },
+      { name: { en: 'Jersey', fr: 'Maillot' }, note: { en: 'Fri (sports day). Sizes S–XXL. Included in the standard pack. Iron before school.', fr: 'Ven (jour de sport). Tailles S à XXL. Inclus dans le pack standard. Repassage avant l’école.' } },
+      { name: { en: 'Shorts', fr: 'Short' }, note: { en: 'Fri (sports day). Sizes S–XXL. Included in the standard pack. Iron before school.', fr: 'Ven (jour de sport). Tailles S à XXL. Inclus dans le pack standard. Repassage avant l’école.' } },
+      { name: { en: 'Socks', fr: 'Chaussettes' }, note: { en: 'Every school day. Sizes S–XXL. Included in the standard pack. Care: N/A.', fr: 'Tous les jours d’école. Tailles S à XXL. Inclus dans le pack standard. Entretien : N/A.' } },
     ],
   },
 ];
