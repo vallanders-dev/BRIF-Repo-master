@@ -1,6 +1,8 @@
 ---
+import { Image } from 'astro:assets';
 import { content, site } from '../data/content.js';
 import PageHero from './PageHero.astro';
+import mapScreenshot from '../assets/photos/brif-map-location.png';
 
 const { lang = 'en' } = Astro.props;
 const c = content[lang].contact;
@@ -66,10 +68,14 @@ const tourWhatsappHref = `https://wa.me/${site.whatsapp}?text=${encodeURICompone
     <div class="contact-map" data-reveal>
       <a href={site.mapUrl} target="_blank" rel="noopener" class="map-frame">
         <div class="map-ph">
-          <span class="map-pin" aria-hidden="true">📍</span>
-          <strong>British &amp; French Academy</strong>
-          <span>{site.address[lang]}</span>
-          <span class="map-cta">{lang === 'fr' ? 'Ouvrir dans Google Maps' : 'Open in Google Maps'} →</span>
+          <Image src={mapScreenshot} alt="" class="map-bg" width={760} widths={[380, 570, 760]} sizes="(max-width: 780px) 100vw, 50vw" loading="lazy" />
+          <div class="map-scrim" aria-hidden="true"></div>
+          <div class="map-content">
+            <span class="map-pin" aria-hidden="true">📍</span>
+            <strong class="map-name">British &amp; French Academy</strong>
+            <span class="map-address">{site.address[lang]}</span>
+            <span class="map-cta">{lang === 'fr' ? 'Ouvrir dans Google Maps' : 'Open in Google Maps'} →</span>
+          </div>
         </div>
       </a>
     </div>
@@ -116,12 +122,37 @@ const tourWhatsappHref = `https://wa.me/${site.whatsapp}?text=${encodeURICompone
 
   .map-frame { display: block; }
   .map-ph {
+    position: relative;
     aspect-ratio: 4 / 3;
-    background:
-      radial-gradient(circle at 30% 30%, rgba(57,108,180,0.12), transparent 60%),
-      linear-gradient(135deg, var(--mist), #e8eef7);
+    background: var(--mist);
     border: 1px solid var(--line);
     border-radius: var(--radius);
+    overflow: hidden;
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .map-frame:hover .map-ph { box-shadow: var(--shadow); transform: translateY(-3px); }
+  /* The map screenshot sits blurred behind the card's own text — scaled up
+     slightly so the blur's soft edge never shows the frame's border, with a
+     light scrim over it so the dark text stays easily readable. */
+  .map-ph :global(.map-bg) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transform: scale(1.15);
+    filter: blur(1.5px);
+  }
+  .map-scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 30% 30%, rgba(57,108,180,0.1), transparent 60%),
+      rgba(244,247,251,0.82);
+  }
+  .map-content {
+    position: relative;
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -129,12 +160,10 @@ const tourWhatsappHref = `https://wa.me/${site.whatsapp}?text=${encodeURICompone
     gap: 0.5rem;
     text-align: center;
     padding: 2rem;
-    transition: box-shadow 0.2s ease, transform 0.2s ease;
   }
-  .map-frame:hover .map-ph { box-shadow: var(--shadow); transform: translateY(-3px); }
   .map-pin { font-size: 2.5rem; }
-  .map-ph strong { font-family: var(--font-display); font-size: 1.4rem; color: var(--oxford); }
-  .map-ph span { color: var(--ink-soft); font-size: 0.95rem; }
+  .map-name { font-family: var(--font-display); font-size: 1.4rem; color: var(--oxford); }
+  .map-address { color: var(--ink-soft); font-size: 0.95rem; }
   .map-cta { color: var(--orange); font-weight: 600; margin-top: 0.5rem; }
 
   @media (max-width: 780px) {
