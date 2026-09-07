@@ -9,7 +9,9 @@ import heroPhotoAlt from '../assets/photos/brif-graduation-lineup.jpg';
 const { lang = 'en' } = Astro.props;
 const c = content[lang].home;
 const t = useTranslations(lang);
-const items = news[lang];
+// Homepage teaser: latest 3 only (the 3-column grid below), full list on
+// the News page — see the comment above `news` in content.js.
+const items = news[lang].slice(0, 3);
 
 const admissionsHref = localizedPath(lang, 'admissions');
 const aboutHref = localizedPath(lang, 'about');
@@ -138,7 +140,7 @@ const dateFmt = (iso) => {
         <article class="news-card">
           <time datetime={n.date}>{dateFmt(n.date)}</time>
           <h3>{n.title}</h3>
-          <p>{n.excerpt}</p>
+          <p>{n.subtitle}</p>
         </article>
       ))}
     </div>

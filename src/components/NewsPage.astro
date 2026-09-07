@@ -1,11 +1,28 @@
 ---
+import { Image } from 'astro:assets';
 import { content, news, site } from '../data/content.js';
 import PageHero from './PageHero.astro';
+import igcseResultsPhoto from '../assets/photos/brif-igcse-100-percent.jpg';
+import septemberWishesPhoto from '../assets/photos/brif-september-wishes.jpg';
+import schoolResumptionPhoto from '../assets/photos/brif-school-resumption.jpg';
+import summerSchoolPhoto from '../assets/photos/brif-swimming-pool.jpg';
 
 const { lang = 'en' } = Astro.props;
 const c = content[lang].news;
 const fb = content[lang].fbModule;
 const items = news[lang];
+
+// Thumbnails, keyed the same way as UniformPage.astro's renders — see the
+// comment above `news` in content.js for which items still need a real photo.
+// Every entry here is a dedicated image used nowhere else on the site — do
+// not point a key at a photo that's already imported elsewhere (e.g.
+// ProgramsPage.astro, LifePage.astro).
+const thumbByKey = {
+  'igcse-results': igcseResultsPhoto,
+  'september-wishes': septemberWishesPhoto,
+  'school-resumption': schoolResumptionPhoto,
+  'summer-school': summerSchoolPhoto,
+};
 
 const dateFmt = (iso) => {
   // Parse as local-timezone date components, not a UTC instant — new Date(iso)
@@ -23,71 +40,45 @@ const dateFmt = (iso) => {
   <div class="wrap">
     <p class="lede intro-lede" data-reveal>{c.intro}</p>
     <div class="news-list">
-      {items.map((n, i) => (
+      {items.map((n, i) => {
+        const thumb = thumbByKey[n.key];
+        return (
         <article class="news-item" data-reveal class:list={[`d${Math.min(i + 1, 4)}`]}>
-          <div class="news-item-img" aria-hidden="true"><span>📷</span></div>
+          {thumb ? (
+            <div class="news-item-img">
+              <Image src={thumb} alt="" width={300} height={225} widths={[240, 300, 450]} sizes="(max-width: 860px) 100vw, 300px" loading="lazy" />
+            </div>
+          ) : (
+            <div class="news-item-img news-item-img--placeholder" aria-hidden="true"><span>📷</span></div>
+          )}
           <div class="news-item-body">
             <time datetime={n.date}>{dateFmt(n.date)}</time>
             <h2>{n.title}</h2>
-            <p>{n.excerpt}</p>
-            <a href={site.facebook} class="news-link" target="_blank" rel="noopener">
-              {c.readMore}<span aria-hidden="true"> →</span>
-            </a>
+            <p>{n.subtitle}</p>
           </div>
         </article>
-      ))}
+        );
+      })}
     </div>
   </div>
 </section>
 
-<!-- Facebook live feed module -->
+<!-- Facebook follow CTA. Used to also embed Facebook's official Page Plugin
+     (a cross-origin iframe) alongside this, but that widget's own internal
+     styling — fonts, colours, post cards — can't be restyled via CSS (it's
+     sandboxed, and Meta's platform terms forbid disguising it), and it
+     looked visually inconsistent with the rest of the site. Dropped in
+     favour of this standalone, fully on-brand CTA. -->
 <section class="section section--mist">
   <div class="wrap fb-live" data-reveal>
-    <div class="fb-live-copy">
-      <p class="eyebrow">{fb.kicker}</p>
-      <h2>{fb.title}</h2>
-      <p class="lede">{fb.text}</p>
-      <a href={site.facebook} class="btn" target="_blank" rel="noopener">
-        <span class="fb-icon" aria-hidden="true">f</span>{fb.button}
-      </a>
-    </div>
-    <!-- Official Facebook Page Plugin mounts here.
-         It loads only in the built site (needs the FB SDK + a real page URL).
-         Framed to sit tidily within the site's styling. -->
-    <div class="fb-embed">
-      <div class="fb-embed-frame">
-        <div class="fb-page"
-          data-href={site.facebook}
-          data-tabs="timeline"
-          data-width="380"
-          data-height="500"
-          data-small-header="true"
-          data-adapt-container-width="true"
-          data-hide-cover="false"
-          data-show-facepile="true">
-          <blockquote cite={site.facebook} class="fb-xfbml-parse-ignore">
-            <a href={site.facebook}>British &amp; French Academy</a>
-          </blockquote>
-        </div>
-      </div>
-    </div>
+    <p class="eyebrow">{fb.kicker}</p>
+    <h2>{fb.title}</h2>
+    <p class="lede">{fb.text}</p>
+    <a href={site.facebook} class="btn" target="_blank" rel="noopener">
+      <span class="fb-icon" aria-hidden="true">f</span>{fb.button}
+    </a>
   </div>
 </section>
-
-<div id="fb-root"></div>
-<script>
-  (function (d, s, id) {
-    if (d.getElementById(id)) return;
-    var js = d.createElement(s);
-    js.id = id;
-    // @ts-ignore — d.createElement(s) is always a <script> tag here (see call at bottom)
-    js.src = 'https://connect.facebook.net/' +
-      (document.documentElement.lang === 'fr' ? 'fr_FR' : 'en_GB') +
-      '/sdk.js#xfbml=1&version=v19.0';
-    var fjs = d.getElementsByTagName(s)[0];
-    fjs.parentNode.insertBefore(js, fjs);
-  })(document, 'script', 'facebook-jssdk');
-</script>
 
 <style>
   .intro-lede { max-width: 60ch; margin-bottom: 3rem; }
@@ -103,13 +94,32 @@ const dateFmt = (iso) => {
   }
   .news-item:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
   .news-item-img {
+    /* No aspect-ratio here on purpose: this box sits in a grid row next to
+       the text column, whose content (title + subtitle) sets the row's
+       height. A fixed aspect-ratio locks the box to its own height instead
+       of stretching to match — leaving a gap below it whenever the text is
+       taller. Absolutely positioning the img to fill via inset instead (same
+       pattern as .life-card-img--photo in LifePage.astro) lets the box
+       stretch with the row (grid's default) and the photo always covers it
+       completely, whatever height that turns out to be. */
+    position: relative;
+    overflow: hidden;
+  }
+  .news-item-img :global(img) {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .news-item-img--placeholder {
     background: linear-gradient(135deg, var(--mist), #e8eef7);
     border-right: 1px dashed var(--true-blue);
     display: grid;
     place-items: center;
     font-size: 2rem;
     color: var(--true-blue);
-    min-height: 180px;
   }
   .news-item-body { padding: 1.8rem 1.8rem 1.8rem 0; }
   .news-item-body time {
@@ -120,19 +130,17 @@ const dateFmt = (iso) => {
     letter-spacing: 0.08em;
   }
   .news-item-body h2 { font-size: 1.6rem; margin: 0.5rem 0 0.7rem; }
-  .news-item-body p { color: var(--ink-soft); margin-bottom: 1rem; }
-  .news-link { font-weight: 600; color: var(--orange); }
-  .news-link:hover { color: var(--orange-ink); }
+  .news-item-body p { color: var(--ink-soft); }
 
   .fb-live {
-    display: grid;
-    grid-template-columns: 1fr 400px;
-    gap: clamp(2rem, 1rem + 4vw, 4rem);
-    align-items: center;
+    max-width: 52ch;
+    margin-inline: auto;
+    text-align: center;
   }
-  .fb-live-copy .eyebrow { margin-bottom: 1rem; }
-  .fb-live-copy h2 { font-size: var(--step-3); margin-bottom: 1rem; }
-  .fb-live-copy .lede { margin-bottom: 1.6rem; }
+  .fb-live .eyebrow { margin-bottom: 1rem; }
+  .fb-live h2 { font-size: var(--step-3); margin-bottom: 1rem; }
+  .fb-live .lede { margin-bottom: 1.6rem; }
+  .fb-live .btn { display: inline-flex; }
   .fb-icon {
     display: inline-grid;
     place-items: center;
@@ -145,31 +153,10 @@ const dateFmt = (iso) => {
     font-style: italic;
     font-size: 0.95rem;
   }
-  .fb-embed-frame {
-    background: #fff;
-    border: 1px solid var(--line);
-    border-radius: var(--radius);
-    padding: 0.5rem;
-    box-shadow: var(--shadow-sm);
-    min-height: 200px;
-    display: grid;
-    place-items: center;
-    overflow: hidden;
-  }
-  .fb-embed-frame:empty::after,
-  .fb-page:not(.fb_iframe_widget)::after {
-    content: "Facebook feed loads on the published site";
-    color: var(--ink-soft);
-    font-size: 0.9rem;
-    padding: 2rem;
-    text-align: center;
-  }
 
   @media (max-width: 860px) {
     .news-item { grid-template-columns: 1fr; }
-    .news-item-img { border-right: none; border-bottom: 1px dashed var(--true-blue); }
+    .news-item-img--placeholder { border-right: none; border-bottom: 1px dashed var(--true-blue); }
     .news-item-body { padding: 1.6rem; }
-    .fb-live { grid-template-columns: 1fr; }
-    .fb-embed { max-width: 400px; }
   }
 </style>

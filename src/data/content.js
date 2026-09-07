@@ -828,24 +828,24 @@ export const uniforms = [
         x: 50, y: 22,
         label: { en: 'Shirt', fr: 'Chemise' },
         detail: {
-          en: 'Worn: Monday to Thursday. Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Monday to Thursday. Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 50, y: 49,
         label: { en: 'Shorts', fr: 'Short' },
         detail: {
-          en: 'Worn: Monday to Thursday. Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Monday to Thursday. Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 50, y: 72,
         label: { en: 'Socks', fr: 'Chaussettes' },
         detail: {
-          en: 'Worn: every school day. Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: N/A.',
-          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : N/A.',
+          en: 'Worn: every school day. Included in the standard pack. Sizes available: S to XXL. Care: N/A.',
+          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : N/A.',
         },
       },
     ],
@@ -869,24 +869,24 @@ export const uniforms = [
         x: 50, y: 30,
         label: { en: 'Pinafore', fr: 'Robe chasuble' },
         detail: {
-          en: 'Worn: Monday to Thursday (the girls’ standard daily uniform); the pinafore itself is optional. Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : du lundi au jeudi (tenue quotidienne standard des filles) ; la robe chasuble elle-même est facultative. Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Monday to Thursday (the girls’ standard daily uniform); the pinafore itself is optional. Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : du lundi au jeudi (tenue quotidienne standard des filles) ; la robe chasuble elle-même est facultative. Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 60, y: 9,
         label: { en: 'Shirt (worn underneath)', fr: 'Chemise (portée dessous)' },
         detail: {
-          en: 'Worn: Monday to Thursday. Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Monday to Thursday. Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : du lundi au jeudi. Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 50, y: 81,
         label: { en: 'Socks', fr: 'Chaussettes' },
         detail: {
-          en: 'Worn: every school day. Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: N/A.',
-          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : N/A.',
+          en: 'Worn: every school day. Included in the standard pack. Sizes available: S to XXL. Care: N/A.',
+          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : N/A.',
         },
       },
     ],
@@ -910,24 +910,24 @@ export const uniforms = [
         x: 50, y: 30,
         label: { en: 'T-shirt', fr: 'T-shirt' },
         detail: {
-          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: Ordered separately. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : Commandé séparément. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Friday (sports day). Ordered separately. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : le vendredi (jour de sport). Commandé séparément. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 50, y: 59,
         label: { en: 'Shorts', fr: 'Short' },
         detail: {
-          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: Ordered separately. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : Commandé séparément. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Friday (sports day). Ordered separately. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : le vendredi (jour de sport). Commandé séparément. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 50, y: 80,
         label: { en: 'Socks', fr: 'Chaussettes' },
         detail: {
-          en: 'Worn: every school day. Included in standard pack or ordered separately: Ordered separately. Sizes available: S to XXL. Care: N/A.',
-          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : Commandé séparément. Tailles disponibles : S à XXL. Entretien : N/A.',
+          en: 'Worn: every school day. Ordered separately. Sizes available: S to XXL. Care: N/A.',
+          fr: 'Porté : tous les jours d’école. Commandé séparément. Tailles disponibles : S à XXL. Entretien : N/A.',
         },
       },
     ],
@@ -951,24 +951,24 @@ export const uniforms = [
         x: 50, y: 28,
         label: { en: 'Jersey', fr: 'Maillot' },
         detail: {
-          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Friday (sports day). Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 50, y: 55,
         label: { en: 'Shorts', fr: 'Short' },
         detail: {
-          en: 'Worn: Friday (sports day). Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
-          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
+          en: 'Worn: Friday (sports day). Included in the standard pack. Sizes available: S to XXL. Care: No specific instructions, aside from ironing before school.',
+          fr: 'Porté : le vendredi (jour de sport). Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : aucune instruction particulière, à part le repassage avant l’école.',
         },
       },
       {
         x: 50, y: 72,
         label: { en: 'Socks', fr: 'Chaussettes' },
         detail: {
-          en: 'Worn: every school day. Included in standard pack or ordered separately: Included in the standard pack. Sizes available: S to XXL. Care: N/A.',
-          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard ou commandé séparément : Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : N/A.',
+          en: 'Worn: every school day. Included in the standard pack. Sizes available: S to XXL. Care: N/A.',
+          fr: 'Porté : tous les jours d’école. Inclus dans le pack standard. Tailles disponibles : S à XXL. Entretien : N/A.',
         },
       },
     ],
@@ -1318,7 +1318,6 @@ export const content = {
       title: 'News',
       kicker: 'From the Academy',
       intro: 'Announcements, events, and stories from our community.',
-      readMore: 'Read more',
     },
     admissions: {
       title: 'Admissions',
@@ -1973,7 +1972,6 @@ export const content = {
       title: 'Actualités',
       kicker: "De l'Académie",
       intro: 'Annonces, événements et histoires de notre communauté.',
-      readMore: 'Lire la suite',
     },
     admissions: {
       title: 'Admissions',
@@ -2310,16 +2308,65 @@ export const content = {
   },
 };
 
-// Shared news items (dates are neutral; edit freely).
+// Shared news items — mirrors the school's Facebook page (facebook.com/brif.one),
+// newest first. Each `key` is looked up in NewsPage.astro against a thumbnail
+// image imported there (same keyed-lookup pattern as UniformPage.astro); an
+// item with no matching thumbnail just falls back to the placeholder icon.
+// To refresh: replace these four with the next four FB posts, oldest one out,
+// and add/remove the matching thumbnail import + thumbByKey entry in
+// NewsPage.astro. All four currently have a real, dedicated photo (none
+// shared with another page — see the note above thumbByKey there).
 export const news = {
   en: [
-    { date: '2025-09-02', title: 'Welcome back for the new school year', excerpt: 'Our campus reopens its doors to returning and new families. Here is what to expect in the term ahead.' },
-    { date: '2025-07-10', title: 'Celebrating our end-of-year showcase', excerpt: 'Students shared their work in arts, science, and sport at our annual community celebration.' },
-    { date: '2025-05-18', title: 'BRIF students shine in regional competition', excerpt: 'A proud moment as our team represented the Academy with distinction and sportsmanship.' },
+    {
+      key: 'school-resumption',
+      date: '2026-09-14',
+      title: 'Welcome back to a new school year!',
+      subtitle: 'Classes resume on Monday, 14 September — we can’t wait to welcome our students back to campus.',
+    },
+    {
+      key: 'september-wishes',
+      date: '2026-09-01',
+      title: 'Wishing our community a wonderful September',
+      subtitle: 'As the new month begins, we send our warmest wishes to every parent, teacher, and student in the BRIF family.',
+    },
+    {
+      key: 'igcse-results',
+      date: '2026-08-20',
+      title: '100% success for our IGCSE stars!',
+      subtitle: 'Congratulations to every student — your hard work, dedication, and success make the whole BRIF family proud.',
+    },
+    {
+      key: 'summer-school',
+      date: '2026-07-28',
+      title: 'Summer school is here: swimming, kung fu & creative arts',
+      subtitle: 'A fun-filled summer programme for our students, with swimming, kung fu, and creative arts sessions all holiday long.',
+    },
   ],
   fr: [
-    { date: '2025-09-02', title: 'Bonne rentrée pour la nouvelle année scolaire', excerpt: 'Notre campus rouvre ses portes aux familles anciennes et nouvelles. Voici ce qui vous attend ce trimestre.' },
-    { date: '2025-07-10', title: 'Notre fête de fin d\u2019année', excerpt: 'Les élèves ont présenté leurs travaux en arts, en sciences et en sport lors de notre célébration annuelle.' },
-    { date: '2025-05-18', title: 'Les élèves de la BRIF brillent en compétition régionale', excerpt: 'Un moment de fierté : notre équipe a représenté l\u2019Académie avec distinction et fair-play.' },
+    {
+      key: 'school-resumption',
+      date: '2026-09-14',
+      title: 'Bonne rentrée !',
+      subtitle: 'Les cours reprennent le lundi 14 septembre — nous avons hâte de retrouver nos élèves sur le campus.',
+    },
+    {
+      key: 'september-wishes',
+      date: '2026-09-01',
+      title: 'Un très beau mois de septembre à toute la communauté',
+      subtitle: 'En ce début de mois, nous adressons nos meilleurs vœux à tous les parents, enseignants et élèves de la famille BRIF.',
+    },
+    {
+      key: 'igcse-results',
+      date: '2026-08-20',
+      title: '100 % de réussite pour nos étoiles de l’IGCSE !',
+      subtitle: 'Félicitations à chaque élève : votre travail, votre engagement et votre réussite rendent toute la famille BRIF fière.',
+    },
+    {
+      key: 'summer-school',
+      date: '2026-07-28',
+      title: 'L’école d’été est là : natation, kung-fu et arts créatifs',
+      subtitle: 'Un programme estival plein d’activités pour nos élèves, avec natation, kung-fu et ateliers d’arts créatifs tout au long des vacances.',
+    },
   ],
 };
