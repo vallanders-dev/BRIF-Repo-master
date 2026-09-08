@@ -6,10 +6,63 @@
 # Use the custom 404 page
 ErrorDocument 404 /404.html
 
-# Redirect the bare domain root to the English site
-# (index.html already does this via meta-refresh; this is a faster fallback)
+# Redirect the bare domain root to the English site.
+# dist/index.html also does this via meta-refresh, but that costs the visitor a
+# round trip and reads poorly to crawlers — this handles it at the server.
 RewriteEngine On
 RewriteBase /
+
+# Bare root only ("/"), not any deeper path.
+#
+# Language negotiation: a browser that prefers French gets the French site,
+# everyone else gets English. Most families here are francophone, so this
+# matches the old WordPress behaviour (French at the domain root) while still
+# serving English to international visitors.
+#
+# `^fr` matches fr, fr-FR, fr-CA etc., but only when French is the browser's
+# FIRST preference — so "en-US,en;q=0.9,fr;q=0.8" correctly gets English.
+#
+# These MUST stay 302. A 301 would be cached by the browser permanently and
+# would trap a visitor in whichever language they first arrived in, even after
+# they use the EN/FR switcher.
+RewriteCond %{HTTP:Accept-Language} ^fr [NC]
+RewriteRule ^$ /fr/ [R=302,L,E=LANGREDIR:1]
+RewriteRule ^$ /en/ [R=302,L,E=LANGREDIR:1]
+
+# =========================================================================
+# Legacy WordPress URLs -> new site (301, permanent).
+#
+# The old site was French-first at the domain root, with English under /en/.
+# These keep search results, old links and shared WhatsApp messages working
+# instead of dropping visitors on a 404. Safe to remove once the old URLs
+# have aged out of the search index (a year or so).
+#
+# Note: none of these can collide with the new site's own paths, because
+# every new page lives under /en/ or /fr/.
+# =========================================================================
+
+# --- French pages (were at the domain root) ---
+RewriteRule ^a-propos-de-nous/?$            /fr/a-propos/       [R=301,L]
+RewriteRule ^admission/?$                   /fr/admissions/     [R=301,L]
+RewriteRule ^contactez-nous/?$              /fr/contact/        [R=301,L]
+
+# Both of these held the curriculum tables, which now live on the
+# Programmes page alongside the three programme tracks.
+RewriteRule ^british-curriculum-2/?$        /fr/programmes/     [R=301,L]
+RewriteRule ^ecoles/?$                      /fr/programmes/     [R=301,L]
+
+# The old blog is retired and its posts are not being carried over, so the
+# index and any post beneath it both land on the news page.
+RewriteRule ^blog-british-and-french-academy(/.*)?$  /fr/actualites/  [R=301,L]
+
+# Legal pages the old cookie banner linked to.
+RewriteRule ^privacy-policy/?$              /fr/politique-de-confidentialite/  [R=301,L]
+
+# --- English pages (were under /en/) ---
+RewriteRule ^en/home/?$                     /en/                        [R=301,L]
+RewriteRule ^en/contact-2/?$                /en/contact/                [R=301,L]
+RewriteRule ^en/admission-2/?$              /en/admissions/             [R=301,L]
+RewriteRule ^en/cambridge-admission/?$      /en/programmes/cambridge/   [R=301,L]
 
 # Force HTTPS (recommended once your SSL certificate is active on OVH)
 # Uncomment the next two lines after enabling SSL:
@@ -39,6 +92,12 @@ DirectoryIndex index.html
 
 # --- Basic security headers ---
 <IfModule mod_headers.c>
+  # Tell caches and proxies that the root response varies by language, so a
+  # French visitor's redirect is never served to an English one. Set only on
+  # the root redirect (see LANGREDIR above), not on every asset, which would
+  # needlessly fragment caching.
+  Header always set Vary "Accept-Language" env=LANGREDIR
+
   Header set X-Content-Type-Options "nosniff"
   Header set X-Frame-Options "SAMEORIGIN"
   Header set Referrer-Policy "strict-origin-when-cross-origin"
