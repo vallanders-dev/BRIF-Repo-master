@@ -24,9 +24,9 @@ export const site = {
     en: 'Quartier JAK, 06 BP 129, Cotonou, Republic of Benin',
     fr: 'Quartier JAK, 06 BP 129, Cotonou, République du Bénin',
   },
-  // Web3Forms access key for the enrolment form (host-agnostic: works on
-  // Netlify now and on OVH after the move, no backend of our own needed).
-  // Tied to info@brif.one via https://web3forms.com.
+  // Web3Forms access key for the enrolment form. The site is static with no
+  // backend of our own, so submissions POST straight to web3forms.com, which
+  // forwards them by email. Public by design — it ships in the page HTML.
   formAccessKey: 'e014b612-b7e6-42c7-ba89-d8aaab9a7a06',
 };
 

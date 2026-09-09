@@ -55,24 +55,44 @@ npm run preview
 
 ## 5. Deploying
 
-### Recommended flow: preview online first, then OVH
+The site is live at **https://brif.one**, on OVH shared hosting.
 
-1. Push this project to a **GitHub** repo.
-2. Connect the repo to **Netlify** or **Vercel** (both free).
-   - Build command: `npm run build`
-   - Publish directory: `dist`
-   They give you a live preview URL to share with the school for sign-off.
-3. Once approved, upload to OVH (below).
+### Deploys are automatic
 
-### Uploading to OVH (shared hosting)
+Push to `master` and GitHub Actions does the rest — see
+`.github/workflows/deploy-ovh.yml`. It builds, checks the output is sane, then
+uploads `dist/` to OVH over SFTP. No manual step, no local build needed.
 
-1. Run `npm run build`.
-2. Open OVH's file manager or an SFTP client (FileZilla).
-3. Upload **the contents of `dist/`** (not the folder itself) into your
-   web root — usually `www/` on OVH.
-4. Point the `brif.one` domain at the hosting (OVH DNS panel).
+The workflow needs three repository secrets (Settings → Secrets and variables
+→ Actions): `OVH_FTP_SERVER`, `OVH_FTP_USERNAME`, `OVH_FTP_PASSWORD`.
 
-Because the site is static, OVH serves it with zero configuration.
+Note that `.htaccess` is uploaded by its own step. The main upload uses a
+`./dist/*` glob, and globs don't match dotfiles — so without that second step
+it is silently skipped, and the site serves fine while every rule in it is
+quietly absent.
+
+### What `.htaccess` does
+
+`public/.htaccess` is copied into the build and drives everything Apache-side:
+
+- **Language negotiation at the root** — a browser preferring French gets
+  `/fr/`, everyone else `/en/`. Deliberately a 302: a 301 would be cached
+  permanently and trap visitors in one language despite the EN/FR switcher.
+- **301s for the retired WordPress URLs**, so old search results and shared
+  links keep working.
+- The custom 404 page, caching headers, and compression.
+
+### Verifying the live site
+
+OVH rejects requests that don't look like a browser, so plain `curl` returns
+403 no matter what is deployed. Always pass a User-Agent:
+
+```bash
+curl -sI -A "Mozilla/5.0" -H "Accept-Language: fr-FR,fr;q=0.9" https://brif.one/
+```
+
+A deploy also replaces `.htaccess` in place, so the site may 403 for a moment
+mid-deploy. That is expected and clears on its own.
 The included `.htaccess` (see below) handles clean URLs and the language
 redirect if needed.
 
