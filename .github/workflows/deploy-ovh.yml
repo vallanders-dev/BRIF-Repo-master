@@ -75,3 +75,19 @@ jobs:
           # action's default (rsync over ssh) won't work here — this forces
           # plain SFTP puts instead.
           sftp_only: true
+
+      - name: Upload .htaccess
+        # Uploaded separately because the glob above ("./dist/*") does not
+        # match dotfiles, so .htaccess was silently skipped — the site served
+        # fine while every Apache rule in it (legacy 301s, the custom
+        # ErrorDocument, and Accept-Language negotiation at the root) was
+        # simply absent. It is the only dotfile the build produces.
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
+        with:
+          server: ${{ secrets.OVH_FTP_SERVER }}
+          port: 22
+          username: ${{ secrets.OVH_FTP_USERNAME }}
+          password: ${{ secrets.OVH_FTP_PASSWORD }}
+          local_path: './dist/.htaccess'
+          remote_path: './www/'
+          sftp_only: true
