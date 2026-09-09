@@ -57,7 +57,11 @@ jobs:
           server: ${{ secrets.OVH_FTP_SERVER }}
           username: ${{ secrets.OVH_FTP_USERNAME }}
           password: ${{ secrets.OVH_FTP_PASSWORD }}
-          protocol: ftps
+          # OVH shared hosting rejects explicit FTPS ("AUTH TLS" on port 21)
+          # with "500 This security scheme is not implemented" — it expects
+          # implicit FTPS instead (TLS from the start, typically port 990).
+          protocol: ftps-legacy
+          port: 990
           local-dir: ./dist/
           # OVH shared hosting serves from www/. Adjust if your plan differs.
           server-dir: ./www/
