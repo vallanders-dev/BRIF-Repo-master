@@ -1,12 +1,16 @@
 name: Deploy to OVH
 
-# Every push to master builds the site and uploads it to OVH shared hosting.
+# Every push to master builds the site and uploads it to OVH shared hosting
+# over SFTP (see the deploy step below for why SFTP rather than FTP/FTPS).
 # After the one-time secret setup (see below), deploys need no intervention.
 #
 # Required repository secrets — Settings > Secrets and variables > Actions:
-#   OVH_FTP_SERVER    e.g. ftp.cluster021.hosting.ovh.net
-#   OVH_FTP_USERNAME  your OVH FTP login
-#   OVH_FTP_PASSWORD  your OVH FTP password
+#   OVH_FTP_SERVER    the SAME host used for FTP, e.g. ftp.cluster021.hosting.ovh.net
+#                     (OVH shared hosting typically answers SSH/SFTP on this
+#                     same hostname too; if the control panel's SFTP tab
+#                     shows a different host, use that one instead)
+#   OVH_FTP_USERNAME  your OVH FTP/SSH login
+#   OVH_FTP_PASSWORD  your OVH FTP/SSH password
 #
 # Never commit these values to the repo. GitHub masks them in logs.
 
@@ -51,24 +55,23 @@ jobs:
           test -d dist/fr         || { echo "dist/fr missing"; exit 1; }
           echo "Build looks sane: $(find dist -type f | wc -l) files."
 
-      - name: Upload to OVH over FTPS
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Upload to OVH over SFTP
+        # This plan's OVH control panel lists only plain FTP (21, no TLS
+        # upgrade available — confirmed by "500 This security scheme is not
+        # implemented" on explicit FTPS, then a connection timeout on
+        # implicit FTPS/990, since nothing listens there) and SFTP (22).
+        # SFTP is the only encrypted option this plan actually offers, so
+        # that's what's used here, over SSH rather than the FTP family.
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
         with:
           server: ${{ secrets.OVH_FTP_SERVER }}
+          port: 22
           username: ${{ secrets.OVH_FTP_USERNAME }}
           password: ${{ secrets.OVH_FTP_PASSWORD }}
-          # OVH shared hosting rejects explicit FTPS ("AUTH TLS" on port 21)
-          # with "500 This security scheme is not implemented" — it expects
-          # implicit FTPS instead (TLS from the start, typically port 990).
-          protocol: ftps-legacy
-          port: 990
-          local-dir: ./dist/
+          local_path: './dist/*'
           # OVH shared hosting serves from www/. Adjust if your plan differs.
-          server-dir: ./www/
-          # The action keeps a sync-state file on the server and uploads only
-          # what changed, so routine deploys are seconds rather than minutes.
-          # It also means the first run uploads everything.
-          exclude: |
-            **/.git*
-            **/.git*/**
-            **/node_modules/**
+          remote_path: './www/'
+          # OVH shared hosting is an SFTP-only jail with no shell, so the
+          # action's default (rsync over ssh) won't work here — this forces
+          # plain SFTP puts instead.
+          sftp_only: true
